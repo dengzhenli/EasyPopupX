@@ -1,0 +1,3 @@
+include ':easyPopup'
+include ':app'
+rootProject.name = "EasyPopup"
