@@ -114,7 +114,7 @@ public abstract class BasePopView {
         int height = rect.height();
 
 //        popupWidth = activity.getResources().getDimensionPixelSize(LR.dimen.umipay_pop_width);
-        popupWidth = 200;
+        popupWidth = 1000;
         popupHeight = height + rect.top;
         //宽度
         popupWindow.setWidth(popupWidth);
