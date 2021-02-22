@@ -27,13 +27,34 @@ abstract class BasePopView(activity: Activity) {
     private var popupHeight = 0
 
     /**
+     * 窗体的长宽
+     */
+    private var viewWidth = WindowManager.LayoutParams.MATCH_PARENT
+    private var viewHeight = WindowManager.LayoutParams.MATCH_PARENT
+
+    /**
      * 上下边距
      */
     private var marginWidth = 0f
     private var marginHeight = 0f
 
+    /**
+     * 是否占据焦点
+     */
+    private var focusable = true
+
+    /**
+     *
+     */
+    private var isOutsideTouchable = true
+
+    private var gravity = Gravity.TOP or Gravity.LEFT
+
+    private var alpha = 0.5f
+
     //pop本地属性
     private var activity: Activity = activity
+    private var view: View? = null
     private var inflate: LayoutInflater = activity.layoutInflater
     private var popupWindow: BasePopupWindow? = null
     private var popupDismissListener: PopupDismissListener? = null
@@ -46,27 +67,19 @@ abstract class BasePopView(activity: Activity) {
 
     abstract fun initData()
 
-    private fun reShowData() { initData() }
+    private fun reShowData() {
+        initData()
+    }
 
+
+    val isShow: Boolean
+        get() = popupWindow?.isShowing ?: false
 
     companion object {
         private const val TAG = "BasePopView"
     }
 
     /***********************************PopupWindow相关 **********************************/
-    /**
-     * 设置添加屏幕的背景透明度
-     * @param bgAlpha
-     */
-    private fun backgroundAlpha(bgAlpha: Float) {
-        val lp = activity.window.attributes
-        lp.alpha = bgAlpha //0.0-1.0
-        activity.window.attributes = lp
-    }
-
-
-    val isShow: Boolean
-        get() = if (popupWindow == null) false else popupWindow!!.isShowing
 
 
     /**
@@ -74,48 +87,43 @@ abstract class BasePopView(activity: Activity) {
      */
     private fun initPopupWindow() {
         layoutId = getLayoutId()
-        val popupWindowView = inflate.inflate(layoutId, null)
+        view = inflate.inflate(layoutId, null)
         //内容，高度，宽度
         popupWindow = BasePopupWindow(
-            popupWindowView,
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.MATCH_PARENT,
-            true
+            view,
+            viewWidth,
+            viewHeight,
+            focusable
         )
+
         //动画效果
-        popupWindow!!.animationStyle = R.style.dialog_theme
+        popupWindow?.animationStyle = R.style.dialog_theme
+        //宽度
+        popupWindow?.width = popupWidth
+        //高度
+        popupWindow?.height = popupHeight
+        //显示位置
+        popupWindow?.isOutsideTouchable = isOutsideTouchable
+        popupWindow?.setBackgroundDrawable(view?.background)
 
         //菜单背景色
-        val dw = ColorDrawable(-0x1000000)
-        val parent = activity.window.decorView
-            .findViewById<View>(android.R.id.content)
-        val rect = Rect()
-        val window = activity.window
-        window.decorView.getWindowVisibleDisplayFrame(rect)
-        val height = rect.height()
+        val parent = activity.window.decorView.findViewById<View>(android.R.id.content)
 
-        popupWidth = 1000
-        popupHeight = height + rect.top
-        //宽度
-        popupWindow!!.width = popupWidth
-        //高度
-        popupWindow!!.height = popupHeight
-        //显示位置
-        popupWindow!!.isOutsideTouchable = true
-        popupWindow!!.setBackgroundDrawable(dw)
-        popupWindow!!.showAtLocation(
+        popupWindow?.showAtLocation(
             parent,
-            Gravity.TOP or Gravity.LEFT,
+            gravity,
             marginWidth.toInt(),
             marginHeight.toInt()
         )
 
         //设置背景半透明
-        backgroundAlpha(0.5f)
-        popupWindow!!.setOnDismissListener { onPopDismiss() }
-        initView(popupWindowView)
+        backgroundAlpha(alpha)
+        popupWindow?.setOnDismissListener { onPopDismiss() }
+
+        initView(view)
         initData()
     }
+
 
     /**
      * 显示view
@@ -125,14 +133,10 @@ abstract class BasePopView(activity: Activity) {
         if (popupWindow == null) {
             initPopupWindow()
         } else {
-            val parent = activity.window.decorView
-                .findViewById<View>(android.R.id.content)
-            val rect = Rect()
-            val window = activity.window
-            window.decorView.getWindowVisibleDisplayFrame(rect)
-            popupWindow!!.showAtLocation(
+            val parent = activity.window.decorView.findViewById<View>(android.R.id.content)
+            popupWindow?.showAtLocation(
                 parent,
-                Gravity.TOP or Gravity.LEFT,
+                gravity,
                 marginWidth.toInt(),
                 marginHeight.toInt()
             )
@@ -140,40 +144,53 @@ abstract class BasePopView(activity: Activity) {
         }
     }
 
-    interface PopupDismissListener {
-        fun onDismiss()
+    private fun initPopData() {
+        val rect = Rect()
+        val window = activity.window
+        window.decorView.getWindowVisibleDisplayFrame(rect)
+        val height = rect.height()
+
+        popupHeight = height + rect.top
     }
 
-    //隐藏
-    fun dismiss() {
-        if (popupWindow == null) return
-        popupWindow!!.dismiss()
-    }
-
-    fun onPopDismiss() {
-        backgroundAlpha(1f)
-        if (popupDismissListener != null) {
-            popupDismissListener!!.onDismiss()
-        }
-    }
 
     fun finish() {
-        if (popupWindow == null) return
-        if (popupWindow!!.isShowing) {
-            popupWindow!!.dismiss()
+        popupWindow?.let {
+            if (it.isShowing) {
+                it.dismiss()
+            }
         }
         popupWindow = null
     }
 
-    fun showPW(popView: BasePopView) {
-        popView.show()
+
+    //隐藏
+    fun dismiss() {
+        popupWindow?.dismiss()
     }
 
-    fun showMsg(msg: String?) {}
+    fun onPopDismiss() {
+        backgroundAlpha(1f)
+        popupDismissListener?.onDismiss()
+    }
 
     //设置隐藏监听
     fun setPopupDismissListener(popupDismissListener: PopupDismissListener?) {
         this.popupDismissListener = popupDismissListener
+    }
+
+    interface PopupDismissListener {
+        fun onDismiss()
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param bgAlpha
+     */
+    private fun backgroundAlpha(bgAlpha: Float) {
+        val lp = activity.window.attributes
+        lp.alpha = bgAlpha //0.0-1.0
+        activity.window.attributes = lp
     }
 
 
