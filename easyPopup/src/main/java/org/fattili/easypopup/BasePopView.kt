@@ -86,6 +86,8 @@ abstract class BasePopView(activity: Activity) {
      * 初始化
      */
     private fun initPopupWindow() {
+
+
         layoutId = getLayoutId()
         view = inflate.inflate(layoutId, null)
         //内容，高度，宽度
@@ -131,6 +133,7 @@ abstract class BasePopView(activity: Activity) {
     fun show() {
         Log.d(TAG, "findResume: basepop：show")
         if (popupWindow == null) {
+            initPopData()
             initPopupWindow()
         } else {
             val parent = activity.window.decorView.findViewById<View>(android.R.id.content)
@@ -149,7 +152,7 @@ abstract class BasePopView(activity: Activity) {
         val window = activity.window
         window.decorView.getWindowVisibleDisplayFrame(rect)
         val height = rect.height()
-
+        popupWidth = 1000
         popupHeight = height + rect.top
     }
 
