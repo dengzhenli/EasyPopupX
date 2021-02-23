@@ -1,6 +1,7 @@
 package org.fattili.easypopup_demo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 
 import org.fattili.easypopup.BasePopView;
@@ -25,8 +26,15 @@ public class TestPop extends BasePopView {
 
     }
 
+
+
     @Override
     public int getLayoutId() {
         return R.layout.pop_test;
+    }
+
+    @Override
+    public void onPopDismiss() {
+
     }
 }

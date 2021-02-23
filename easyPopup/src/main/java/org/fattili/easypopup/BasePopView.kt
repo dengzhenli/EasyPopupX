@@ -1,20 +1,19 @@
 package org.fattili.easypopup
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
+import androidx.core.view.get
 
 /**
  * Created by dengzhenli on 2021/01/23.
  * 自定义的左侧浮窗
  */
 abstract class BasePopView(activity: Activity) {
-    //修改的属性
+
     /**
      * layoutId
      */
@@ -23,8 +22,8 @@ abstract class BasePopView(activity: Activity) {
     /**
      * 窗体的长宽
      */
-    private var popupWidth = 0
-    private var popupHeight = 0
+    private var popupWidth = WindowManager.LayoutParams.MATCH_PARENT
+    private var popupHeight = WindowManager.LayoutParams.MATCH_PARENT
 
     /**
      * 窗体的长宽
@@ -38,6 +37,11 @@ abstract class BasePopView(activity: Activity) {
     private var marginWidth = 0f
     private var marginHeight = 0f
 
+
+    private var gravity = Gravity.TOP or Gravity.LEFT
+
+    private var alpha = 0.5f
+
     /**
      * 是否占据焦点
      */
@@ -48,18 +52,17 @@ abstract class BasePopView(activity: Activity) {
      */
     private var isOutsideTouchable = true
 
-    private var gravity = Gravity.TOP or Gravity.LEFT
-
-    private var alpha = 0.5f
 
     //pop本地属性
-    private var activity: Activity = activity
+    private val activity: Activity = activity
+    private val context: Context = activity
+
     private var view: View? = null
-    private var inflate: LayoutInflater = activity.layoutInflater
     private var popupWindow: BasePopupWindow? = null
-    private var popupDismissListener: PopupDismissListener? = null
 
     /**********************************     抽象方法   **********************************/
+
+    abstract fun onPopDismiss()
 
     abstract fun getLayoutId(): Int
 
@@ -81,15 +84,28 @@ abstract class BasePopView(activity: Activity) {
 
     /***********************************PopupWindow相关 **********************************/
 
+    private fun initPopData() {
+
+    }
 
     /**
      * 初始化
      */
     private fun initPopupWindow() {
-
-
         layoutId = getLayoutId()
+        val inflate = LayoutInflater.from(context)
         view = inflate.inflate(layoutId, null)
+//        Log.d(TAG, "initPopupWindow: " + (view as ViewGroup).getChildAt(0).width)
+        view?.let {
+
+
+            val v = it.findViewWithTag<PopLayout>("PopLayout");
+            viewWidth = it.measuredWidth
+            viewHeight = it.measuredHeight
+            popupWidth = it.measuredWidth
+            popupHeight = it.measuredHeight
+            Log.d(TAG, "initPopupWindow: " + v.width + ":" + it.width)
+        }
         //内容，高度，宽度
         popupWindow = BasePopupWindow(
             view,
@@ -108,11 +124,8 @@ abstract class BasePopView(activity: Activity) {
         popupWindow?.isOutsideTouchable = isOutsideTouchable
         popupWindow?.setBackgroundDrawable(view?.background)
 
-        //菜单背景色
-        val parent = activity.window.decorView.findViewById<View>(android.R.id.content)
-
         popupWindow?.showAtLocation(
-            parent,
+            view,
             gravity,
             marginWidth.toInt(),
             marginHeight.toInt()
@@ -120,7 +133,10 @@ abstract class BasePopView(activity: Activity) {
 
         //设置背景半透明
         backgroundAlpha(alpha)
-        popupWindow?.setOnDismissListener { onPopDismiss() }
+        popupWindow?.setOnDismissListener {
+            backgroundAlpha(1f)
+            onPopDismiss()
+        }
 
         initView(view)
         initData()
@@ -136,24 +152,14 @@ abstract class BasePopView(activity: Activity) {
             initPopData()
             initPopupWindow()
         } else {
-            val parent = activity.window.decorView.findViewById<View>(android.R.id.content)
-            popupWindow?.showAtLocation(
-                parent,
+          popupWindow?.showAtLocation(
+                view,
                 gravity,
                 marginWidth.toInt(),
                 marginHeight.toInt()
             )
             reShowData()
         }
-    }
-
-    private fun initPopData() {
-        val rect = Rect()
-        val window = activity.window
-        window.decorView.getWindowVisibleDisplayFrame(rect)
-        val height = rect.height()
-        popupWidth = 1000
-        popupHeight = height + rect.top
     }
 
 
@@ -166,35 +172,19 @@ abstract class BasePopView(activity: Activity) {
         popupWindow = null
     }
 
-
     //隐藏
     fun dismiss() {
         popupWindow?.dismiss()
     }
 
-    fun onPopDismiss() {
-        backgroundAlpha(1f)
-        popupDismissListener?.onDismiss()
-    }
 
-    //设置隐藏监听
-    fun setPopupDismissListener(popupDismissListener: PopupDismissListener?) {
-        this.popupDismissListener = popupDismissListener
-    }
 
-    interface PopupDismissListener {
-        fun onDismiss()
-    }
 
     /**
      * 设置添加屏幕的背景透明度
      * @param bgAlpha
      */
     private fun backgroundAlpha(bgAlpha: Float) {
-        val lp = activity.window.attributes
-        lp.alpha = bgAlpha //0.0-1.0
-        activity.window.attributes = lp
+        activity.window.attributes.alpha = bgAlpha
     }
-
-
 }
