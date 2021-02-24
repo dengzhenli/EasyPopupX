@@ -3,7 +3,7 @@ package org.fattili.easypopup_demo;
 import android.app.Activity;
 import android.view.View;
 
-import org.fattili.easypopup.BasePopView;
+import org.fattili.easypopup.view.BasePopView;
 
 /**
  * 2021/2/22
@@ -25,8 +25,6 @@ public class TestPop extends BasePopView {
     public void initData() {
 
     }
-
-
 
     @Override
     public int getLayoutId() {

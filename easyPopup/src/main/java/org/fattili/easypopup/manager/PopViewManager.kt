@@ -1,5 +1,6 @@
-package org.fattili.easypopup
+package org.fattili.easypopup.manager
 
+import org.fattili.easypopup.view.BasePopView
 import java.util.*
 
 /**
@@ -104,7 +105,8 @@ object PopViewManager {
         //先清空临时栈
         clearTemp()
         while (!popStack.empty()) {
-            val dialog = removeViewToTemp()
+            val dialog =
+                removeViewToTemp()
             if (dialog!!.isShow) {
                 dialog.dismiss()
             }
@@ -118,7 +120,8 @@ object PopViewManager {
         //先清空临时栈
         clearTemp()
         while (!popStack.empty()) {
-            val dialog = removeViewToTemp()
+            val dialog =
+                removeViewToTemp()
             if (dialog!!.isShow) {
                 dialog.finish()
             }
@@ -131,7 +134,8 @@ object PopViewManager {
     val viewsFromTemp: Unit
         get() {
             while (!tempPopStack.empty()) {
-                val dialog = viewFromTemp
+                val dialog =
+                    viewFromTemp
                 showPW(dialog)
             }
         }

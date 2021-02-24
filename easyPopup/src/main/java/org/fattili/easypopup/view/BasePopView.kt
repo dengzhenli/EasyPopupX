@@ -1,18 +1,24 @@
-package org.fattili.easypopup
+package org.fattili.easypopup.view
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Rect
-import android.graphics.drawable.ColorDrawable
 import android.util.Log
-import android.view.*
-import androidx.core.view.get
+import android.util.Xml
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.WindowManager
+import org.fattili.easypopup.R
+import org.fattili.easypopup.util.ScreenUtil
+import org.xmlpull.v1.XmlPullParser
 
 /**
  * Created by dengzhenli on 2021/01/23.
  * 自定义的左侧浮窗
  */
-abstract class BasePopView(activity: Activity) {
+abstract class BasePopView(//pop本地属性
+    private val activity: Activity
+) {
 
     /**
      * layoutId
@@ -22,39 +28,38 @@ abstract class BasePopView(activity: Activity) {
     /**
      * 窗体的长宽
      */
-    private var popupWidth = WindowManager.LayoutParams.MATCH_PARENT
-    private var popupHeight = WindowManager.LayoutParams.MATCH_PARENT
+    var popupWidth = WindowManager.LayoutParams.MATCH_PARENT
+
+    var popupHeight = WindowManager.LayoutParams.MATCH_PARENT
 
     /**
      * 窗体的长宽
      */
-    private var viewWidth = WindowManager.LayoutParams.MATCH_PARENT
-    private var viewHeight = WindowManager.LayoutParams.MATCH_PARENT
+    var viewWidth = WindowManager.LayoutParams.MATCH_PARENT
+    var viewHeight = WindowManager.LayoutParams.MATCH_PARENT
 
     /**
      * 上下边距
      */
-    private var marginWidth = 0f
-    private var marginHeight = 0f
+    var marginWidth = 0f
+    var marginHeight = 0f
 
 
-    private var gravity = Gravity.TOP or Gravity.LEFT
+    var gravity = Gravity.CENTER
 
-    private var alpha = 0.5f
+    var alpha = 0.5f
 
     /**
      * 是否占据焦点
      */
-    private var focusable = true
+    var focusable = true
 
     /**
      *
      */
-    private var isOutsideTouchable = true
+    var isOutsideTouchable = true
 
 
-    //pop本地属性
-    private val activity: Activity = activity
     private val context: Context = activity
 
     private var view: View? = null
@@ -83,35 +88,58 @@ abstract class BasePopView(activity: Activity) {
     }
 
     /***********************************PopupWindow相关 **********************************/
-
     private fun initPopData() {
+        val parser = activity.resources.getLayout(layoutId)
+        var type: Int
+        while (parser.eventType.also { type = it } != XmlPullParser.START_TAG
+            && type != XmlPullParser.END_DOCUMENT) {
+            parser.next()
+        }
+        val count = parser.attributeCount
 
+        val attributeSet = Xml.asAttributeSet(parser)
+        for (i in 0 until count) {
+            val name: String = attributeSet.getAttributeName(i)
+            val value: String = attributeSet.getAttributeValue(i)
+            if ("layout_width" == name) {
+                val width = getPx(value)
+                viewWidth = width
+                popupWidth = width
+            }
+            if ("layout_height" == name) {
+                val height = getPx(value)
+                viewHeight = height
+                popupHeight = height
+            }
+
+            if ("layout_gravity" == name) {
+                val v: Int = attributeSet.getAttributeIntValue(i, gravity)
+                gravity = v
+            }
+
+        }
     }
+
+
+    private fun getPx(value: String): Int {
+        if (value.endsWith("dip")) {
+            val dp = value.replace("dip", "").toFloat()
+            return ScreenUtil.dip2px(context, dp).toInt()
+        }
+        if (value.endsWith("px")) {
+            val px = value.replace("px", "").toFloat()
+            return px.toInt()
+        }
+        return value.toInt()
+    }
+
 
     /**
      * 初始化
      */
     private fun initPopupWindow() {
-        layoutId = getLayoutId()
         val inflate = LayoutInflater.from(context)
         view = inflate.inflate(layoutId, null)
-//        Log.d(TAG, "initPopupWindow: " + (view as ViewGroup).getChildAt(0).width)
-        view?.let {
-
-
-
-//            val v = it.findViewWithTag<PopLayout>("PopLayout");
-//
-//            val l =
-//            val l2 = it.layoutParams
-
-
-//            viewWidth = it.measuredWidth
-//            viewHeight = it.measuredHeight
-//            popupWidth = it.measuredWidth
-//            popupHeight = it.measuredHeight
-//            Log.d(TAG, "initPopupWindow: " + it.layoutParams.width + ":" + it.width)
-        }
         //内容，高度，宽度
         popupWindow = BasePopupWindow(
             view,
@@ -155,10 +183,11 @@ abstract class BasePopView(activity: Activity) {
     fun show() {
         Log.d(TAG, "findResume: basepop：show")
         if (popupWindow == null) {
+            layoutId = getLayoutId()
             initPopData()
             initPopupWindow()
         } else {
-          popupWindow?.showAtLocation(
+            popupWindow?.showAtLocation(
                 view,
                 gravity,
                 marginWidth.toInt(),
@@ -182,8 +211,6 @@ abstract class BasePopView(activity: Activity) {
     fun dismiss() {
         popupWindow?.dismiss()
     }
-
-
 
 
     /**
