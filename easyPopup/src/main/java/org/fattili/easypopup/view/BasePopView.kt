@@ -102,22 +102,24 @@ abstract class BasePopView(//pop本地属性
         for (i in 0 until count) {
             val name: String = attributeSet.getAttributeName(i)
             val value: String = attributeSet.getAttributeValue(i)
-            if ("layout_width" == name) {
-                val width = getPx(value)
-                viewWidth = width
-                popupWidth = width
-            }
-            if ("layout_height" == name) {
-                val height = getPx(value)
-                viewHeight = height
-                popupHeight = height
-            }
+            when (name) {
+                "layout_width" -> {
+                    val width = getPx(value)
+                    viewWidth = width
+                    popupWidth = width
+                }
 
-            if ("layout_gravity" == name) {
-                val v: Int = attributeSet.getAttributeIntValue(i, gravity)
-                gravity = v
-            }
+                "layout_height" -> {
+                    val height = getPx(value)
+                    viewHeight = height
+                    popupHeight = height
+                }
 
+                "layout_gravity" -> {
+                    val v: Int = attributeSet.getAttributeIntValue(i, gravity)
+                    gravity = v
+                }
+            }
         }
     }
 
