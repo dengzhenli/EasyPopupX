@@ -91,7 +91,8 @@ abstract class BasePopView(//pop本地属性
     private fun initPopData() {
         val parser = activity.resources.getLayout(layoutId)
         var type: Int
-        while (parser.eventType.also { type = it } != XmlPullParser.START_TAG
+        while (
+            parser.eventType.also { type = it } != XmlPullParser.START_TAG
             && type != XmlPullParser.END_DOCUMENT) {
             parser.next()
         }
