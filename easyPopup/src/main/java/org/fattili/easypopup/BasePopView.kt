@@ -99,12 +99,18 @@ abstract class BasePopView(activity: Activity) {
         view?.let {
 
 
-            val v = it.findViewWithTag<PopLayout>("PopLayout");
-            viewWidth = it.measuredWidth
-            viewHeight = it.measuredHeight
-            popupWidth = it.measuredWidth
-            popupHeight = it.measuredHeight
-            Log.d(TAG, "initPopupWindow: " + v.width + ":" + it.width)
+
+//            val v = it.findViewWithTag<PopLayout>("PopLayout");
+//
+//            val l =
+//            val l2 = it.layoutParams
+
+
+//            viewWidth = it.measuredWidth
+//            viewHeight = it.measuredHeight
+//            popupWidth = it.measuredWidth
+//            popupHeight = it.measuredHeight
+//            Log.d(TAG, "initPopupWindow: " + it.layoutParams.width + ":" + it.width)
         }
         //内容，高度，宽度
         popupWindow = BasePopupWindow(

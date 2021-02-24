@@ -1,7 +1,6 @@
 package org.fattili.easypopup_demo;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 
 import org.fattili.easypopup.BasePopView;
@@ -12,6 +11,7 @@ import org.fattili.easypopup.BasePopView;
  * @author dengzhenli
  */
 public class TestPop extends BasePopView {
+
     public TestPop(Activity activity) {
         super(activity);
     }
