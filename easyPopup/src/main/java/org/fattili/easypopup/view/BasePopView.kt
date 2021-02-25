@@ -16,9 +16,37 @@ import org.xmlpull.v1.XmlPullParser
  * Created by dengzhenli on 2021/01/23.
  * 自定义的左侧浮窗
  */
-abstract class BasePopView(//pop本地属性
+abstract class BasePopView(
     private val activity: Activity
 ) {
+
+    /**
+     * 默认设置
+     */
+    private val DEFAULT_POP_WIDTH = WindowManager.LayoutParams.MATCH_PARENT
+    private val DEFAULT_POP_HEIGHT = WindowManager.LayoutParams.MATCH_PARENT
+    private val DEFAULT_VIEW_WIDTH = WindowManager.LayoutParams.MATCH_PARENT
+    private val DEFAULT_VIEW_HEIGHT = WindowManager.LayoutParams.MATCH_PARENT
+    private val DEFAULT_MARGIN_WIDTH = 0f
+    private val DEFAULT_MARGIN_HEIGHT = 0f
+    private val DEFAULT_GRAVITY = Gravity.CENTER
+    private val DEFAULT_ALPHA = 0.5f
+    private val DEFAULT_FOCUSABLE = true
+    private val DEFAULT_ISOUTSIDETOUCHABLE = true
+
+    /**
+     * 优先使用代码设置的选项
+     */
+    private var SET_POP_WIDTH = false
+    private var SET_POP_HEIGHT = false
+    private var SET_VIEW_WIDTH = false
+    private var SET_VIEW_HEIGHT = false
+    private var SET_MARGIN_WIDTH = false
+    private var SET_MARGIN_HEIGHT = false
+    private var SET_GRAVITY = false
+    private var SET_ALPHA = false
+    private var SET_FOCUSABLE = false
+    private var SET_ISOUTSIDETOUCHABLE = false
 
     /**
      * layoutId
@@ -28,36 +56,76 @@ abstract class BasePopView(//pop本地属性
     /**
      * 窗体的长宽
      */
-    var popupWidth = WindowManager.LayoutParams.MATCH_PARENT
-
-    var popupHeight = WindowManager.LayoutParams.MATCH_PARENT
+    var popupWidth = DEFAULT_POP_WIDTH
+        set(value) {
+            field = value
+            SET_POP_WIDTH = true
+        }
+    var popupHeight = DEFAULT_POP_HEIGHT
+        set(value) {
+            field = value
+            SET_POP_HEIGHT = true
+        }
 
     /**
      * 窗体的长宽
      */
-    var viewWidth = WindowManager.LayoutParams.MATCH_PARENT
-    var viewHeight = WindowManager.LayoutParams.MATCH_PARENT
+    var viewWidth = DEFAULT_VIEW_WIDTH
+        set(value) {
+            field = value
+            SET_VIEW_WIDTH = true
+        }
+
+    var viewHeight = DEFAULT_VIEW_HEIGHT
+        set(value) {
+            field = value
+            SET_VIEW_HEIGHT = true
+        }
 
     /**
      * 上下边距
      */
-    var marginWidth = 0f
-    var marginHeight = 0f
+    var marginWidth = DEFAULT_MARGIN_WIDTH
+        set(value) {
+            field = value
+            SET_MARGIN_WIDTH = true
+        }
 
+    var marginHeight = DEFAULT_MARGIN_HEIGHT
+        set(value) {
+            field = value
+            SET_MARGIN_HEIGHT = true
+        }
 
-    var gravity = Gravity.CENTER
+    var gravity = DEFAULT_GRAVITY
+        set(value) {
+            field = value
+            SET_GRAVITY = true
+        }
 
-    var alpha = 0.5f
+    var alpha = DEFAULT_ALPHA
+        set(value) {
+            field = value
+            SET_ALPHA = true
+        }
 
     /**
      * 是否占据焦点
      */
-    var focusable = true
+    var focusable = DEFAULT_FOCUSABLE
+        set(value) {
+            field = value
+            SET_FOCUSABLE = true
+        }
 
     /**
      *
      */
-    var isOutsideTouchable = true
+    var isOutsideTouchable = DEFAULT_ISOUTSIDETOUCHABLE
+        set(value) {
+            field = value
+            SET_ISOUTSIDETOUCHABLE = true
+        }
 
 
     private val context: Context = activity
@@ -65,7 +133,9 @@ abstract class BasePopView(//pop本地属性
     private var view: View? = null
     private var popupWindow: BasePopupWindow? = null
 
+
     /**********************************     抽象方法   **********************************/
+
 
     abstract fun onPopDismiss()
 
@@ -105,22 +175,27 @@ abstract class BasePopView(//pop本地属性
             when (name) {
                 "layout_width" -> {
                     val width = getPx(value)
-                    viewWidth = width
-                    popupWidth = width
+                    (!SET_VIEW_WIDTH).let { viewWidth = width }
+                    (!SET_POP_WIDTH).let { popupWidth = width }
                 }
 
                 "layout_height" -> {
                     val height = getPx(value)
-                    viewHeight = height
-                    popupHeight = height
+                    (!SET_VIEW_HEIGHT).let { viewHeight = height }
+                    (!SET_POP_HEIGHT).let { popupHeight = height }
                 }
 
                 "layout_gravity" -> {
                     val v: Int = attributeSet.getAttributeIntValue(i, gravity)
-                    gravity = v
+                    (!SET_GRAVITY).let { gravity = v }
                 }
             }
         }
+
+
+//        marginWidth = 400.0f
+//        marginHeight = 500.0f
+//        gravity = Gravity.END or Gravity.BOTTOM
     }
 
 
