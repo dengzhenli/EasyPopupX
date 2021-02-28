@@ -20,6 +20,9 @@ abstract class BasePopView(
     private val activity: Activity
 ) {
 
+    private val GRAVITY_RIGHT_FLAG = 0x4
+    private val GRAVITY_BOTTOM_FLAG = 0x40
+
     /**
      * 默认设置
      */
@@ -27,8 +30,8 @@ abstract class BasePopView(
     private val DEFAULT_POP_HEIGHT = WindowManager.LayoutParams.MATCH_PARENT
     private val DEFAULT_VIEW_WIDTH = WindowManager.LayoutParams.MATCH_PARENT
     private val DEFAULT_VIEW_HEIGHT = WindowManager.LayoutParams.MATCH_PARENT
-    private val DEFAULT_MARGIN_WIDTH = 0f
-    private val DEFAULT_MARGIN_HEIGHT = 0f
+    private val DEFAULT_MARGIN_WIDTH = 0
+    private val DEFAULT_MARGIN_HEIGHT = 0
     private val DEFAULT_GRAVITY = Gravity.CENTER
     private val DEFAULT_ALPHA = 0.5f
     private val DEFAULT_FOCUSABLE = true
@@ -189,13 +192,49 @@ abstract class BasePopView(
                     val v: Int = attributeSet.getAttributeIntValue(i, gravity)
                     (!SET_GRAVITY).let { gravity = v }
                 }
+
+                "layout_marginLeft" -> {
+                    if (gravity and GRAVITY_RIGHT_FLAG > 0){
+                        marginWidth =getPx(value)
+                    }
+                }
+                "layout_marginRight" -> {
+                    if (gravity and GRAVITY_RIGHT_FLAG == 0){
+                        marginWidth = getPx(value)
+                    }
+                }
+                "layout_marginHorizontal" -> {
+                    marginWidth = getPx(value)
+                }
+                "layout_marginStart" -> {
+                    if (gravity and GRAVITY_RIGHT_FLAG > 0){
+                        marginWidth = getPx(value)
+                    }
+                }
+                "layout_marginEnd" -> {
+                    if (gravity and GRAVITY_RIGHT_FLAG == 0){
+                        marginWidth = getPx(value)
+                    }
+                }
+                "layout_marginBottom" -> {
+                    if (gravity and GRAVITY_BOTTOM_FLAG == 0){
+                        marginHeight = getPx(value)
+                    }
+                }
+                "layout_marginTop" -> {
+                    if (gravity and GRAVITY_BOTTOM_FLAG == 0){
+                        marginHeight = getPx(value)
+                    }
+                }
+                "layout_marginVertical" -> {
+                    marginHeight = getPx(value)
+                }
+                "layout_margin" -> {
+                    marginWidth = getPx(value)
+                    marginHeight = getPx(value)
+                }
             }
         }
-
-
-//        marginWidth = 400.0f
-//        marginHeight = 500.0f
-//        gravity = Gravity.END or Gravity.BOTTOM
     }
 
 
