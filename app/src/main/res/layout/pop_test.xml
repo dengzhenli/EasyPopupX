@@ -7,7 +7,7 @@
     android:layout_marginHorizontal="80dp"
     android:layout_marginStart="20dp"
     android:layout_marginLeft="20dp"
-    android:layout_gravity="top|left"
+    android:layout_gravity="center"
     android:background="@drawable/ep_common_shape_bg">
 
     <TextView
