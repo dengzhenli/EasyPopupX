@@ -1,4 +1,4 @@
-package org.fattili.easypopup.view
+package org.fattili.easypopup.view.base
 
 import android.app.Activity
 import android.content.Context
@@ -137,6 +137,10 @@ abstract class BasePopView(
     private var popupWindow: BasePopupWindow? = null
 
 
+    fun getContext(): Context {
+        return activity
+    }
+
     /**********************************     抽象方法   **********************************/
 
 
@@ -194,12 +198,12 @@ abstract class BasePopView(
                 }
 
                 "layout_marginLeft" -> {
-                    if (gravity and GRAVITY_RIGHT_FLAG > 0){
-                        marginWidth =getPx(value)
+                    if (gravity and GRAVITY_RIGHT_FLAG > 0) {
+                        marginWidth = getPx(value)
                     }
                 }
                 "layout_marginRight" -> {
-                    if (gravity and GRAVITY_RIGHT_FLAG == 0){
+                    if (gravity and GRAVITY_RIGHT_FLAG == 0) {
                         marginWidth = getPx(value)
                     }
                 }
@@ -207,22 +211,22 @@ abstract class BasePopView(
                     marginWidth = getPx(value)
                 }
                 "layout_marginStart" -> {
-                    if (gravity and GRAVITY_RIGHT_FLAG > 0){
+                    if (gravity and GRAVITY_RIGHT_FLAG > 0) {
                         marginWidth = getPx(value)
                     }
                 }
                 "layout_marginEnd" -> {
-                    if (gravity and GRAVITY_RIGHT_FLAG == 0){
+                    if (gravity and GRAVITY_RIGHT_FLAG == 0) {
                         marginWidth = getPx(value)
                     }
                 }
                 "layout_marginBottom" -> {
-                    if (gravity and GRAVITY_BOTTOM_FLAG == 0){
+                    if (gravity and GRAVITY_BOTTOM_FLAG == 0) {
                         marginHeight = getPx(value)
                     }
                 }
                 "layout_marginTop" -> {
-                    if (gravity and GRAVITY_BOTTOM_FLAG == 0){
+                    if (gravity and GRAVITY_BOTTOM_FLAG == 0) {
                         marginHeight = getPx(value)
                     }
                 }

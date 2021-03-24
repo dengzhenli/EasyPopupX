@@ -1,4 +1,4 @@
-package org.fattili.easypopup.view
+package org.fattili.easypopup.view.base
 
 import android.view.View
 import android.widget.PopupWindow

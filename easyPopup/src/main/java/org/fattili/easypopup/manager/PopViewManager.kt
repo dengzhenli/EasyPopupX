@@ -1,6 +1,6 @@
 package org.fattili.easypopup.manager
 
-import org.fattili.easypopup.view.BasePopView
+import org.fattili.easypopup.view.base.BasePopView
 import java.util.*
 
 /**
