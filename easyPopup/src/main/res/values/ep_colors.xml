@@ -1,4 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="whiteBg">#fff3EE</color>
+
+    <color name="grey31">#4F4F4F</color>
+    <color name="snow">#FFFAFA</color>
+    <color name="blue">#1ccaff</color>
+    <color name="white">#FFFFFF</color>
+    <color name="halftran">#88000000</color>
+
+
+    <color name="colorPrimary">@color/grey31</color>
+    <color name="colorPrimaryDark">@color/grey31</color>
+    <color name="colorAccent">@color/snow</color>
+
+    <!-- Common -->
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="grayLine">#E2E2E2</color><!--灰色 -->
+    <color name="stopRed">#DF4444</color><!--红色 -->
+    <color name="stopRedHalf">#AADF4444</color><!--淡红色 -->
+    <color name="cyan">#2C61A2</color><!--青色 -->
+    <color name="grayCandle">#ABABAB</color><!--灰色 -->
+    <color name="grayCandle_Pressed">#AAABABAB</color><!--灰色 -->
+    <color name="gray">#888888</color><!--灰色 -->
+    <color name="gold">#F8BF49</color><!--金色 -->
+    <color name="onion_yellow">#EACF01</color>
+    <color name="onion_green">#6C890B</color>
+    <color name="onion_green2">#ABC327</color>
+    <color name="onion_pink">#DFB5B7</color>
+    <color name="onion_purple">#7F1874</color>
+    <color name="grey11">#1C1C1C</color>
+    <color name="grey41">#696969</color>
+    <color name="Ivory3">#CDCDC1</color>
+    <color name="LavenderBlush4">#8B8386</color>
+    <color name="LightYellow3">#CDCDB4</color>
+    <color name="Wheat2">#EED8AE</color>
+    <color name="Wheat3">#CDBA96</color>
+
+    <color name="blue2">#1296db</color>
+    <color name="blue_light">#1296c1</color>
+    <!-- 半透明 -->
+    <color name="half_transparent">#88323232</color>
+    <color name="half_black">#44000000</color>
+
+    <color name="lm_background_green">#E1F9E3</color>
+    <color name="lm_background_while">#E5e5e5</color>
+    <color name="lm_background">@color/lm_background_while</color>
+    <color name="lm_font">@color/grey31</color>
+    <color name="lm_white_pressed">#99FFFFFF</color>
+    <color name="lm_dialog_bg">#77777777</color>
 </resources>

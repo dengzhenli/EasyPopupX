@@ -16,9 +16,9 @@ import org.xmlpull.v1.XmlPullParser
  * Created by dengzhenli on 2021/01/23.
  * 自定义的左侧浮窗
  */
-abstract class BasePopView(
-    private val activity: Activity
-) {
+abstract class BasePopView {
+
+    var activity: Activity
 
     private val GRAVITY_RIGHT_FLAG = 0x4
     private val GRAVITY_BOTTOM_FLAG = 0x40
@@ -131,14 +131,25 @@ abstract class BasePopView(
         }
 
 
-    private val context: Context = activity
+    private var context: Context
 
     private var view: View? = null
+    private var showAtView: View? = null
     private var popupWindow: BasePopupWindow? = null
 
 
     fun getContext(): Context {
         return activity
+    }
+
+
+    constructor(activity: Activity) {
+        this.activity = activity
+        this.context = activity
+    }
+
+    constructor(activity: Activity, showAtView: View) : this(activity) {
+        this.showAtView = showAtView
     }
 
     /**********************************     抽象方法   **********************************/
@@ -151,6 +162,8 @@ abstract class BasePopView(
     abstract fun initView(view: View?)
 
     abstract fun initData()
+
+    abstract fun outClickable(): Boolean
 
     private fun reShowData() {
         initData()
@@ -239,6 +252,14 @@ abstract class BasePopView(
                 }
             }
         }
+
+        if (!SET_FOCUSABLE) {
+            focusable = outClickable()
+        }
+
+        if (!SET_ISOUTSIDETOUCHABLE) {
+            isOutsideTouchable = outClickable()
+        }
     }
 
 
@@ -260,7 +281,9 @@ abstract class BasePopView(
      */
     private fun initPopupWindow() {
         val inflate = LayoutInflater.from(context)
+
         view = inflate.inflate(layoutId, null)
+        if (showAtView == null) showAtView = view
         //内容，高度，宽度
         popupWindow = BasePopupWindow(
             view,
@@ -280,7 +303,7 @@ abstract class BasePopView(
         popupWindow?.setBackgroundDrawable(view?.background)
 
         popupWindow?.showAtLocation(
-            view,
+            showAtView,
             gravity,
             marginWidth.toInt(),
             marginHeight.toInt()
@@ -339,6 +362,8 @@ abstract class BasePopView(
      * @param bgAlpha
      */
     private fun backgroundAlpha(bgAlpha: Float) {
-        activity.window.attributes.alpha = bgAlpha
+        val lp = activity.window.attributes
+        lp.alpha = bgAlpha
+        activity.window.attributes = lp
     }
 }

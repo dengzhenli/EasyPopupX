@@ -4,17 +4,23 @@ import android.app.Activity;
 import android.view.View;
 
 import org.fattili.easypopup.view.base.BasePopView;
+import org.fattili.easypopup.view.pop.TopPop;
 
 /**
  * 2021/2/22
  *
  * @author dengzhenli
  */
-public class TestPop extends BasePopView {
+public class TopTestPop extends TopPop {
 
-    public TestPop(Activity activity) {
+    public TopTestPop(Activity activity) {
         super(activity);
     }
+
+    public TopTestPop(Activity activity,View view) {
+        super(activity, view);
+    }
+
 
     @Override
     public void initView(View view) {
@@ -28,7 +34,7 @@ public class TestPop extends BasePopView {
 
     @Override
     public int getLayoutId() {
-        return R.layout.pop_test;
+        return R.layout.top_pop_test;
     }
 
     @Override
@@ -38,6 +44,6 @@ public class TestPop extends BasePopView {
 
     @Override
     public boolean outClickable() {
-        return false;
+        return true;
     }
 }

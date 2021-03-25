@@ -10,4 +10,9 @@
         <item name="android:windowContentOverlay">@null</item>
 
     </style>
+
+    <style name="lm_font_style_dark_16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/snow</item>
+    </style>
 </resources>

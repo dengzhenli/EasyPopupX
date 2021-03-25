@@ -16,7 +16,9 @@ abstract class DialogPop : BasePopView {
 
     override fun onPopDismiss() {}
 
-    constructor(activity: Activity?) : super(activity!!) {}
+    constructor(activity: Activity?) : super(activity!!) {
+
+    }
 
     constructor(activity: Activity?, gravity: Int, width: Int, height: Int) : super(activity!!) {
         this.gravity = gravity

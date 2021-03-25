@@ -1,6 +1,7 @@
-package org.fattili.easypopup_demo;
+package org.fattili.easypopup.view.pop;
 
 import android.app.Activity;
+import android.view.Gravity;
 import android.view.View;
 
 import org.fattili.easypopup.view.base.BasePopView;
@@ -10,11 +11,17 @@ import org.fattili.easypopup.view.base.BasePopView;
  *
  * @author dengzhenli
  */
-public class TestPop extends BasePopView {
+public abstract class RightPop extends BasePopView {
 
-    public TestPop(Activity activity) {
+    public RightPop(Activity activity) {
         super(activity);
+        setGravity(Gravity.RIGHT);
     }
+
+    public RightPop(Activity activity,View view) {
+        super(activity, view);
+    }
+
 
     @Override
     public void initView(View view) {
@@ -26,18 +33,9 @@ public class TestPop extends BasePopView {
 
     }
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.pop_test;
-    }
 
     @Override
     public void onPopDismiss() {
 
-    }
-
-    @Override
-    public boolean outClickable() {
-        return false;
     }
 }

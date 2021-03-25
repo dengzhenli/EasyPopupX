@@ -17,7 +17,8 @@ public abstract class TestPop extends BasePopView {
     }
 
     public TestPop(Activity activity,String str) {
-        super(activity);
+
+        this(activity);
     }
 
     @Override
