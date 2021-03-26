@@ -1,10 +1,10 @@
 package org.fattili.easypopup.view.card
 
 import android.app.Activity
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import org.fattili.easypopup.R
 import org.fattili.easypopup.view.base.BasePopView
 
@@ -14,10 +14,18 @@ abstract class CardPopup : BasePopView {
     var dataView: View? = null
     var dataLayout: ViewGroup? = null
 
-    constructor(activity: Activity?) : super(activity!!) {
+    constructor(activity: Activity?) : this(
+        activity,
+        Gravity.BOTTOM,
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
 
+    constructor(activity: Activity?, gravity: Int, width: Int, height: Int) : super(activity!!) {
+        this.gravity = gravity
+        setWidth(width)
+        setHeight(height)
     }
-
 
     override fun onPopDismiss() {
     }

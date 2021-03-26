@@ -26,4 +26,13 @@ object ScreenUtil{
         return (pxValue / scale + 0.5f).toInt()
     }
 
+    open fun getScreenWidth(context: Context): Int{
+        return context.resources.displayMetrics.widthPixels
+    }
+
+    open fun getScreenHeight(context: Context): Int{
+        return context.resources.displayMetrics.heightPixels
+    }
+
+
 }

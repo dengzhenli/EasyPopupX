@@ -8,6 +8,10 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import org.fattili.easypopup.R
 import org.fattili.easypopup.util.ScreenUtil
 import org.xmlpull.v1.XmlPullParser
@@ -16,7 +20,7 @@ import org.xmlpull.v1.XmlPullParser
  * Created by dengzhenli on 2021/01/23.
  * 自定义的左侧浮窗
  */
-abstract class BasePopView {
+abstract class BasePopView : LifecycleObserver{
 
     var activity: Activity
 
@@ -195,19 +199,29 @@ abstract class BasePopView {
             when (name) {
                 "layout_width" -> {
                     val width = getPx(value)
-                    (!SET_VIEW_WIDTH).let { viewWidth = width }
-                    (!SET_POP_WIDTH).let { popupWidth = width }
+                    if (!SET_VIEW_WIDTH) {
+                        viewWidth = width
+                    }
+                    if (!SET_POP_WIDTH) {
+                        popupWidth = width
+                    }
                 }
 
                 "layout_height" -> {
                     val height = getPx(value)
-                    (!SET_VIEW_HEIGHT).let { viewHeight = height }
-                    (!SET_POP_HEIGHT).let { popupHeight = height }
+                    if (!SET_VIEW_HEIGHT) {
+                        viewHeight = height
+                    }
+                    if (!SET_POP_HEIGHT) {
+                        popupHeight = height
+                    }
                 }
 
                 "layout_gravity" -> {
                     val v: Int = attributeSet.getAttributeIntValue(i, gravity)
-                    (!SET_GRAVITY).let { gravity = v }
+                    if (!SET_GRAVITY) {
+                        gravity = v
+                    }
                 }
 
                 "layout_marginLeft" -> {
@@ -318,27 +332,32 @@ abstract class BasePopView {
 
         initView(view)
         initData()
+
+
     }
 
 
     /**
      * 显示view
      */
-    fun show() {
+    fun show(): BasePopView {
         Log.d(TAG, "findResume: basepop：show")
         if (popupWindow == null) {
+            onCreatePop()
             layoutId = getLayoutId()
             initPopData()
             initPopupWindow()
+            onStartPop()
         } else {
             popupWindow?.showAtLocation(
                 view,
                 gravity,
-                marginWidth.toInt(),
-                marginHeight.toInt()
+                marginWidth,
+                marginHeight
             )
             reShowData()
         }
+        return this
     }
 
 
@@ -366,4 +385,50 @@ abstract class BasePopView {
         lp.alpha = bgAlpha
         activity.window.attributes = lp
     }
+
+    fun setWidth(width: Int) {
+        popupWidth = width
+        viewWidth = width
+    }
+    fun setHeight(height: Int) {
+        popupHeight = height
+        viewHeight = height
+    }
+
+    fun register(owner: LifecycleOwner) : BasePopView{
+        owner.lifecycle.addObserver(this)
+        return this
+    }
+
+    open fun onStartPop() {
+
+    }
+
+    open fun onCreatePop() {
+
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    open fun onDestroy() {
+
+    }
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    open fun onResume() {
+
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    open fun onPause() {
+
+    }
+
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    open fun onStop() {
+
+    }
+
 }

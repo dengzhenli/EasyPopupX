@@ -1,9 +1,10 @@
-package org.fattili.easypopup_demo;
+package org.fattili.easypopup_demo.java;
 
 import android.app.Activity;
 import android.view.View;
 
 import org.fattili.easypopup.view.base.BasePopView;
+import org.fattili.easypopup_demo.R;
 
 /**
  * 2021/2/22
@@ -40,4 +41,6 @@ public class TestPop extends BasePopView {
     public boolean outClickable() {
         return false;
     }
+
+
 }

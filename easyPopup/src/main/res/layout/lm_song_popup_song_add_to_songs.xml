@@ -24,22 +24,24 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minWidth="100dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp">
 
 
                 <ImageView
+                    android:layout_alignParentRight="true"
                     android:id="@+id/lm_song_song_add_to_songs_back_iv"
                     android:layout_width="50dp"
                     android:layout_height="25dp"
                     android:src="@drawable/lm_common_selector_btn_back">
                 </ImageView>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/lm_song_song_add_to_songs_lv"

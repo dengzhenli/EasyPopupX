@@ -1,179 +1,146 @@
-package org.fattili.easypopup.view.dialog;
+package org.fattili.easypopup.view.dialog
 
-import android.app.Activity;
-import android.content.Context;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-
-import org.fattili.easypopup.R;
+import android.app.Activity
+import android.content.Context
+import android.text.TextUtils
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
+import org.fattili.easypopup.R
 
 /**
  * 2021/2/22
  *
  * @author dengzhenli
  */
-public class AlertDialogPop extends DialogPop {
-
-
-    private ViewGroup titleView;
-    private ViewGroup contentView;
-
-    private TextView titleTv;
-    private TextView msgTv;
-
-    private Button measureBt;
-    private Button cancelBt;
-
-
-    private String paramMeasureBtText;
-    private String paramCancelBtText;
-
-    private boolean paramMeasureBtShow;
-    private boolean paramCancelBtShow;
-
-    private View.OnClickListener paramMeasureBtListener;
-    private View.OnClickListener paramCancelBtListener;
-
-    private String paramTitle;
-    private String paramMsg;
-
-    private View paramTitleView;
-    private View paramContentView;
-
-
-    public AlertDialogPop(Activity activity) {
-        super(activity);
+class AlertDialogPop(activity: Activity?) : DialogPop(activity) {
+    private var titleView: ViewGroup? = null
+    private var contentView: ViewGroup? = null
+    private var titleTv: TextView? = null
+    private var msgTv: TextView? = null
+    private var measureBt: Button? = null
+    private var cancelBt: Button? = null
+    private var paramMeasureBtText: String? = null
+    private var paramCancelBtText: String? = null
+    private var paramMeasureBtShow = false
+    private var paramCancelBtShow = false
+    private var paramMeasureBtListener: View.OnClickListener? = null
+    private var paramCancelBtListener: View.OnClickListener? = null
+    private var paramTitle: String? = null
+    private var paramMsg: String? = null
+    private var paramTitleView: View? = null
+    private var paramContentView: View? = null
+    override fun initView(view: View?) {
+        titleView = view?.findViewById(R.id.id_ep_pop_alert_dialog_title_view)
+        contentView = view?.findViewById(R.id.id_ep_pop_alert_dialog_content_view)
+        titleTv = view?.findViewById(R.id.id_ep_pop_alert_dialog_title_tv)
+        msgTv = view?.findViewById(R.id.id_ep_pop_alert_dialog_msg_tv)
+        measureBt = view?.findViewById(R.id.id_ep_pop_alert_dialog_measure_bt)
+        cancelBt = view?.findViewById(R.id.id_ep_pop_alert_dialog_cancel_bt)
+        cancelBt?.setOnClickListener(View.OnClickListener { dismiss() })
+        titleView?.setVisibility(View.GONE)
     }
 
-
-    @Override
-    public void initView(View view) {
-        titleView = view.findViewById(R.id.id_ep_pop_alert_dialog_title_view);
-        contentView = view.findViewById(R.id.id_ep_pop_alert_dialog_content_view);
-
-        titleTv = view.findViewById(R.id.id_ep_pop_alert_dialog_title_tv);
-        msgTv = view.findViewById(R.id.id_ep_pop_alert_dialog_msg_tv);
-
-        measureBt = view.findViewById(R.id.id_ep_pop_alert_dialog_measure_bt);
-        cancelBt = view.findViewById(R.id.id_ep_pop_alert_dialog_cancel_bt);
-
-        cancelBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
-        titleView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void initData() {
+    override fun initData() {
         if (!TextUtils.isEmpty(paramMsg)) {
-            msgTv.setText(paramMsg);
+            msgTv?.text = paramMsg
         }
         if (!TextUtils.isEmpty(paramTitle)) {
-            titleTv.setText(paramTitle);
-            titleView.setVisibility(View.VISIBLE);
+            titleTv?.text = paramTitle
+            titleView?.visibility = View.VISIBLE
         }
         if (paramTitleView != null) {
-            titleView.addView(paramTitleView);
-            titleView.setVisibility(View.VISIBLE);
+            titleView?.addView(paramTitleView)
+            titleView?.visibility = View.VISIBLE
         }
-
         if (paramContentView != null) {
-            contentView.addView(paramContentView);
+            contentView?.addView(paramContentView)
         }
-
-
-        cancelBt.setVisibility(paramCancelBtShow ? View.VISIBLE : View.GONE);
-        measureBt.setVisibility(paramMeasureBtShow ? View.VISIBLE : View.GONE);
-
+        cancelBt?.visibility = if (paramCancelBtShow) View.VISIBLE else View.GONE
+        measureBt?.visibility =
+            if (paramMeasureBtShow) View.VISIBLE else View.GONE
         if (!TextUtils.isEmpty(paramCancelBtText)) {
-            cancelBt.setText(paramCancelBtText);
+            cancelBt?.text = paramCancelBtText
         }
         if (!TextUtils.isEmpty(paramMeasureBtText)) {
-            measureBt.setText(paramMeasureBtText);
+            measureBt?.text = paramMeasureBtText
         }
         if (paramCancelBtListener != null) {
-            cancelBt.setOnClickListener(paramCancelBtListener);
+            cancelBt?.setOnClickListener(paramCancelBtListener)
         }
         if (paramMeasureBtListener != null) {
-            measureBt.setOnClickListener(paramMeasureBtListener);
+            measureBt?.setOnClickListener(paramMeasureBtListener)
+        }
+    }
+
+    override fun onPopDismiss() {}
+    override fun getLayoutId(): Int {
+        return R.layout.ep_pop_alert_dialog
+    }
+
+    class Builder(activity: Activity?) {
+        private val pop: AlertDialogPop = AlertDialogPop(activity)
+        fun getContext(): Context {
+            return pop.getContext()
+        }
+
+        fun setTitle(title: String?): Builder {
+            pop.paramTitle = title
+            return this
+        }
+
+        fun setTitleView(titleView: View?): Builder {
+            pop.paramTitleView = titleView
+            return this
+        }
+
+        fun setMessage(msg: String?): Builder {
+            pop.paramMsg = msg
+            return this
+        }
+
+        fun setContentView(contentView: View?): Builder {
+            pop.paramContentView = contentView
+            return this
+        }
+
+        fun setMeasureButton(
+            show: Boolean,
+            text: String?,
+            clickListener: View.OnClickListener?
+        ): Builder {
+            pop.paramMeasureBtShow = show
+            pop.paramMeasureBtText = text
+            pop.paramMeasureBtListener = clickListener
+            return this
+        }
+
+        fun setCancelButton(
+            show: Boolean,
+            text: String?,
+            clickListener: View.OnClickListener?
+        ): Builder {
+            pop.paramCancelBtShow = show
+            pop.paramCancelBtText = text
+            pop.paramCancelBtListener = clickListener
+            return this
+        }
+
+        fun show(): AlertDialogPop {
+            pop.show()
+            return pop
+        }
+
+        fun register(owner: LifecycleOwner?): AlertDialogPop {
+            owner?.let { pop.register(it) }
+            return pop
         }
 
     }
 
-
-    @Override
-    public void onPopDismiss() {
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.ep_pop_alert_dialog;
-    }
-
-
-    public static class Builder {
-
-        private AlertDialogPop pop;
-
-        public Builder(Activity activity) {
-            pop = new AlertDialogPop(activity);
-        }
-
-        public Context getContext() {
-            return pop.getContext();
-        }
-
-
-        public Builder setTitle(String title) {
-            pop.paramTitle = title;
-            return this;
-        }
-
-        public Builder setTitleView(View titleView) {
-            pop.paramTitleView = titleView;
-            return this;
-        }
-
-        public Builder setMessage(String msg) {
-            pop.paramMsg = msg;
-            return this;
-        }
-
-        public Builder setContentView(View contentView) {
-            pop.paramContentView = contentView;
-            return this;
-        }
-
-        public Builder setMeasureButton(boolean show, String text, View.OnClickListener clickListener) {
-            pop.paramMeasureBtShow = show;
-            pop.paramMeasureBtText = text;
-            pop.paramMeasureBtListener = clickListener;
-            return this;
-        }
-
-        public Builder setCancelButton(boolean show, String text, View.OnClickListener clickListener) {
-            pop.paramCancelBtShow = show;
-            pop.paramCancelBtText = text;
-            pop.paramCancelBtListener = clickListener;
-            return this;
-        }
-
-        public AlertDialogPop show() {
-            pop.show();
-            return pop;
-        }
-    }
-
-    @Override
-    public boolean outClickable() {
-        return false;
+    override fun outClickable(): Boolean {
+        return false
     }
 }
