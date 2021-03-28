@@ -31,16 +31,16 @@ abstract class CardPopup : BasePopView {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.lm_song_popup_song_add_to_songs
+        return R.layout.ep_song_popup_song_add_to_songs
     }
 
     abstract fun getContentLayoutId(): Int
 
     override fun initView(view: View?) {
-        back = view?.findViewById(R.id.lm_song_song_add_to_songs_back_iv)
+        back = view?.findViewById(R.id.ep_song_song_add_to_songs_back_iv)
         back?.setOnClickListener { dismiss() }
 
-        dataLayout = view?.findViewById(R.id.lm_song_song_add_to_songs_lv)
+        dataLayout = view?.findViewById(R.id.ep_song_song_add_to_songs_lv)
         dataView = activity.layoutInflater.inflate(getContentLayoutId(), null)
         dataLayout?.addView(dataView)
     }

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:state_pressed="true" android:drawable="@drawable/lm_common_shape_style_bt_click"></item>
-        <item android:drawable="@drawable/lm_common_shape_style_bt"></item>
-</selector>

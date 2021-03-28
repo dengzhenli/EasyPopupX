@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="dialog_theme" parent="android:Theme.Dialog">
+    <style name="ep_dialog_theme" parent="android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -11,7 +11,7 @@
 
     </style>
 
-    <style name="lm_font_style_dark_16">
+    <style name="ep_font_style_dark_16">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/snow</item>
     </style>

@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="whiteBg">#fff3EE</color>
 
     <color name="grey31">#4F4F4F</color>
     <color name="snow">#FFFAFA</color>
     <color name="blue">#1ccaff</color>
     <color name="white">#FFFFFF</color>
-    <color name="halftran">#88000000</color>
-
-
-    <color name="colorPrimary">@color/grey31</color>
-    <color name="colorPrimaryDark">@color/grey31</color>
-    <color name="colorAccent">@color/snow</color>
 
     <!-- Common -->
     <color name="transparent">#00000000</color>
@@ -43,10 +36,6 @@
     <color name="half_transparent">#88323232</color>
     <color name="half_black">#44000000</color>
 
-    <color name="lm_background_green">#E1F9E3</color>
     <color name="lm_background_while">#E5e5e5</color>
-    <color name="lm_background">@color/lm_background_while</color>
-    <color name="lm_font">@color/grey31</color>
-    <color name="lm_white_pressed">#99FFFFFF</color>
-    <color name="lm_dialog_bg">#77777777</color>
+    <color name="ep_background">@color/lm_background_while</color>
 </resources>

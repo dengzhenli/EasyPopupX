@@ -39,7 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="8dp"
-            android:text="TextViesfffdgdfjsdaoilguasdopgjndsfgljdfsoigjdfsgjmfdsgdfggsdgfw"
             android:textSize="16sp" />
     </FrameLayout>
 
@@ -50,22 +49,22 @@
         android:gravity="center" >
         <Button
             android:id="@+id/id_ep_pop_alert_dialog_measure_bt"
-            android:text="确定"
+            android:text="@string/ep_measure"
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_margin="8dp"
-            android:background="@drawable/lm_common_selector_style_bt"
-            style="@style/lm_font_style_dark_16">
+            android:background="@drawable/ep_common_selector_style_bt"
+            style="@style/ep_font_style_dark_16">
         </Button>
 
         <Button
             android:id="@+id/id_ep_pop_alert_dialog_cancel_bt"
-            android:text="取消"
+            android:text="@string/ep_cancel"
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_margin="8dp"
-            android:background="@drawable/lm_common_selector_style_bt"
-            style="@style/lm_font_style_dark_16"
+            android:background="@drawable/ep_common_selector_style_bt"
+            style="@style/ep_font_style_dark_16"
             >
         </Button>
 

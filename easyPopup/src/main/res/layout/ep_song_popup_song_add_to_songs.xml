@@ -11,12 +11,11 @@
         android:elevation="10dp"
         app:cardCornerRadius="10dp"
         android:layout_gravity="bottom"
-        app:cardBackgroundColor="@color/lm_background"
+        app:cardBackgroundColor="@color/ep_background"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-
         android:padding="20dp">
 
         <LinearLayout
@@ -35,16 +34,16 @@
 
                 <ImageView
                     android:layout_alignParentRight="true"
-                    android:id="@+id/lm_song_song_add_to_songs_back_iv"
+                    android:id="@+id/ep_song_song_add_to_songs_back_iv"
                     android:layout_width="50dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/lm_common_selector_btn_back">
+                    android:src="@drawable/ep_common_selector_btn_back">
                 </ImageView>
 
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/lm_song_song_add_to_songs_lv"
+                android:id="@+id/ep_song_song_add_to_songs_lv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"

@@ -307,7 +307,7 @@ abstract class BasePopView : LifecycleObserver{
         )
 
         //动画效果
-        popupWindow?.animationStyle = R.style.dialog_theme
+        popupWindow?.animationStyle = R.style.ep_dialog_theme
         //宽度
         popupWindow?.width = popupWidth
         //高度
