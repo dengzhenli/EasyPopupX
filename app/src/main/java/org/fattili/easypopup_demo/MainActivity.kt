@@ -29,10 +29,10 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     fun dialogPop(view: View) {
         AlertDialogPop.Builder(this)
-            .setTitle("sfsd")
-            .setMessage("fsfsdf")
-            .setMeasureButton(false, "确定", null)
-            .setCancelButton(true, "取消", null)
+            .setTitle("标题")
+            .setMessage("是否启动自毁程序")
+            .setMeasureButton(true, null, View.OnClickListener { finish() })
+            .setCancelButton(true, null, null)
             .register(this)
             .show()
     }

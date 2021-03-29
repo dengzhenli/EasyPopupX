@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ep_pop_alert_dialog_width">260dp</dimen>
+    <dimen name="ep_pop_alert_dialog_min_height">150dp</dimen>
+    <dimen name="ep_pop_alert_dialog_button_width">100dp</dimen>
+    <dimen name="ep_pop_alert_dialog_button_height">30dp</dimen>
+    <dimen name="ep_pop_card_min_height">100dp</dimen>
+    <dimen name="ep_margin_smart">4dp</dimen>
+    <dimen name="ep_margin_middle">8dp</dimen>
+    <dimen name="ep_margin_normal">16dp</dimen>
+
+</resources>

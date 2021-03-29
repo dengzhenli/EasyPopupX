@@ -1,30 +1,28 @@
 package org.fattili.easypopup.view.base
 
 import android.app.Activity
-import android.content.Context
 import android.util.Log
-import android.util.Xml
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
+import android.widget.FrameLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import org.fattili.easypopup.R
-import org.fattili.easypopup.util.ScreenUtil
-import org.xmlpull.v1.XmlPullParser
+import org.fattili.easypopup.util.XmlUtil
 
 /**
  * Created by dengzhenli on 2021/01/23.
- * 自定义的左侧浮窗
+ * 自定义的Popup
  */
-abstract class BasePopView : LifecycleObserver{
+abstract class BasePopView :FrameLayout, LifecycleObserver {
 
     var activity: Activity
 
+    // 向右对其标志 0000 0100
     private val GRAVITY_RIGHT_FLAG = 0x4
+
+    // 向下对其标志 0100 0000
     private val GRAVITY_BOTTOM_FLAG = 0x40
 
     /**
@@ -56,7 +54,7 @@ abstract class BasePopView : LifecycleObserver{
     private var SET_ISOUTSIDETOUCHABLE = false
 
     /**
-     * layoutId
+     * 布局ID
      */
     private var layoutId = 0
 
@@ -75,7 +73,7 @@ abstract class BasePopView : LifecycleObserver{
         }
 
     /**
-     * 窗体的长宽
+     * 窗体内部view的长宽
      */
     var viewWidth = DEFAULT_VIEW_WIDTH
         set(value) {
@@ -110,7 +108,7 @@ abstract class BasePopView : LifecycleObserver{
             SET_GRAVITY = true
         }
 
-    var alpha = DEFAULT_ALPHA
+    var bgAlpha = DEFAULT_ALPHA
         set(value) {
             field = value
             SET_ALPHA = true
@@ -119,14 +117,14 @@ abstract class BasePopView : LifecycleObserver{
     /**
      * 是否占据焦点
      */
-    var focusable = DEFAULT_FOCUSABLE
+    var popFocusable = DEFAULT_FOCUSABLE
         set(value) {
             field = value
             SET_FOCUSABLE = true
         }
 
     /**
-     *
+     * 外部点击
      */
     var isOutsideTouchable = DEFAULT_ISOUTSIDETOUCHABLE
         set(value) {
@@ -135,21 +133,19 @@ abstract class BasePopView : LifecycleObserver{
         }
 
 
-    private var context: Context
+    var popView: View? = null
 
-    private var view: View? = null
+    /**
+     * 依托view 没用设置则使用activity根布局
+     */
     private var showAtView: View? = null
     private var popupWindow: BasePopupWindow? = null
 
 
-    fun getContext(): Context {
-        return activity
-    }
 
 
-    constructor(activity: Activity) {
+    constructor(activity: Activity) : super(activity) {
         this.activity = activity
-        this.context = activity
     }
 
     constructor(activity: Activity, showAtView: View) : this(activity) {
@@ -171,6 +167,7 @@ abstract class BasePopView : LifecycleObserver{
 
     private fun reShowData() {
         initData()
+        onReShowPop()
     }
 
 
@@ -182,23 +179,31 @@ abstract class BasePopView : LifecycleObserver{
     }
 
     /***********************************PopupWindow相关 **********************************/
+    /**
+     * 初始化窗体参数
+     */
     private fun initPopData() {
-        val parser = activity.resources.getLayout(layoutId)
-        var type: Int
-        while (
-            parser.eventType.also { type = it } != XmlPullParser.START_TAG
-            && type != XmlPullParser.END_DOCUMENT) {
-            parser.next()
+        initViewParam()
+        if (!SET_FOCUSABLE) {
+            popFocusable = outClickable()
         }
-        val count = parser.attributeCount
 
-        val attributeSet = Xml.asAttributeSet(parser)
-        for (i in 0 until count) {
-            val name: String = attributeSet.getAttributeName(i)
-            val value: String = attributeSet.getAttributeValue(i)
-            when (name) {
+        if (!SET_ISOUTSIDETOUCHABLE) {
+            isOutsideTouchable = outClickable()
+        }
+    }
+
+
+    /**
+     * 初始化布局参数
+     */
+    private fun initViewParam() {
+        val param = XmlUtil.parse(context, layoutId)
+        param.entries.forEach {
+            val value = it.value.strValue ?: ""
+            when (it.key) {
                 "layout_width" -> {
-                    val width = getPx(value)
+                    val width = XmlUtil.getPx(context, value)
                     if (!SET_VIEW_WIDTH) {
                         viewWidth = width
                     }
@@ -208,7 +213,7 @@ abstract class BasePopView : LifecycleObserver{
                 }
 
                 "layout_height" -> {
-                    val height = getPx(value)
+                    val height = XmlUtil.getPx(context, value)
                     if (!SET_VIEW_HEIGHT) {
                         viewHeight = height
                     }
@@ -218,7 +223,7 @@ abstract class BasePopView : LifecycleObserver{
                 }
 
                 "layout_gravity" -> {
-                    val v: Int = attributeSet.getAttributeIntValue(i, gravity)
+                    val v: Int = it.value.intValue ?: DEFAULT_GRAVITY
                     if (!SET_GRAVITY) {
                         gravity = v
                     }
@@ -226,95 +231,73 @@ abstract class BasePopView : LifecycleObserver{
 
                 "layout_marginLeft" -> {
                     if (gravity and GRAVITY_RIGHT_FLAG > 0) {
-                        marginWidth = getPx(value)
+                        marginWidth = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginRight" -> {
                     if (gravity and GRAVITY_RIGHT_FLAG == 0) {
-                        marginWidth = getPx(value)
+                        marginWidth = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginHorizontal" -> {
-                    marginWidth = getPx(value)
+                    marginWidth = XmlUtil.getPx(context, value)
                 }
                 "layout_marginStart" -> {
                     if (gravity and GRAVITY_RIGHT_FLAG > 0) {
-                        marginWidth = getPx(value)
+                        marginWidth = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginEnd" -> {
                     if (gravity and GRAVITY_RIGHT_FLAG == 0) {
-                        marginWidth = getPx(value)
+                        marginWidth = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginBottom" -> {
                     if (gravity and GRAVITY_BOTTOM_FLAG == 0) {
-                        marginHeight = getPx(value)
+                        marginHeight = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginTop" -> {
                     if (gravity and GRAVITY_BOTTOM_FLAG == 0) {
-                        marginHeight = getPx(value)
+                        marginHeight = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginVertical" -> {
-                    marginHeight = getPx(value)
+                    marginHeight = XmlUtil.getPx(context, value)
                 }
                 "layout_margin" -> {
-                    marginWidth = getPx(value)
-                    marginHeight = getPx(value)
+                    marginWidth = XmlUtil.getPx(context, value)
+                    marginHeight = XmlUtil.getPx(context, value)
                 }
             }
         }
-
-        if (!SET_FOCUSABLE) {
-            focusable = outClickable()
-        }
-
-        if (!SET_ISOUTSIDETOUCHABLE) {
-            isOutsideTouchable = outClickable()
-        }
     }
-
-
-    private fun getPx(value: String): Int {
-        if (value.endsWith("dip")) {
-            val dp = value.replace("dip", "").toFloat()
-            return ScreenUtil.dip2px(context, dp).toInt()
-        }
-        if (value.endsWith("px")) {
-            val px = value.replace("px", "").toFloat()
-            return px.toInt()
-        }
-        return value.toInt()
-    }
-
 
     /**
-     * 初始化
+     * 初始化窗体
      */
     private fun initPopupWindow() {
         val inflate = LayoutInflater.from(context)
 
-        view = inflate.inflate(layoutId, null)
-        if (showAtView == null) showAtView = view
+        popView = inflate.inflate(layoutId, this)
+        if (showAtView == null) showAtView = popView
         //内容，高度，宽度
         popupWindow = BasePopupWindow(
-            view,
+            popView,
             viewWidth,
             viewHeight,
-            focusable
+            popFocusable
         )
 
         //动画效果
-        popupWindow?.animationStyle = R.style.ep_dialog_theme
+        popupWindow?.animationStyle = R.style.ep_common_pop_theme
         //宽度
         popupWindow?.width = popupWidth
         //高度
         popupWindow?.height = popupHeight
         //显示位置
         popupWindow?.isOutsideTouchable = isOutsideTouchable
-        popupWindow?.setBackgroundDrawable(view?.background)
+        popupWindow?.setBackgroundDrawable(popView?.background)
 
         popupWindow?.showAtLocation(
             showAtView,
@@ -324,15 +307,14 @@ abstract class BasePopView : LifecycleObserver{
         )
 
         //设置背景半透明
-        backgroundAlpha(alpha)
+        backgroundAlpha(bgAlpha)
         popupWindow?.setOnDismissListener {
             backgroundAlpha(1f)
             onPopDismiss()
         }
 
-        initView(view)
+        initView(popView)
         initData()
-
 
     }
 
@@ -347,10 +329,10 @@ abstract class BasePopView : LifecycleObserver{
             layoutId = getLayoutId()
             initPopData()
             initPopupWindow()
-            onStartPop()
+            onCreatePop()
         } else {
             popupWindow?.showAtLocation(
-                view,
+                popView,
                 gravity,
                 marginWidth,
                 marginHeight
@@ -361,6 +343,9 @@ abstract class BasePopView : LifecycleObserver{
     }
 
 
+    /**
+     * 关闭页面
+     */
     fun finish() {
         popupWindow?.let {
             if (it.isShowing) {
@@ -370,7 +355,9 @@ abstract class BasePopView : LifecycleObserver{
         popupWindow = null
     }
 
-    //隐藏
+    /**
+     * 隐藏
+     */
     fun dismiss() {
         popupWindow?.dismiss()
     }
@@ -386,49 +373,66 @@ abstract class BasePopView : LifecycleObserver{
         activity.window.attributes = lp
     }
 
+    /**
+     * 设置宽度，pop与view一起
+     */
     fun setWidth(width: Int) {
         popupWidth = width
         viewWidth = width
     }
+
+    /**
+     * 设置高度，pop与view一起
+     */
     fun setHeight(height: Int) {
         popupHeight = height
         viewHeight = height
     }
 
-    fun register(owner: LifecycleOwner) : BasePopView{
+    /**
+     * 注册lifecycle
+     */
+    fun register(owner: LifecycleOwner): BasePopView {
         owner.lifecycle.addObserver(this)
         return this
     }
 
-    open fun onStartPop() {
+    /**
+     * pop重新加载
+     */
+    open fun onReShowPop() {}
 
-    }
+    /**
+     * pop初次加载
+     */
+    open fun onCreatePop() {}
 
-    open fun onCreatePop() {
-
-    }
-
+    /**
+     * activity生命周期
+     */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     open fun onDestroy() {
-
     }
 
-
+    /**
+     * activity生命周期
+     */
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     open fun onResume() {
-
     }
 
+    /**
+     * activity生命周期
+     */
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     open fun onPause() {
-
     }
 
-
-
+    /**
+     * activity生命周期
+     */
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     open fun onStop() {
-
     }
 
 }

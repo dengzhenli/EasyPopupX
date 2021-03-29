@@ -44,15 +44,13 @@ class CardTestPop : CardPopup {
         Log.d(TAG, "onPause: ")
     }
 
-    override fun onStartPop() {
-        super.onStartPop()
-        Log.d(TAG, "onStartPop: ")
-    }
 
     override fun onStop() {
         super.onStop()
         Log.d(TAG, "onStop: ")
     }
+
+
 
     override fun onResume() {
         super.onResume()

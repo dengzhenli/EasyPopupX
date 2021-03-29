@@ -22,6 +22,8 @@ class TopTestPop : TopPop {
 
     override fun onPopDismiss() {}
     override fun outClickable(): Boolean {
+//        id_ep_pop_alert_dialog_title_view
         return true
     }
+
 }

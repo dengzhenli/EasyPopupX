@@ -6,7 +6,7 @@ import org.fattili.easypopup.view.base.BasePopView
 
 /**
  * 2021/2/22
- *
+ * 通用dialog
  * @author dengzhenli
  */
 abstract class DialogPop : BasePopView {
@@ -17,7 +17,6 @@ abstract class DialogPop : BasePopView {
     override fun onPopDismiss() {}
 
     constructor(activity: Activity?) : super(activity!!) {
-
     }
 
     constructor(activity: Activity?, gravity: Int, width: Int, height: Int) : super(activity!!) {

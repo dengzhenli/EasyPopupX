@@ -1,74 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="260dp"
+    android:layout_width="@dimen/ep_pop_alert_dialog_width"
     android:layout_height="wrap_content"
-    android:minHeight="150dp"
     android:layout_gravity="center"
-    android:background="@drawable/ep_dialog_shape_bg"
+    android:background="@drawable/ep_pop_shape_dialog_bg"
+    android:minHeight="@dimen/ep_pop_alert_dialog_min_height"
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/id_ep_pop_alert_dialog_title_view"
+        android:id="@+id/ep_alert_dialog_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/id_ep_pop_alert_dialog_title_tv"
+            android:id="@+id/ep_alert_dialog_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:textSize="16sp" />
+            android:layout_marginTop="@dimen/ep_margin_smart"
+            android:layout_marginBottom="@dimen/ep_margin_smart"
+            style="@style/ep_font_style_16" />
 
     </FrameLayout>
 
 
     <FrameLayout
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/id_ep_pop_alert_dialog_content_view"
+        android:id="@+id/ep_alert_dialog_content_view"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/ep_margin_middle"
+        android:layout_marginBottom="@dimen/ep_margin_middle"
+        android:layout_weight="1">
 
         <TextView
-            android:id="@+id/id_ep_pop_alert_dialog_msg_tv"
+            android:id="@+id/ep_alert_dialog_msg_tv"
+            style="@style/ep_font_style_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="8dp"
-            android:textSize="16sp" />
+            android:padding="@dimen/ep_margin_middle" />
     </FrameLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center" >
-        <Button
-            android:id="@+id/id_ep_pop_alert_dialog_measure_bt"
-            android:text="@string/ep_measure"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/ep_common_selector_style_bt"
-            style="@style/ep_font_style_dark_16">
-        </Button>
+        android:gravity="center">
 
         <Button
-            android:id="@+id/id_ep_pop_alert_dialog_cancel_bt"
-            android:text="@string/ep_cancel"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/ep_common_selector_style_bt"
-            style="@style/ep_font_style_dark_16"
-            >
-        </Button>
+            android:id="@+id/ep_alert_dialog_measure_bt"
+            style="@style/ep_pop_alert_dialog_button"
+            android:text="@string/ep_measure" />
+
+        <Button
+            android:id="@+id/ep_alert_dialog_cancel_bt"
+            style="@style/ep_pop_alert_dialog_button"
+            android:text="@string/ep_cancel" />
 
     </LinearLayout>
-
-
 </LinearLayout>

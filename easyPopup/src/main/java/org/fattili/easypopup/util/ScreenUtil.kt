@@ -4,7 +4,7 @@ import android.content.Context
 
 /**
  * 2021/2/24
- *
+ * 屏幕尺寸工具
  * @author dengzhenli
  */
 object ScreenUtil{
@@ -12,7 +12,7 @@ object ScreenUtil{
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */
-    open fun dip2px(context: Context, dpValue: Float): Int {
+    fun dip2px(context: Context, dpValue: Float): Int {
         val scale = context.resources.displayMetrics.density
         return (dpValue * scale + 0.5f).toInt()
     }
@@ -21,16 +21,23 @@ object ScreenUtil{
     /**
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
      */
-    open fun px2dip(context: Context, pxValue: Float): Int {
+    fun px2dip(context: Context, pxValue: Float): Int {
         val scale = context.resources.displayMetrics.density
         return (pxValue / scale + 0.5f).toInt()
     }
 
-    open fun getScreenWidth(context: Context): Int{
+    /**
+     * 获取屏幕宽度
+     */
+    fun getScreenWidth(context: Context): Int{
         return context.resources.displayMetrics.widthPixels
     }
 
-    open fun getScreenHeight(context: Context): Int{
+
+    /**
+     * 获取屏幕高度
+     */
+    fun getScreenHeight(context: Context): Int{
         return context.resources.displayMetrics.heightPixels
     }
 

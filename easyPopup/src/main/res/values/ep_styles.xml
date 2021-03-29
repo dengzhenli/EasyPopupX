@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    默认pop样式-->
+    <style name="ep_common_pop_theme" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 背景有灰度 -->
+        <item name="android:windowContentOverlay">@null</item>
+
+    </style>
+
+    <style name="ep_font_style_dark_16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/ep_snow</item>
+    </style>
+    <style name="ep_font_style_16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/ep_grey31</item>
+    </style>
+
+<!--通用dialog样式-->
+    <style name="ep_pop_alert_dialog_button" parent="ep_font_style_dark_16">
+        <item name="android:layout_width">@dimen/ep_pop_alert_dialog_button_width</item>
+        <item name="android:layout_height">@dimen/ep_pop_alert_dialog_button_height</item>
+        <item name="android:layout_margin">@dimen/ep_margin_middle</item>
+        <item name="android:background">@drawable/ep_common_selector_style_bt</item>
+    </style>
+</resources>

@@ -4,15 +4,16 @@ import android.app.Activity
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import org.fattili.easypopup.R
 import org.fattili.easypopup.view.base.BasePopView
+import kotlinx.android.synthetic.main.ep_pop_card.view.*
 
+/**
+ * 卡片式弹出窗
+ */
 abstract class CardPopup : BasePopView {
 
-    var back: ImageView? = null
-    var dataView: View? = null
-    var dataLayout: ViewGroup? = null
+    private var dataView: View? = null
 
     constructor(activity: Activity?) : this(
         activity,
@@ -27,26 +28,24 @@ abstract class CardPopup : BasePopView {
         setHeight(height)
     }
 
+
     override fun onPopDismiss() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.ep_song_popup_song_add_to_songs
+        return R.layout.ep_pop_card
     }
 
     abstract fun getContentLayoutId(): Int
 
     override fun initView(view: View?) {
-        back = view?.findViewById(R.id.ep_song_song_add_to_songs_back_iv)
-        back?.setOnClickListener { dismiss() }
 
-        dataLayout = view?.findViewById(R.id.ep_song_song_add_to_songs_lv)
         dataView = activity.layoutInflater.inflate(getContentLayoutId(), null)
-        dataLayout?.addView(dataView)
+        ep_pop_card_lv.addView(dataView)
+        ep_pop_card_back_iv.setOnClickListener { dismiss() }
     }
 
     override fun initData() {
     }
-
 
 }

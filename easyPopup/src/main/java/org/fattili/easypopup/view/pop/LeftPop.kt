@@ -7,7 +7,7 @@ import org.fattili.easypopup.view.base.BasePopView
 
 /**
  * 2021/2/22
- *
+ * 左侧弹出窗
  * @author dengzhenli
  */
 abstract class LeftPop : BasePopView {
