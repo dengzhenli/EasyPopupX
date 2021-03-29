@@ -117,7 +117,7 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
     /**
      * 是否占据焦点
      */
-    var popFocusable = DEFAULT_FOCUSABLE
+    private var popFocusable = DEFAULT_FOCUSABLE
         set(value) {
             field = value
             SET_FOCUSABLE = true
@@ -126,7 +126,7 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
     /**
      * 外部点击
      */
-    var isOutsideTouchable = DEFAULT_ISOUTSIDETOUCHABLE
+    private var isOutsideTouchable = DEFAULT_ISOUTSIDETOUCHABLE
         set(value) {
             field = value
             SET_ISOUTSIDETOUCHABLE = true

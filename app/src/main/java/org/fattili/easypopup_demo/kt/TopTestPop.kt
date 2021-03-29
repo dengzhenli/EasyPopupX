@@ -2,6 +2,7 @@ package org.fattili.easypopup_demo.kt
 
 import android.app.Activity
 import android.view.View
+import kotlinx.android.synthetic.main.pop_example.view.*
 import org.fattili.easypopup.view.pop.TopPop
 import org.fattili.easypopup_demo.R
 
@@ -11,10 +12,12 @@ import org.fattili.easypopup_demo.R
  * @author dengzhenli
  */
 class TopTestPop : TopPop {
-    constructor(activity: Activity?) : super(activity) {}
-    constructor(activity: Activity?, view: View?) : super(activity, view) {}
+    constructor(activity: Activity) : super(activity) {}
+    constructor(activity: Activity, view: View) : super(activity, view) {}
 
-    override fun initView(view: View?) {}
+    override fun initView(view: View?) {
+        pop_example_text.text = "我是顶部弹出窗"
+    }
     override fun initData() {}
     override fun getLayoutId(): Int {
         return R.layout.top_pop_test
@@ -22,7 +25,6 @@ class TopTestPop : TopPop {
 
     override fun onPopDismiss() {}
     override fun outClickable(): Boolean {
-//        id_ep_pop_alert_dialog_title_view
         return true
     }
 

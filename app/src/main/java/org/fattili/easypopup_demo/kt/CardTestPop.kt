@@ -11,8 +11,8 @@ import org.fattili.easypopup_demo.R
  * @author dengzhenli
  */
 class CardTestPop : CardPopup {
-    constructor(activity: Activity?) : super(activity) {}
-    constructor(activity: Activity?, gravity: Int, width: Int, height: Int) : super(
+    constructor(activity: Activity) : super(activity) {}
+    constructor(activity: Activity, gravity: Int, width: Int, height: Int) : super(
         activity,
         gravity,
         width,

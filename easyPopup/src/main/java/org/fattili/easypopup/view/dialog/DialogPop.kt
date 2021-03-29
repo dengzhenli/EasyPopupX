@@ -2,8 +2,6 @@ package org.fattili.easypopup.view.dialog
 
 import android.app.Activity
 import android.view.View
-import kotlinx.android.synthetic.main.ep_pop_card.view.*
-import kotlinx.android.synthetic.main.ep_pop_card.view.ep_pop_card_lv
 import kotlinx.android.synthetic.main.ep_pop_dialog.view.*
 import org.fattili.easypopup.R
 import org.fattili.easypopup.view.base.BasePopView

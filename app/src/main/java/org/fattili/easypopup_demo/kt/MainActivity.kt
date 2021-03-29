@@ -1,12 +1,11 @@
-package org.fattili.easypopup_demo
+package org.fattili.easypopup_demo.kt
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import org.fattili.easypopup.view.dialog.AlertDialogPop
-import org.fattili.easypopup_demo.kt.CardTestPop
-import org.fattili.easypopup_demo.kt.TopTestPop
+import org.fattili.easypopup_demo.R
 
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
@@ -39,5 +38,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     fun cardPop(view: View) {
         CardTestPop(this).register(this).show()
+    }
+
+    fun normalPop(view: View) {
+        TestPop(this).register(this).show()
     }
 }

@@ -2,6 +2,7 @@ package org.fattili.easypopup_demo.java;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.TextView;
 
 import org.fattili.easypopup.view.base.BasePopView;
 import org.fattili.easypopup.view.pop.TopPop;
@@ -25,7 +26,8 @@ public class TopTestPop extends TopPop {
 
     @Override
     public void initView(View view) {
-
+        TextView textView = findViewById(R.id.pop_example_text);
+        textView.setText("我是顶部弹出窗");
     }
 
     @Override
@@ -40,7 +42,6 @@ public class TopTestPop extends TopPop {
 
     @Override
     public void onPopDismiss() {
-
     }
 
     @Override
