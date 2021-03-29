@@ -133,7 +133,7 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
         }
 
 
-    var popView: View? = null
+    var view: View? = null
 
     /**
      * 依托view 没用设置则使用activity根布局
@@ -279,11 +279,11 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
     private fun initPopupWindow() {
         val inflate = LayoutInflater.from(context)
 
-        popView = inflate.inflate(layoutId, this)
-        if (showAtView == null) showAtView = popView
+        view = inflate.inflate(layoutId, this)
+        if (showAtView == null) showAtView = view
         //内容，高度，宽度
         popupWindow = BasePopupWindow(
-            popView,
+            view,
             viewWidth,
             viewHeight,
             popFocusable
@@ -297,7 +297,7 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
         popupWindow?.height = popupHeight
         //显示位置
         popupWindow?.isOutsideTouchable = isOutsideTouchable
-        popupWindow?.setBackgroundDrawable(popView?.background)
+        popupWindow?.setBackgroundDrawable(view?.background)
 
         popupWindow?.showAtLocation(
             showAtView,
@@ -313,7 +313,7 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
             onPopDismiss()
         }
 
-        initView(popView)
+        initView(view)
         initData()
 
     }
@@ -332,7 +332,7 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
             onCreatePop()
         } else {
             popupWindow?.showAtLocation(
-                popView,
+                view,
                 gravity,
                 marginWidth,
                 marginHeight

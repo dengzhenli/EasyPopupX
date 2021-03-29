@@ -72,8 +72,13 @@ class AlertDialogPop(activity: Activity?) : DialogPop(activity) {
     }
 
     override fun onPopDismiss() {}
+
     override fun getLayoutId(): Int {
         return R.layout.ep_pop_alert_dialog
+    }
+
+    override fun getContentLayoutId(): Int {
+        return 0
     }
 
     class Builder(activity: Activity?) {
