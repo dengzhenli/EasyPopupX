@@ -3,14 +3,14 @@ package org.fattili.easypopup.view.pop
 import android.app.Activity
 import android.view.Gravity
 import android.view.View
-import org.fattili.easypopup.view.base.BasePopView
+import org.fattili.easypopup.view.EasyPop
 
 /**
  * 2021/2/22
  * 底部弹出窗
  * @author dengzhenli
  */
-abstract class BottomPop : BasePopView {
+abstract class BottomPop : EasyPop {
     constructor(activity: Activity?) : super(activity!!) {
         gravity = Gravity.BOTTOM
     }

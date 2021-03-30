@@ -1,7 +1,6 @@
-package org.fattili.easypopup.view.base
+package org.fattili.easypopup.view
 
 import android.app.Activity
-import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import androidx.lifecycle.Lifecycle
@@ -9,15 +8,21 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import org.fattili.easypopup.R
+import org.fattili.easypopup.except.ViewUnCreatedException
+import org.fattili.easypopup.manager.EasyPopManager
 import org.fattili.easypopup.util.XmlUtil
+import org.fattili.easypopup.view.base.BasePopupWindow
+
 
 /**
  * Created by dengzhenli on 2021/01/23.
  * 自定义的Popup
  */
-abstract class BasePopView :FrameLayout, LifecycleObserver {
+abstract class EasyPop : FrameLayout, LifecycleObserver {
 
     var activity: Activity
+
+    private var needReload = false
 
     // 向右对其标志 0000 0100
     private val GRAVITY_RIGHT_FLAG = 0x4
@@ -140,8 +145,6 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
      */
     private var showAtView: View? = null
     private var popupWindow: BasePopupWindow? = null
-
-
 
 
     constructor(activity: Activity) : super(activity) {
@@ -276,6 +279,7 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
     /**
      * 初始化窗体
      */
+    @Throws(ViewUnCreatedException::class)
     private fun initPopupWindow() {
         val inflate = LayoutInflater.from(context)
 
@@ -289,6 +293,7 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
             popFocusable
         )
 
+
         //动画效果
         popupWindow?.animationStyle = R.style.ep_common_pop_theme
         //宽度
@@ -299,12 +304,21 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
         popupWindow?.isOutsideTouchable = isOutsideTouchable
         popupWindow?.setBackgroundDrawable(view?.background)
 
-        popupWindow?.showAtLocation(
-            showAtView,
-            gravity,
-            marginWidth.toInt(),
-            marginHeight.toInt()
-        )
+
+
+        try {
+            popupWindow?.showAtLocation(
+                showAtView,
+                gravity,
+                marginWidth,
+                marginHeight
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            val parent = view?.parent as ViewGroup
+            parent.removeView(view)
+            throw ViewUnCreatedException("easyPop调用失败，请先等待你的页面渲染完成")
+        }
 
         //设置背景半透明
         backgroundAlpha(bgAlpha)
@@ -322,14 +336,18 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
     /**
      * 显示view
      */
-    fun show(): BasePopView {
-        Log.d(TAG, "findResume: basepop：show")
+    fun show(): EasyPop {
         if (popupWindow == null) {
-            onCreatePop()
+            EasyPopManager.add(activity, this)
             layoutId = getLayoutId()
             initPopData()
-            initPopupWindow()
-            onCreatePop()
+            try {
+                initPopupWindow()
+                onCreatePop()
+            } catch (e: ViewUnCreatedException) {
+                needReload = true
+                e.printStackTrace()
+            }
         } else {
             popupWindow?.showAtLocation(
                 view,
@@ -351,6 +369,7 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
             if (it.isShowing) {
                 it.dismiss()
             }
+            EasyPopManager.remove(activity, this)
         }
         popupWindow = null
     }
@@ -392,7 +411,7 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
     /**
      * 注册lifecycle
      */
-    fun register(owner: LifecycleOwner): BasePopView {
+    fun register(owner: LifecycleOwner): EasyPop {
         owner.lifecycle.addObserver(this)
         return this
     }
@@ -405,13 +424,15 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
     /**
      * pop初次加载
      */
-    open fun onCreatePop() {}
+    open fun onCreatePop() {
+    }
 
     /**
      * activity生命周期
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     open fun onDestroy() {
+        EasyPopManager.remove(activity)
     }
 
     /**
@@ -435,4 +456,17 @@ abstract class BasePopView :FrameLayout, LifecycleObserver {
     open fun onStop() {
     }
 
+
+    override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
+        super.onWindowFocusChanged(hasWindowFocus)
+        if (hasWindowFocus && needReload) {
+            try {
+                initPopupWindow()
+                onCreatePop()
+                needReload = false
+            } catch (e: ViewUnCreatedException) {
+                e.printStackTrace()
+            }
+        }
+    }
 }

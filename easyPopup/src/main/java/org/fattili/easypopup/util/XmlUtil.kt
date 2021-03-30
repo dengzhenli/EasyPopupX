@@ -1,11 +1,9 @@
 package org.fattili.easypopup.util
 
 import android.content.Context
-import android.util.Log
 import android.util.Xml
 import android.view.Gravity
 import org.fattili.easypopup.entity.XmlEntity
-import org.fattili.easypopup.view.base.BasePopView
 import org.xmlpull.v1.XmlPullParser
 
 /**

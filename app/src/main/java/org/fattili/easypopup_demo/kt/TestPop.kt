@@ -3,7 +3,7 @@ package org.fattili.easypopup_demo.kt
 import android.app.Activity
 import android.view.View
 import kotlinx.android.synthetic.main.pop_example.view.*
-import org.fattili.easypopup.view.base.BasePopView
+import org.fattili.easypopup.view.EasyPop
 import org.fattili.easypopup_demo.R
 
 /**
@@ -11,7 +11,7 @@ import org.fattili.easypopup_demo.R
  *
  * @author dengzhenli
  */
-class TestPop(activity: Activity) : BasePopView(activity) {
+class TestPop(activity: Activity) : EasyPop(activity) {
     override fun initView(view: View?) {
         pop_example_text.text = "我是普通弹出窗"
     }

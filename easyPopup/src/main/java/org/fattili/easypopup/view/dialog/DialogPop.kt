@@ -4,14 +4,14 @@ import android.app.Activity
 import android.view.View
 import kotlinx.android.synthetic.main.ep_pop_dialog.view.*
 import org.fattili.easypopup.R
-import org.fattili.easypopup.view.base.BasePopView
+import org.fattili.easypopup.view.EasyPop
 
 /**
  * 2021/2/22
  * 通用dialog
  * @author dengzhenli
  */
-abstract class DialogPop : BasePopView {
+abstract class DialogPop : EasyPop {
     private var dataView: View? = null
 
 

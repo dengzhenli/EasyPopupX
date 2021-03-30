@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
-import org.fattili.easypopup.view.base.BasePopView;
+import org.fattili.easypopup.view.EasyPop;
 import org.fattili.easypopup_demo.R;
 
 /**
@@ -12,7 +12,7 @@ import org.fattili.easypopup_demo.R;
  *
  * @author dengzhenli
  */
-public class TestPop extends BasePopView {
+public class TestPop extends EasyPop {
 
     public TestPop(Activity activity) {
         super(activity);

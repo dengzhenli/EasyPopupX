@@ -5,13 +5,13 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import org.fattili.easypopup.R
-import org.fattili.easypopup.view.base.BasePopView
+import org.fattili.easypopup.view.EasyPop
 import kotlinx.android.synthetic.main.ep_pop_card.view.*
 
 /**
  * 卡片式弹出窗
  */
-abstract class CardPopup : BasePopView {
+abstract class CardPopup : EasyPop {
 
     private var dataView: View? = null
 

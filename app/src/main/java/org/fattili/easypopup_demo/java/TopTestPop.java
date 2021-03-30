@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
-import org.fattili.easypopup.view.base.BasePopView;
 import org.fattili.easypopup.view.pop.TopPop;
 import org.fattili.easypopup_demo.R;
 
