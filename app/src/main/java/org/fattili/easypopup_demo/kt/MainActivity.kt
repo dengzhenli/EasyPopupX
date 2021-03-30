@@ -20,16 +20,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         pop = TestPop(this).show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
     fun topPop(view: View) {
-
 
         TopTestPop(this).show()
     }

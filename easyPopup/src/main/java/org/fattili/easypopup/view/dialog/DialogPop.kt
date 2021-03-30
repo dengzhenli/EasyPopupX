@@ -39,7 +39,7 @@ abstract class DialogPop : EasyPop {
     abstract fun getContentLayoutId(): Int
 
     override fun initView(view: View?) {
-        dataView = activity.layoutInflater.inflate(getContentLayoutId(), null)
+        dataView = activity?.layoutInflater?.inflate(getContentLayoutId(), null)
         ep_pop_dialog_v.addView(dataView)
     }
 

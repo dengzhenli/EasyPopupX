@@ -40,7 +40,7 @@ abstract class CardPopup : EasyPop {
 
     override fun initView(view: View?) {
 
-        dataView = activity.layoutInflater.inflate(getContentLayoutId(), null)
+        dataView = activity?.layoutInflater?.inflate(getContentLayoutId(), null)
         ep_pop_card_lv.addView(dataView)
         ep_pop_card_back_iv.setOnClickListener { dismiss() }
     }

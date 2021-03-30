@@ -20,7 +20,7 @@ import org.fattili.easypopup.view.base.BasePopupWindow
  */
 abstract class EasyPop : FrameLayout, LifecycleObserver {
 
-    var activity: Activity
+    var activity: Activity?
 
     private var needReload = false
 
@@ -338,7 +338,7 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
      */
     fun show(): EasyPop {
         if (popupWindow == null) {
-            EasyPopManager.add(activity, this)
+            activity?.let { EasyPopManager.add(it, this) }
             layoutId = getLayoutId()
             initPopData()
             try {
@@ -369,7 +369,7 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
             if (it.isShowing) {
                 it.dismiss()
             }
-            EasyPopManager.remove(activity, this)
+            activity?.let { it1 -> EasyPopManager.remove(it1, this) }
         }
         popupWindow = null
     }
@@ -387,9 +387,9 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
      * @param bgAlpha
      */
     private fun backgroundAlpha(bgAlpha: Float) {
-        val lp = activity.window.attributes
-        lp.alpha = bgAlpha
-        activity.window.attributes = lp
+        val lp = activity?.window?.attributes
+        lp?.alpha = bgAlpha
+        activity?.window?.attributes = lp
     }
 
     /**
@@ -432,7 +432,8 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     open fun onDestroy() {
-        EasyPopManager.remove(activity)
+        activity?.let { EasyPopManager.remove(it) }
+        activity = null
     }
 
     /**

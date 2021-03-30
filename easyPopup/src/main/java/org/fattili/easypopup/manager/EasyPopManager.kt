@@ -20,7 +20,6 @@ object EasyPopManager {
 
 
     fun add(activity: Activity, easyPop: EasyPop) {
-
         var list: MutableList<EasyPop> = ArrayList()
 
         if (activityEasyPopMap.containsKey(activity)) {
