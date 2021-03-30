@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 
+import org.fattili.easypopup.manager.EasyPopManager;
+import org.fattili.easypopup.view.EasyPop;
 import org.fattili.easypopup.view.dialog.AlertDialogPop;
 import org.fattili.easypopup_demo.R;
 
@@ -21,6 +23,41 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        EasyPopManager.INSTANCE.register(this, this);
+        new EasyPop(this){
+
+            @Override
+            public boolean outClickable() {
+                return false;
+            }
+
+            @Override
+            public void initData() {
+
+            }
+
+            @Override
+            public void initView(@org.jetbrains.annotations.Nullable View view) {
+
+            }
+
+            @Override
+            public int getLayoutId() {
+                return 0;
+            }
+
+            @Override
+            public void onPopDismiss() {
+
+            }
+        };
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        EasyPopManager.INSTANCE.onWindowFocusChanged(this, hasFocus);
     }
 
     private void topPop(View view) {

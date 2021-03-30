@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     fun topPop(view: View) {
-
         TopTestPop(this).show()
     }
 

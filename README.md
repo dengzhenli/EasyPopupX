@@ -37,6 +37,12 @@ public class TestPop extends BasePopView {
 
 ```
 ## 调用
+建议：activity实现 LifecycleOwner 接口，为方便后续popupwindow感知生命周期（）
+
+建议：在调用easypop之前调用register方法，此方法会进行生命周期注册等步骤
+```kotlin
+    EasyPopManager.register(this, this)
+```
 
 # 属性
 
