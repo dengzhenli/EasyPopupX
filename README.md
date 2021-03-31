@@ -1,6 +1,11 @@
 # 关于EasyPopup
 EasyPopup是一个可以让你在项目里面轻松使用PopupWindow的工具。
-你只需按正常的使用习惯即可，其他的事情都交给PopupWindow
+你只需按正常的使用习惯即可，其他的事情都交给EasyPopup
+
+你可以通过EasyPopup轻松实现例如以下的页面
+![img](img/pop_top.jpeg)
+![img](img/pop_card.jpeg)
+![img](img/pop_dialog.jpeg)
 
 # 快速接入
 ## 添加依赖
@@ -65,6 +70,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 ```
 
+
 不重要：你也可以直接声明匿名内部类
 ```kotlin
     fun normalPop(view: View) {
@@ -88,3 +94,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 # 属性
 
 # 组件
+
+
+
+
+
+
