@@ -158,8 +158,6 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
     /**********************************     抽象方法   **********************************/
 
 
-    abstract fun onPopDismiss()
-
     abstract fun getLayoutId(): Int
 
     abstract fun initView(view: View?)
@@ -457,6 +455,10 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
     open fun onStop() {
     }
 
+
+    open fun onPopDismiss() {
+
+    }
 
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
         super.onWindowFocusChanged(hasWindowFocus)

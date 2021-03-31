@@ -2,6 +2,7 @@ package org.fattili.easypopup_demo.java;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,33 +25,6 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         setContentView(R.layout.activity_main);
 
         EasyPopManager.INSTANCE.register(this, this);
-        new EasyPop(this){
-
-            @Override
-            public boolean outClickable() {
-                return false;
-            }
-
-            @Override
-            public void initData() {
-
-            }
-
-            @Override
-            public void initView(@org.jetbrains.annotations.Nullable View view) {
-
-            }
-
-            @Override
-            public int getLayoutId() {
-                return 0;
-            }
-
-            @Override
-            public void onPopDismiss() {
-
-            }
-        };
 
     }
 
@@ -85,6 +59,30 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     }
 
     private void normalPop(View view) {
-        new TestPop(this).register(this).show();
+//        new TestPop(this).register(this).show();
+        new EasyPop(this){
+
+            @Override
+            public boolean outClickable() {
+                return true;
+            }
+
+            @Override
+            public void initData() {
+            }
+
+            @Override
+            public void initView(View view) {
+                TextView textView = findViewById(R.id.pop_example_text);
+                textView.setText("我是普通弹出窗");
+            }
+
+            @Override
+            public int getLayoutId() {
+                return R.layout.pop_test;
+            }
+
+        };
+
     }
 }

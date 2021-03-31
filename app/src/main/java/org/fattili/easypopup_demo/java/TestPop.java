@@ -34,10 +34,6 @@ public class TestPop extends EasyPop {
         return R.layout.pop_test;
     }
 
-    @Override
-    public void onPopDismiss() {
-
-    }
 
     @Override
     public boolean outClickable() {

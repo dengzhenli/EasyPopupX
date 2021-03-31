@@ -17,8 +17,6 @@ abstract class DialogPop : EasyPop {
 
     override fun initData() {}
 
-    override fun onPopDismiss() {}
-
     constructor(activity: Activity?) : super(activity!!) {
     }
 

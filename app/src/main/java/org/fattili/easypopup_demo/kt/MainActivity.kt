@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
+import kotlinx.android.synthetic.main.pop_example.view.*
 import org.fattili.easypopup.manager.EasyPopManager
 import org.fattili.easypopup.view.EasyPop
 import org.fattili.easypopup.view.dialog.AlertDialogPop
@@ -38,7 +39,21 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     fun normalPop(view: View) {
-        TestPop(this).show()
+        object : EasyPop(this@MainActivity) {
+            override fun outClickable(): Boolean {
+                return true
+            }
+
+            override fun initData() {}
+            override fun initView(view: View?) {
+                pop_example_text.text = "我是普通弹出窗"
+            }
+
+            override fun getLayoutId(): Int {
+                return R.layout.pop_test
+            }
+
+        }.show()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

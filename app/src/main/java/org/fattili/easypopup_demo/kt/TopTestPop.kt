@@ -23,7 +23,6 @@ class TopTestPop : TopPop {
         return R.layout.top_pop_test
     }
 
-    override fun onPopDismiss() {}
     override fun outClickable(): Boolean {
         return true
     }

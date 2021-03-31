@@ -57,8 +57,4 @@ class CardTestPop : CardPopup {
         Log.d(TAG, "onResume: ")
     }
 
-    override fun onPopDismiss() {
-        super.onPopDismiss()
-        Log.d(TAG, "onPopDismiss: ")
-    }
 }

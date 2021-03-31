@@ -19,5 +19,4 @@ abstract class LeftPop : EasyPop {
 
     override fun initView(view: View?) {}
     override fun initData() {}
-    override fun onPopDismiss() {}
 }

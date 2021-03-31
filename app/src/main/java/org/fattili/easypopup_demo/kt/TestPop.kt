@@ -20,7 +20,6 @@ class TestPop(activity: Activity) : EasyPop(activity) {
         return R.layout.pop_test
     }
 
-    override fun onPopDismiss() {}
     override fun outClickable(): Boolean {
         return true
     }

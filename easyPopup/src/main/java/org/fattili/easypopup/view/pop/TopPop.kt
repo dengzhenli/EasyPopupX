@@ -19,5 +19,4 @@ abstract class TopPop : EasyPop {
 
     override fun initView(view: View?) {}
     override fun initData() {}
-    override fun onPopDismiss() {}
 }

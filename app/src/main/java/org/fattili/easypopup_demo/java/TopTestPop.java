@@ -40,10 +40,6 @@ public class TopTestPop extends TopPop {
     }
 
     @Override
-    public void onPopDismiss() {
-    }
-
-    @Override
     public boolean outClickable() {
         return true;
     }
