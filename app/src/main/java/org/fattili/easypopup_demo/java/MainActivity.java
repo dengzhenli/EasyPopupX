@@ -1,6 +1,7 @@
 package org.fattili.easypopup_demo.java;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 
 import org.fattili.easypopup.manager.EasyPopManager;
+import org.fattili.easypopup.util.ScreenUtil;
 import org.fattili.easypopup.view.EasyPop;
 import org.fattili.easypopup.view.dialog.AlertDialogPop;
 import org.fattili.easypopup_demo.R;
@@ -34,11 +36,11 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         EasyPopManager.INSTANCE.onWindowFocusChanged(this, hasFocus);
     }
 
-    private void topPop(View view) {
+    public void topPop(View view) {
         new TopTestPop(this).register(this).show();
     }
 
-    private void dialogPop(View view) {
+    public void alertDialogPop(View view) {
 
         new AlertDialogPop.Builder(this)
                 .setTitle("标题")
@@ -54,13 +56,21 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                 .show();
     }
 
-    private void cardPop(View view) {
+    public void dialogPop(View view) {
+
+        new DialogTest(this, Gravity.CENTER,
+                ScreenUtil.INSTANCE.dip2px(this, 300F),
+                ScreenUtil.INSTANCE.dip2px(this, 400F))
+                .show();
+    }
+
+    public void cardPop(View view) {
         new CardTestPop(this).register(this).show();
     }
 
-    private void normalPop(View view) {
+    public void normalPop(View view) {
 //        new TestPop(this).register(this).show();
-        new EasyPop(this){
+        new EasyPop(this) {
 
             @Override
             public boolean outClickable() {
@@ -82,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                 return R.layout.pop_test;
             }
 
-        };
+        }.show();
 
     }
 }

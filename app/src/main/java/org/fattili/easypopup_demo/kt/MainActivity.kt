@@ -1,11 +1,14 @@
 package org.fattili.easypopup_demo.kt
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import kotlinx.android.synthetic.main.pop_example.view.*
 import org.fattili.easypopup.manager.EasyPopManager
+import org.fattili.easypopup.util.ScreenUtil
 import org.fattili.easypopup.view.EasyPop
 import org.fattili.easypopup.view.dialog.AlertDialogPop
 import org.fattili.easypopup_demo.R
@@ -13,12 +16,12 @@ import org.fattili.easypopup_demo.R
 
 class MainActivity : AppCompatActivity(), LifecycleOwner {
 
-    var pop: EasyPop? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         EasyPopManager.register(this, this)
-        pop = TestPop(this).show()
+//        TestPop(this).show()
     }
 
     fun topPop(view: View) {
@@ -26,6 +29,13 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     fun dialogPop(view: View) {
+        DialogTest(this, Gravity.CENTER,
+            ScreenUtil.dip2px(this,300F),
+            ScreenUtil.dip2px(this,400F))
+            .show()
+    }
+
+    fun alertDialogPop(view: View) {
         AlertDialogPop.Builder(this)
             .setTitle("标题")
             .setMessage("是否启动自毁程序")
