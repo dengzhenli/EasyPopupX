@@ -1,4 +1,6 @@
 # 关于EasyPopup
+
+
 EasyPopup是一个可以让你在项目里面轻松使用PopupWindow的工具。
 你只需按正常的使用习惯即可，其他的事情都交给EasyPopup
 
@@ -9,7 +11,11 @@ EasyPopup是一个可以让你在项目里面轻松使用PopupWindow的工具。
     <img src="img/pop_dialog.jpeg" width="150">
 </figure>
 
+---
+
 # 快速接入
+
+
 ## 添加依赖
 
 ## 定制你的PopupWindow
@@ -46,6 +52,7 @@ public class TestPop extends EasyPop {
 
 ```
 ## 调用
+
 ### 建议：activity实现 LifecycleOwner 接口，并在调用easypop之前调用register方法  
 此方法会进行生命周期注册等步骤。若没有进行此步骤，EasyPop需要生命周期时候需要手动调用
 ```kotlin
@@ -103,9 +110,14 @@ override fun onDestroy() {
         }.show()
     }
 ```
+
+---
+
 # 属性
 
+
 ## EasyPop属性
+
 调用示例
 ```kotlin
 val easyPop = TestPop(this);
@@ -127,6 +139,7 @@ isShow| 弹窗是否显示状态|boolean
 
 
 ## XML属性
+
 用于自己定制layout的配置能透传到easypop，例如如下的android:layout_height，不使用easypop的话是不会生效的，
 但我觉得这种样式与布局的配置就应该在xml里面设置。easypop已对基本的配置都进行兼容，你只要按照正常的习惯配置即可。
 ```xml
@@ -190,9 +203,15 @@ easypop通过lifecycle监听Activity的生命周期，因为弹窗调用时候�
  onResume()|Activity生命周期
  onPause()|Activity生命周期
  onStop()|Activity生命周期
+ 
+
+---
+ 
 # 组件
 
+
 ## 卡片式弹出窗
+
 ### CardPopup 卡片式弹出窗
 使用：创建一个继承于CardPopup的弹窗，其中getContentLayoutId指定你的布局
 ```kotlin
@@ -225,19 +244,31 @@ fun cardPop(view: View) {
 ![img](img/pop_card.jpeg)
 CardPopup有两个构造方法  
 * constructor(activity: Activity, gravity: Int, width: Int, height: Int)  
-gravity：弹窗方向  
-width：弹窗宽度  
-height：弹窗高度  
+
+gravity：弹窗方向   
+
+width：弹窗宽度   
+
+height：弹窗高度   
+
 * constructor(activity: Activity)  
-默认gravity为Gravity.BOTTOM  
-默认width为MATCH_PARENT  
-默认height为WRAP_CONTENT  
+
+默认gravity为Gravity.BOTTOM   
+
+默认width为MATCH_PARENT   
+
+默认height为WRAP_CONTENT   
+
+
+
 ## dialog
+
 ### DialogPop 通用dialog
 
 ### AlertDialogPop 标准dialog
 
 ## 其他组件
+
 ### BottomPop 底部弹出窗
 ### LeftPop 左侧弹出窗
 ### RightPop 右侧弹出窗
