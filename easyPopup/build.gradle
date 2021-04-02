@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
+
 
 android {
     compileSdkVersion 30
@@ -33,4 +35,24 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+}
+
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'org.fattili.EasyPopup'
+                artifactId = 'easyPopup'
+                version = '1.0'
+            }
+            debug(MavenPublication) {
+                from components.debug
+                groupId = 'org.fattili.EasyPopup'
+                artifactId = 'easyPopup-debug'
+                version = '1.0'
+            }
+        }
+    }
 }
