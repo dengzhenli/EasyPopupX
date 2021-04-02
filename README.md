@@ -1,5 +1,5 @@
 # 关于EasyPopup
-
+---
 
 EasyPopup是一个可以让你在项目里面轻松使用PopupWindow的工具。
 你只需按正常的使用习惯即可，其他的事情都交给EasyPopup
@@ -11,10 +11,10 @@ EasyPopup是一个可以让你在项目里面轻松使用PopupWindow的工具。
     <img src="img/pop_dialog.jpeg" width="150">
 </figure>
 
----
+
 
 # 快速接入
-
+---
 
 ## 添加依赖
 
@@ -111,10 +111,11 @@ override fun onDestroy() {
     }
 ```
 
----
+
 
 # 属性
 
+---
 
 ## EasyPop属性
 
@@ -205,10 +206,10 @@ easypop通过lifecycle监听Activity的生命周期，因为弹窗调用时候�
  onStop()|Activity生命周期
  
 
----
  
 # 组件
 
+---
 
 ## 卡片式弹出窗
 
