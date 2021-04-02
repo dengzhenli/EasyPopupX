@@ -194,9 +194,49 @@ easypop通过lifecycle监听Activity的生命周期，因为弹窗调用时候�
 
 ## 卡片式弹出窗
 ### CardPopup 卡片式弹出窗
+创建一个继承于CardPopup的弹窗，其中getContentLayoutId指定你的布局
+```kotlin
+class CardTestPop : CardPopup {
+    constructor(activity: Activity) : super(activity) {}
 
+    override fun outClickable(): Boolean { return true   }
+
+    override fun getContentLayoutId(): Int {
+        return R.layout.card_pop_test
+    }
+}
+```
+
+```kotlin
+fun cardPop(view: View) {
+    CardTestPop(this).show()
+}
+```
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/pop_example"/>
+</LinearLayout>
+
+```
+
+[img](img/pop_card.jpeg)
+CardPopup有两个构造方法  
+* constructor(activity: Activity, gravity: Int, width: Int, height: Int)
+gravity：弹窗方向
+width：弹窗宽度
+height：弹窗高度
+* constructor(activity: Activity)
+默认gravity为Gravity.BOTTOM
+默认width为MATCH_PARENT
+默认height为WRAP_CONTENT
 ## dialog
 ### DialogPop 通用dialog
+
 ### AlertDialogPop 标准dialog
 
 ## 其他组件
