@@ -1,6 +1,7 @@
 package org.fattili.easypopup.view
 
 import android.app.Activity
+import android.graphics.drawable.Drawable
 import android.view.*
 import android.widget.FrameLayout
 import androidx.lifecycle.Lifecycle
@@ -139,6 +140,9 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
 
 
     var view: View? = null
+
+
+    var backBackground:Drawable? = null
 
     /**
      * 依托view 没用设置则使用activity根布局
@@ -283,6 +287,10 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
 
         view = inflate.inflate(layoutId, this)
         if (showAtView == null) showAtView = view
+        if (backBackground != null) {
+            view?.background = backBackground
+        }
+
         //内容，高度，宽度
         popupWindow = BasePopupWindow(
             view,
@@ -301,8 +309,6 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
         //显示位置
         popupWindow?.isOutsideTouchable = isOutsideTouchable
         popupWindow?.setBackgroundDrawable(view?.background)
-
-
 
         try {
             popupWindow?.showAtLocation(
