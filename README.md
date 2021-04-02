@@ -246,19 +246,19 @@ fun cardPop(view: View) {
 CardPopup有两个构造方法  
 * constructor(activity: Activity, gravity: Int, width: Int, height: Int)  
 
-gravity：弹窗方向   
-
-width：弹窗宽度   
-
-height：弹窗高度   
+        gravity：弹窗方向   
+        
+        width：弹窗宽度   
+        
+        height：弹窗高度   
 
 * constructor(activity: Activity)  
 
-默认gravity为Gravity.BOTTOM   
-
-默认width为MATCH_PARENT   
-
-默认height为WRAP_CONTENT   
+        默认gravity为Gravity.BOTTOM   
+        
+        默认width为MATCH_PARENT   
+        
+        默认height为WRAP_CONTENT   
 
 
 
