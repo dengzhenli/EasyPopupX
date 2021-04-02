@@ -15,14 +15,15 @@ abstract class CardPopup : EasyPop {
 
     private var dataView: View? = null
 
-    constructor(activity: Activity?) : this(
+    constructor(activity: Activity) : this(
         activity,
         Gravity.BOTTOM,
         ViewGroup.LayoutParams.MATCH_PARENT,
         ViewGroup.LayoutParams.WRAP_CONTENT
     )
 
-    constructor(activity: Activity?, gravity: Int, width: Int, height: Int) : super(activity!!) {
+
+    constructor(activity: Activity, gravity: Int, width: Int, height: Int) : super(activity) {
         this.gravity = gravity
         setWidth(width)
         setHeight(height)
