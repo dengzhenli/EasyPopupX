@@ -13,7 +13,7 @@ import org.fattili.easypopup.R
  * 标准dialog
  * @author dengzhenli
  */
-class AlertDialogPop(activity: Activity?) : DialogPop(activity) {
+class AlertDialogPop(activity: Activity) : DialogPop(activity) {
 
 
     private var paramMeasureBtText: String? = null
@@ -43,11 +43,13 @@ class AlertDialogPop(activity: Activity?) : DialogPop(activity) {
         }
 
         if (paramTitleView != null) {
+            ep_alert_dialog_title_tv.visibility = View.GONE
             ep_alert_dialog_view?.addView(paramTitleView)
             ep_alert_dialog_view?.visibility = View.VISIBLE
         }
 
         if (paramContentView != null) {
+            ep_alert_dialog_msg_tv.visibility = View.GONE
             ep_alert_dialog_content_view?.addView(paramContentView)
         }
 
@@ -80,7 +82,7 @@ class AlertDialogPop(activity: Activity?) : DialogPop(activity) {
         return 0
     }
 
-    class Builder(activity: Activity?) {
+    class Builder(activity: Activity) {
         private val pop: AlertDialogPop = AlertDialogPop(activity)
         fun getContext(): Context {
             return pop.getContext()
@@ -141,6 +143,10 @@ class AlertDialogPop(activity: Activity?) : DialogPop(activity) {
     }
 
     override fun outClickable(): Boolean {
+        return false
+    }
+
+    override fun useBackGround(): Boolean {
         return false
     }
 }

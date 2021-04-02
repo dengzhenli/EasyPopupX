@@ -1,6 +1,7 @@
 package org.fattili.easypopup.view.dialog
 
 import android.app.Activity
+import android.content.res.Resources
 import android.view.View
 import kotlinx.android.synthetic.main.ep_pop_dialog.view.*
 import org.fattili.easypopup.R
@@ -17,7 +18,7 @@ abstract class DialogPop : EasyPop {
 
     override fun initData() {}
 
-    constructor(activity: Activity?) : super(activity!!) {
+    constructor(activity: Activity) : super(activity) {
     }
 
 
@@ -25,20 +26,27 @@ abstract class DialogPop : EasyPop {
         return R.layout.ep_pop_dialog
     }
 
-    constructor(activity: Activity?, gravity: Int, width: Int, height: Int) : super(activity!!) {
+    constructor(activity: Activity, gravity: Int, width: Int, height: Int) : super(activity) {
         this.gravity = gravity
-        popupWidth = width
-        popupHeight = height
-        marginWidth = width
-        marginHeight = height
+        setWidth(width)
+        setHeight(height)
+        if (!useBackGround()){
+            backBackground = resources.getDrawable(R.color.ep_transparent)
+        }
     }
 
 
     abstract fun getContentLayoutId(): Int
 
+
     override fun initView(view: View?) {
         dataView = activity?.layoutInflater?.inflate(getContentLayoutId(), null)
+        if (!useBackGround()){
+            ep_pop_dialog_v.setBackgroundResource(R.color.ep_transparent)
+        }
         ep_pop_dialog_v.addView(dataView)
     }
+
+    abstract fun useBackGround(): Boolean
 
 }
