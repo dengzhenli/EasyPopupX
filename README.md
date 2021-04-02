@@ -265,12 +265,76 @@ CardPopup有两个构造方法
 ## dialog
 
 ### DialogPop 通用dialog
+示例：
+```kotlin
+class DialogTest : DialogPop {
+    constructor(activity: Activity) : super(activity) {}
+
+    constructor(activity: Activity, gravity: Int, width: Int, height: Int) : super(
+        activity,
+        gravity,
+        width,
+        height
+    ) {
+    }
+
+    override fun getContentLayoutId(): Int {
+        return R.layout.pop_test
+    }
+
+    override fun outClickable(): Boolean {
+        return true
+    }
+
+    // 是否使用DialogPop自带背景，选择否，则使用透明背景
+    override fun useBackGround(): Boolean {
+        return false
+    }
+
+}
+```
+
+```kotlin
+        DialogTest(this, Gravity.CENTER,
+            ScreenUtil.dip2px(this,300F),
+            ScreenUtil.dip2px(this,400F))
+            .show()
+```
+
+![img](img/pop_dialog2.jpg)
+DialogPop有两个构造方法  
+* constructor(activity: Activity, gravity: Int, width: Int, height: Int)  
+
+        gravity：弹窗方向   
+        
+        width：弹窗宽度   
+        
+        height：弹窗高度   
+
+* constructor(activity: Activity)  
+
+        默认gravity为Gravity.BOTTOM   
+        
+        默认width为MATCH_PARENT   
+        
+        默认height为WRAP_CONTENT   
 
 ### AlertDialogPop 标准dialog
+AlertDialogPop的用法可参考安卓AlertDialog
+```kotlin
 
+    fun alertDialogPop(view: View) {
+        AlertDialogPop.Builder(this)
+            .setTitle("标题")
+            .setMessage("是否进行下一步操作")
+            .setMeasureButton(true, null, View.OnClickListener { finish() })
+            .setCancelButton(true, null, null)
+            .show()
+    }
+```
+![img](img/pop_dialog.jpeg)
 ## 其他组件
-
-### BottomPop 底部弹出窗
-### LeftPop 左侧弹出窗
-### RightPop 右侧弹出窗
-### TopPop 顶部弹出窗
+* BottomPop 底部弹出窗
+* LeftPop 左侧弹出窗
+* RightPop 右侧弹出窗
+* TopPop 顶部弹出窗
