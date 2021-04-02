@@ -320,7 +320,7 @@ DialogPop有两个构造方法
         默认height为WRAP_CONTENT   
 
 ### AlertDialogPop 标准dialog
-AlertDialogPop的用法可参考安卓AlertDialog
+AlertDialogPop的用法可参考安卓AlertDialog  
 ```kotlin
 
     fun alertDialogPop(view: View) {
