@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'maven-publish'
 
 
 android {
@@ -35,32 +34,4 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-}
-
-
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = 'org.fattili'
-                artifactId = 'easyPopup'
-                version = '1.0'
-            }
-            debug(MavenPublication) {
-                from components.debug
-                groupId = 'org.fattili'
-                artifactId = 'easyPopup-debug'
-                version = '1.0'
-            }
-        }
-
-        repositories {
-            maven {
-                // change to point to your repo, e.g. http://my.org/repo
-                url = "$buildDir/repo"
-//                url = "https://jitpack.io"
-            }
-        }
-    }
 }
