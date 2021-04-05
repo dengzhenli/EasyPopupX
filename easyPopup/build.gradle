@@ -43,15 +43,23 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = 'org.fattili.EasyPopup'
+                groupId = 'org.fattili'
                 artifactId = 'easyPopup'
                 version = '1.0'
             }
             debug(MavenPublication) {
                 from components.debug
-                groupId = 'org.fattili.EasyPopup'
+                groupId = 'org.fattili'
                 artifactId = 'easyPopup-debug'
                 version = '1.0'
+            }
+        }
+
+        repositories {
+            maven {
+                // change to point to your repo, e.g. http://my.org/repo
+                url = "$buildDir/repo"
+//                url = "https://jitpack.io"
             }
         }
     }
