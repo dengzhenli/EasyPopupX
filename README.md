@@ -19,7 +19,21 @@ EasyPopup是一个可以让你在项目里面轻松使用PopupWindow的工具。
 
 
 ## 添加依赖
-
+根项目build.gradle添加jitpack
+```
+allprojects {
+    repositories {
+        .....
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+添加依赖
+```
+dependencies {
+     implementation 'com.github.dengzhenli:EasyPopup:1.0'
+}
+```
 ## 定制你的PopupWindow
 ```kotlin
 class TestPop(activity: Activity) : EasyPop(activity) {
