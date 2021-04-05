@@ -31,7 +31,7 @@ allprojects {
 添加依赖
 ```
 dependencies {
-     implementation 'com.github.dengzhenli:EasyPopup:1.0'
+     implementation 'com.github.dengzhenli:EasyPopup:1.0.0'
 }
 ```
 ## 定制你的PopupWindow
