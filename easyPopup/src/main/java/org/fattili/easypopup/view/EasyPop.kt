@@ -283,14 +283,15 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
      */
     @Throws(ViewUnCreatedException::class)
     private fun initPopupWindow() {
-        val inflate = LayoutInflater.from(context)
 
-        view = inflate.inflate(layoutId, this)
-        if (showAtView == null) showAtView = view
-        if (backBackground != null) {
-            view?.background = backBackground
+        if (view == null) {
+            val inflate = LayoutInflater.from(context)
+            view = inflate.inflate(layoutId, this)
+            if (showAtView == null) showAtView = view
+            if (backBackground != null) {
+                view?.background = backBackground
+            }
         }
-
         //内容，高度，宽度
         popupWindow = BasePopupWindow(
             view,
@@ -335,6 +336,7 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
         initData()
 
     }
+
 
 
     /**
