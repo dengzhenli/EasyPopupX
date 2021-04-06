@@ -1,10 +1,7 @@
 package org.fattili.easypopup.manager
 
 import android.app.Activity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import org.fattili.easypopup.view.EasyPop
 import java.util.*
 

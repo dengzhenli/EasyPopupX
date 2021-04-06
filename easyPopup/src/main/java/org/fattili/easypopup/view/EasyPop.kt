@@ -2,6 +2,7 @@ package org.fattili.easypopup.view
 
 import android.app.Activity
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import androidx.lifecycle.Lifecycle
@@ -329,6 +330,7 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
         backgroundAlpha(bgAlpha)
         popupWindow?.setOnDismissListener {
             backgroundAlpha(1f)
+            activity?.let { it1 -> EasyPopManager.remove(it1, this) }
             onPopDismiss()
         }
 
@@ -343,8 +345,8 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
      * 显示view
      */
     fun show(): EasyPop {
+        activity?.let { EasyPopManager.add(it, this) }
         if (popupWindow == null) {
-            activity?.let { EasyPopManager.add(it, this) }
             layoutId = getLayoutId()
             initPopData()
             try {
@@ -363,6 +365,7 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
             )
             reShowData()
         }
+
         return this
     }
 
@@ -375,7 +378,6 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
             if (it.isShowing) {
                 it.dismiss()
             }
-            activity?.let { it1 -> EasyPopManager.remove(it1, this) }
         }
         popupWindow = null
     }
@@ -438,6 +440,10 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     open fun onDestroy() {
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun releaseActivity() {
         activity?.let { EasyPopManager.remove(it) }
         activity = null
     }

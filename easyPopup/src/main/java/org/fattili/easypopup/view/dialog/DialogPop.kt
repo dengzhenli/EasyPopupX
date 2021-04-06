@@ -1,10 +1,8 @@
 package org.fattili.easypopup.view.dialog
 
 import android.app.Activity
-import android.content.res.Resources
 import android.os.Build
 import android.view.View
-import androidx.annotation.RequiresApi
 import kotlinx.android.synthetic.main.ep_pop_dialog.view.*
 import org.fattili.easypopup.R
 import org.fattili.easypopup.view.EasyPop
@@ -28,13 +26,14 @@ abstract class DialogPop : EasyPop {
         return R.layout.ep_pop_dialog
     }
 
-   @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
    constructor(activity: Activity, gravity: Int, width: Int, height: Int) : super(activity) {
         this.gravity = gravity
         setWidth(width)
         setHeight(height)
         if (!useBackGround()){
-            backBackground = resources.getDrawable(R.color.ep_transparent,activity.theme)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                backBackground = resources.getDrawable(R.color.ep_transparent,activity.theme)
+            }
         }
     }
 

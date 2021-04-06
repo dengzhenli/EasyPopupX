@@ -28,7 +28,7 @@ class AlertDialogPop(activity: Activity) : DialogPop(activity) {
     private var paramContentView: View? = null
 
     override fun initView(view: View?) {
-        ep_alert_dialog_cancel_bt?.setOnClickListener(View.OnClickListener { dismiss() })
+        ep_alert_dialog_cancel_bt?.setOnClickListener(View.OnClickListener { finish() })
         ep_alert_dialog_view?.visibility = View.GONE
     }
 

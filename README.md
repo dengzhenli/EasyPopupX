@@ -30,7 +30,7 @@ allprojects {
 添加依赖
 ```
 dependencies {
-     implementation 'com.github.dengzhenli:EasyPopup:1.0.1'
+     implementation 'com.github.dengzhenli:EasyPopup:1.0.2'
 }
 ```
 ## 定制你的PopupWindow
@@ -68,8 +68,15 @@ public class TestPop extends EasyPop {
 ```
 ## 调用
 
+### 必须：在需要调用时候创建EasyPop  
+```kotlin
+    fun normalPop(view: View) {
+        TestPop(this).show()
+    }
+```
+
 ### 建议：activity实现 LifecycleOwner 接口，并在调用easypop之前调用register方法  
-此方法会进行生命周期注册等步骤。若没有进行此步骤，EasyPop需要生命周期时候需要手动调用
+此方法会进行生命周期注册等步骤。
 ```kotlin
 class MainActivity : AppCompatActivity(), LifecycleOwner {
 
@@ -81,16 +88,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 }
 
 ```
-### 必须：保证onDestory被正常调用  
-
-请确保你重写onDestroy时候没有覆盖EasyPop的实现
-```kotlin
-override fun onDestroy() {
-    super.onDestroy()
-}
-```
-如果你没有接入第一点建议的操作，则需要在Activity的onDestory方法调用EasyPop的onDestory
-
+若没有进行此步骤，EasyPop需要生命周期时候需要手动调用
+注：为能及时释放内存，如你未实现
 ### 建议：在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged  
 ```kotlin
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -98,12 +97,7 @@ override fun onDestroy() {
         EasyPopManager.onWindowFocusChanged(this, hasFocus)
     }
 ```
-### 必须：在需要调用时候创建EasyPop  
-```kotlin
-    fun normalPop(view: View) {
-        TestPop(this).show()
-    }
-```
+
 
 ### 不重要：你也可以直接声明匿名内部类
 ```kotlin
