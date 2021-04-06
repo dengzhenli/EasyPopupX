@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
 ```
 若没有进行此步骤，EasyPop需要生命周期时候需要手动调用
-注：为能及时释放内存，如你未实现
+
 ### 建议：在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged  
 ```kotlin
     override fun onWindowFocusChanged(hasFocus: Boolean) {
