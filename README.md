@@ -15,7 +15,7 @@ EasyPopup是一个可以让你在项目里面轻松使用PopupWindow的工具。
 
 ---
 # 快速接入
-（项目目前仅支持AndroidX，我也纠结要不要兼容support，但看到郭霖大佬等人都放弃兼容support，在呼声不大的情况下，就不给维护加大负担了）
+（项目目前仅支持AndroidX，我也纠结要不要兼容support，但看到郭霖大佬等人都放弃兼容support，就不给维护加大负担了。若有读者需要这方面需求，可提issue）
 
 ## 添加依赖
 根项目build.gradle添加jitpack
