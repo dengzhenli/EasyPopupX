@@ -7,8 +7,11 @@ EasyPopup是一个可以让你在项目里面轻松使用PopupWindow的工具。
 你只需按正常的使用习惯即可，其他的事情都交给EasyPopup
 
 你可以通过EasyPopup轻松实现例如以下的页面
-
-![pop_top](img/pop_top.jpeg) ![pop_card](img/pop_card.jpeg) ![pop_dialog](img/pop_dialog.jpeg)
+<div>    
+    <img src="img/pop_top.jpeg" width="150">
+    <img src="img/pop_card.jpeg" width="150">
+    <img src="img/pop_dialog.jpeg" width="150">
+</div>
 
 ---
 # 快速接入
