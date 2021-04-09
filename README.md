@@ -66,6 +66,22 @@ public class TestPop extends EasyPop {
 }
 
 ```
+
+pop_test.xml
+```XML
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:layout_marginTop="20dp"
+    android:layout_gravity="top">
+
+    <include layout="@layout/pop_example"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
 ## 调用
 
 ### 必须：在需要调用时候创建EasyPop  
