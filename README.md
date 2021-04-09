@@ -1,12 +1,12 @@
-[![](https://jitpack.io/v/dengzhenli/EasyPopup.svg)](https://jitpack.io/#dengzhenli/EasyPopup)
+[![](https://jitpack.io/v/dengzhenli/EasyPopupX.svg)](https://jitpack.io/#dengzhenli/EasyPopupX)
 
 ---
-# 关于EasyPopup
+# 关于EasyPopupX
 
-EasyPopup是一个可以让你在项目里面轻松使用PopupWindow的工具。
-你只需按正常的使用习惯即可，其他的事情都交给EasyPopup
+EasyPopupX是一个可以让你在项目里面轻松使用PopupWindow的工具。
+你只需按正常的使用习惯即可，其他的事情都交给EasyPopupX
 
-你可以通过EasyPopup轻松实现例如以下的页面
+你可以通过EasyPopupX轻松实现例如以下的页面
 <div>    
     <img src="img/pop_top.jpeg" width="150">
     <img src="img/pop_card.jpeg" width="150">
@@ -30,7 +30,7 @@ allprojects {
 添加依赖
 ```
 dependencies {
-     implementation 'com.github.dengzhenli:EasyPopup:1.0.2'
+     implementation 'com.github.dengzhenli:EasyPopupX:1.0.2'
 }
 ```
 ## 定制你的PopupWindow
