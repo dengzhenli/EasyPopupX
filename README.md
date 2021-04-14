@@ -64,7 +64,7 @@ dependencies {
     }
 ```
 
-你也可以使用java接入，为节省篇幅，演示只用kotlin，java的使用可参考demo
+你也可以使用java接入，为节省篇幅，演示只用kotlin，java的使用可参考demo  
 pop_test.xml
 ```XML
 <?xml version="1.0" encoding="utf-8"?>
