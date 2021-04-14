@@ -33,40 +33,31 @@ dependencies {
      implementation 'com.github.dengzhenli:EasyPopupX:1.0.2'
 }
 ```
-## 定制你的PopupWindow
+
+## 使用
+
+### 必须：在需要调用时候创建EasyPop的实现类
 ```kotlin
-class TestPop(activity: Activity) : EasyPop(activity) {
-    // 这里进行初始化视图操作
-    override fun initView(view: View?) { pop_example_text.text = "我是普通弹出窗" }
-    // 这里进行初始化数据操作
-    override fun initData() {}
-    // 这里输入你自己编写的布局文件
-    override fun getLayoutId(): Int { return R.layout.pop_test }
-    // 点击外部弹窗是否消失
-    override fun outClickable(): Boolean { return true }
-}
-```
+    fun normalPop(view: View) {
+        object : EasyPop(this@MainActivity) {
+            override fun outClickable(): Boolean {
+                return true
+            }
 
-你也可以使用java接入，为节省篇幅，后面的演示只用kotlin，java的使用可参考demo
-```java
-public class TestPop extends EasyPop {
-    public TestPop(Activity activity) {  super(activity); }
-    @Override
-    public void initView(View view) {
-        TextView textView = findViewById(R.id.pop_example_text);
-        textView.setText("我是普通弹出窗");
+            override fun initData() {}
+            override fun initView(view: View?) {
+                pop_example_text.text = "我是普通弹出窗"
+            }
+
+            override fun getLayoutId(): Int {
+                return R.layout.pop_test
+            }
+
+        }.show()
     }
-    @Override
-    public void initData() {}
-    @Override
-    public int getLayoutId() { return R.layout.pop_test;  }
-
-    @Override
-    public boolean outClickable() { return true;  }
-}
-
 ```
 
+你也可以使用java接入，为节省篇幅，演示只用kotlin，java的使用可参考demo
 pop_test.xml
 ```XML
 <?xml version="1.0" encoding="utf-8"?>
@@ -82,15 +73,6 @@ pop_test.xml
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
-## 调用
-
-### 必须：在需要调用时候创建EasyPop  
-```kotlin
-    fun normalPop(view: View) {
-        TestPop(this).show()
-    }
-```
-
 ### 建议：activity实现 LifecycleOwner 接口，并在调用easypop之前调用register方法  
 此方法会进行生命周期注册等步骤。
 ```kotlin
@@ -115,27 +97,19 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 ```
 
 
-### 不重要：你也可以直接声明匿名内部类
+### 建议：页面较多时候不建议使用匿名内部类，应创建实现类管理
 ```kotlin
-    fun normalPop(view: View) {
-        object : EasyPop(this@MainActivity) {
-            override fun outClickable(): Boolean {
-                return true
-            }
-
-            override fun initData() {}
-            override fun initView(view: View?) {
-                pop_example_text.text = "我是普通弹出窗"
-            }
-
-            override fun getLayoutId(): Int {
-                return R.layout.pop_test
-            }
-
-        }.show()
-    }
+class TestPop(activity: Activity) : EasyPop(activity) {
+    // 这里进行初始化视图操作
+    override fun initView(view: View?) { pop_example_text.text = "我是普通弹出窗" }
+    // 这里进行初始化数据操作
+    override fun initData() {}
+    // 这里输入你自己编写的布局文件
+    override fun getLayoutId(): Int { return R.layout.pop_test }
+    // 点击外部弹窗是否消失
+    override fun outClickable(): Boolean { return true }
+}
 ```
-
 
 ---
 # 属性
@@ -364,8 +338,11 @@ AlertDialogPop的用法可参考安卓AlertDialog
 * RightPop 右侧弹出窗
 * TopPop 顶部弹出窗
 
+# 常见问题
+## 提示创建失败，请等待页面渲染完毕怎么办？
+参考[建议：在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged](#建议：在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged) 
 
-## License
+# License
 
 ```text
 Copyright 2018 Huang JinQun
