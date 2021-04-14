@@ -6,8 +6,15 @@
 EasyPopupX是一个可以让你在项目里面轻松使用PopupWindow的工具。
 你只需按正常的使用习惯即可，其他的事情都交给EasyPopupX
 
+目前EasyPopupX能带给你的明显变化
+* 只需极少的代码
+* PopupWindow相关的安全性，兼容性，内存优化都交给EasyPopupX去考虑
+* 可以在布局文件里面配置PopupWindow位置了
+* 可以在PopupWindow里面直接使用findViewById，也支持synthetic，即kotlin中直接使用id访问组件
+* 其他更多属性
+
 你可以通过EasyPopupX轻松实现例如以下的页面
-<div>    
+<div>
     <img src="img/pop_top.jpeg" width="150">
     <img src="img/pop_card.jpeg" width="150">
     <img src="img/pop_dialog.jpeg" width="150">
@@ -344,18 +351,4 @@ AlertDialogPop的用法可参考安卓AlertDialog
 
 # License
 
-```text
-Copyright 2018 Huang JinQun
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+EasyPopupX is Apache 2 licensed, as found in the LICENSE file.
