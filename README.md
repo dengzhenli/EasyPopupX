@@ -10,7 +10,7 @@ EasyPopupX是一个可以让你在项目里面轻松使用PopupWindow的工具�
 * 只需极少的代码
 * PopupWindow相关的安全性，兼容性，内存优化都交给EasyPopupX去考虑
 * 可以在布局文件里面配置PopupWindow位置了
-* 可以在PopupWindow里面直接使用findViewById
+* 可以在PopupWindow里面直接使用findViewById，支持kotlin-android-extensions（虽然google废弃了，可真的香）
 * 其他更多属性
 
 你可以通过EasyPopupX轻松实现例如以下的页面
