@@ -347,7 +347,7 @@ AlertDialogPop的用法可参考安卓AlertDialog
 
 # 常见问题
 ## 提示创建失败，请等待页面渲染完毕怎么办？
-参考[建议：在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged](#建议：在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged) 
+参考[建议：在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged](#建议在onwindowfocuschanged方法调用easypopmanageronwindowfocuschanged) 
 
 # License
 
