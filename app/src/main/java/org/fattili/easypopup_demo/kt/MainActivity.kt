@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        EasyPopManager.register(this, this)
 //        TestPop(this).show()
     }
 
@@ -50,12 +49,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     fun normalPop(view: View) {
         object : EasyPop(this@MainActivity) {
-            override fun outClickable(): Boolean {
-                return true
-            }
 
-            override fun initData() {}
-            override fun initView(view: View?) {
+            override fun onPopCreated(view: View?) {
                 pop_example_text.text = "我是普通弹出窗"
             }
 

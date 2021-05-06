@@ -12,15 +12,11 @@ import org.fattili.easypopup_demo.R
  * @author dengzhenli
  */
 class TestPop(activity: Activity) : EasyPop(activity) {
-    override fun initView(view: View?) {
+    override fun onPopCreated(view: View?) {
         pop_example_text.text = "我是普通弹出窗"
     }
-    override fun initData() {}
     override fun getLayoutId(): Int {
         return R.layout.pop_test
     }
 
-    override fun outClickable(): Boolean {
-        return true
-    }
 }

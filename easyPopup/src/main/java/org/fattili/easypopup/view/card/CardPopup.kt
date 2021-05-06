@@ -36,14 +36,12 @@ abstract class CardPopup : EasyPop {
 
     abstract fun getContentLayoutId(): Int
 
-    override fun initView(view: View?) {
+    override fun onPopCreated(view: View?) {
 
         dataView = activity?.layoutInflater?.inflate(getContentLayoutId(), null)
         ep_pop_card_lv.addView(dataView)
         ep_pop_card_back_iv.setOnClickListener { finish() }
     }
 
-    override fun initData() {
-    }
 
 }

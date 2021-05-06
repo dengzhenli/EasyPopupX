@@ -13,7 +13,6 @@ import java.util.*
 object EasyPopManager {
 
     private val activityEasyPopMap: MutableMap<Activity, MutableList<EasyPop>> = HashMap()
-    private val activityOwnerMap: MutableMap<Activity, LifecycleOwner> = HashMap()
 
 
     fun add(activity: Activity, easyPop: EasyPop) {
@@ -26,7 +25,6 @@ object EasyPopManager {
         list.add(easyPop)
 
         activityEasyPopMap[activity] = list
-        activityOwnerMap[activity]?.let { easyPop.register(it) }
     }
 
     fun remove(activity: Activity, easyPop: EasyPop) {
@@ -52,15 +50,9 @@ object EasyPopManager {
             activityEasyPopMap.remove(activity)
         }
 
-        if (activityOwnerMap.containsKey(activity)) {
-            activityOwnerMap.remove(activity)
-        }
-    }
 
-
-    fun register(activity: Activity, owner: LifecycleOwner) {
-        activityOwnerMap[activity] = owner
     }
+    
 
     fun onWindowFocusChanged(activity: Activity?, hasFocus: Boolean) {
         val list: List<EasyPop>? = activityEasyPopMap[activity]

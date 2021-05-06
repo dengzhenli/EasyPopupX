@@ -23,12 +23,9 @@ public class CardTestPop extends CardPopup {
 
     public CardTestPop(@Nullable Activity activity, int gravity, int width, int height) {
         super(activity, gravity, width, height);
+        outClickable(true);
     }
 
-    @Override
-    public boolean outClickable() {
-        return true;
-    }
 
     @Override
     public int getContentLayoutId() {

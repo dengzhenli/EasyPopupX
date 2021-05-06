@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EasyPopManager.INSTANCE.register(this, this);
-
     }
 
     @Override
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     }
 
     public void topPop(View view) {
-        new TopTestPop(this).register(this).show();
+        new TopTestPop(this).show();
     }
 
     public void alertDialogPop(View view) {
@@ -52,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                     }
                 })
                 .setCancelButton(true, null, null)
-                .register(this)
                 .show();
     }
 
@@ -65,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     }
 
     public void cardPop(View view) {
-        new CardTestPop(this).register(this).show();
+        new CardTestPop(this).show();
     }
 
     public void normalPop(View view) {
@@ -73,16 +70,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         new EasyPop(this) {
 
             @Override
-            public boolean outClickable() {
-                return true;
-            }
-
-            @Override
-            public void initData() {
-            }
-
-            @Override
-            public void initView(View view) {
+            public void onPopCreated(@org.jetbrains.annotations.Nullable View view) {
                 TextView textView = findViewById(R.id.pop_example_text);
                 textView.setText("我是普通弹出窗");
             }

@@ -16,8 +16,6 @@ abstract class DialogPop : EasyPop {
     private var dataView: View? = null
 
 
-    override fun initData() {}
-
     constructor(activity: Activity) : super(activity) {
     }
 
@@ -40,8 +38,7 @@ abstract class DialogPop : EasyPop {
 
     abstract fun getContentLayoutId(): Int
 
-
-    override fun initView(view: View?) {
+    override fun onPopCreated(view: View?)  {
         dataView = activity?.layoutInflater?.inflate(getContentLayoutId(), null)
         if (!useBackGround()){
             ep_pop_dialog_v.setBackgroundResource(R.color.ep_transparent)

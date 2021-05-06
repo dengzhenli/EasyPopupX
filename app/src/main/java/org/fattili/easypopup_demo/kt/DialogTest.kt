@@ -23,10 +23,6 @@ class DialogTest : DialogPop {
         return R.layout.pop_example
     }
 
-    override fun outClickable(): Boolean {
-        return true
-    }
-
     override fun useBackGround(): Boolean {
         return false
     }

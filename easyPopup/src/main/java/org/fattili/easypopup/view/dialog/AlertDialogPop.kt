@@ -27,12 +27,13 @@ class AlertDialogPop(activity: Activity) : DialogPop(activity) {
     private var paramTitleView: View? = null
     private var paramContentView: View? = null
 
-    override fun initView(view: View?) {
+    override fun onPopCreated(view: View?) {
         ep_alert_dialog_cancel_bt?.setOnClickListener(View.OnClickListener { finish() })
         ep_alert_dialog_view?.visibility = View.GONE
+        initData()
     }
 
-    override fun initData() {
+    private fun initData() {
         if (!TextUtils.isEmpty(paramMsg)) {
             ep_alert_dialog_msg_tv?.text = paramMsg
         }
@@ -135,16 +136,8 @@ class AlertDialogPop(activity: Activity) : DialogPop(activity) {
             return pop
         }
 
-        fun register(owner: LifecycleOwner?): AlertDialogPop {
-            owner?.let { pop.register(it) }
-            return pop
-        }
-
     }
 
-    override fun outClickable(): Boolean {
-        return false
-    }
 
     override fun useBackGround(): Boolean {
         return false

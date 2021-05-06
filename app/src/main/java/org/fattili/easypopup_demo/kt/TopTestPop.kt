@@ -13,18 +13,13 @@ import org.fattili.easypopup_demo.R
  */
 class TopTestPop : TopPop {
     constructor(activity: Activity) : super(activity) {}
-    constructor(activity: Activity, view: View) : super(activity, view) {}
 
-    override fun initView(view: View?) {
+    override fun onPopCreated(view: View?) {
         pop_example_text.text = "我是顶部弹出窗"
     }
-    override fun initData() {}
+
     override fun getLayoutId(): Int {
         return R.layout.top_pop_test
-    }
-
-    override fun outClickable(): Boolean {
-        return true
     }
 
 }

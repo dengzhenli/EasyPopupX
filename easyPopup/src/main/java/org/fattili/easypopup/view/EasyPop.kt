@@ -20,16 +20,23 @@ import org.fattili.easypopup.view.base.BasePopupWindow
  * Created by dengzhenli on 2021/01/23.
  * 自定义的Popup
  */
-abstract class EasyPop : FrameLayout, LifecycleObserver {
+abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObserver {
 
-    var activity: Activity?
+    var view: View? = null
+
+    var activity: Activity? = activity
 
     private var needReload = false
 
-    // 向右对其标志 0000 0100
+
+    /**
+     * 向右对齐标志 0000 0100
+     */
     private val GRAVITY_RIGHT_FLAG = 0x4
 
-    // 向下对其标志 0100 0000
+    /**
+     * 向下对齐标志 0100 0000
+     */
     private val GRAVITY_BOTTOM_FLAG = 0x40
 
     /**
@@ -68,12 +75,13 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
     /**
      * 窗体的长宽
      */
-    var popupWidth = DEFAULT_POP_WIDTH
+    private var popupWidth = DEFAULT_POP_WIDTH
         set(value) {
             field = value
             SET_POP_WIDTH = true
         }
-    var popupHeight = DEFAULT_POP_HEIGHT
+
+    private var popupHeight = DEFAULT_POP_HEIGHT
         set(value) {
             field = value
             SET_POP_HEIGHT = true
@@ -82,44 +90,18 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
     /**
      * 窗体内部view的长宽
      */
-    var viewWidth = DEFAULT_VIEW_WIDTH
+    private var viewWidth = DEFAULT_VIEW_WIDTH
         set(value) {
             field = value
             SET_VIEW_WIDTH = true
         }
 
-    var viewHeight = DEFAULT_VIEW_HEIGHT
+    private var viewHeight = DEFAULT_VIEW_HEIGHT
         set(value) {
             field = value
             SET_VIEW_HEIGHT = true
         }
 
-    /**
-     * 上下边距
-     */
-    var marginWidth = DEFAULT_MARGIN_WIDTH
-        set(value) {
-            field = value
-            SET_MARGIN_WIDTH = true
-        }
-
-    var marginHeight = DEFAULT_MARGIN_HEIGHT
-        set(value) {
-            field = value
-            SET_MARGIN_HEIGHT = true
-        }
-
-    var gravity = DEFAULT_GRAVITY
-        set(value) {
-            field = value
-            SET_GRAVITY = true
-        }
-
-    var bgAlpha = DEFAULT_ALPHA
-        set(value) {
-            field = value
-            SET_ALPHA = true
-        }
 
     /**
      * 是否占据焦点
@@ -140,11 +122,6 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
         }
 
 
-    var view: View? = null
-
-
-    var backBackground:Drawable? = null
-
     /**
      * 依托view 没用设置则使用activity根布局
      */
@@ -152,51 +129,12 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
     private var popupWindow: BasePopupWindow? = null
 
 
-    constructor(activity: Activity) : super(activity) {
-        this.activity = activity
-    }
-
-    constructor(activity: Activity, showAtView: View) : this(activity) {
-        this.showAtView = showAtView
-    }
-
-    /**********************************     抽象方法   **********************************/
-
-
-    abstract fun getLayoutId(): Int
-
-    abstract fun initView(view: View?)
-
-    abstract fun initData()
-
-    abstract fun outClickable(): Boolean
-
-    private fun reShowData() {
-        initData()
-        onReShowPop()
-    }
-
-
-    val isShow: Boolean
-        get() = popupWindow?.isShowing ?: false
-
-    companion object {
-        private const val TAG = "BasePopView"
-    }
-
     /***********************************PopupWindow相关 **********************************/
     /**
      * 初始化窗体参数
      */
     private fun initPopData() {
         initViewParam()
-        if (!SET_FOCUSABLE) {
-            popFocusable = outClickable()
-        }
-
-        if (!SET_ISOUTSIDETOUCHABLE) {
-            isOutsideTouchable = outClickable()
-        }
     }
 
 
@@ -333,25 +271,21 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
             activity?.let { it1 -> EasyPopManager.remove(it1, this) }
             onPopDismiss()
         }
-
-        initView(view)
-        initData()
-
+        onPopCreated(view)
     }
-
 
 
     /**
      * 显示view
      */
-    fun show(): EasyPop {
+    private fun showPop(): EasyPop {
         activity?.let { EasyPopManager.add(it, this) }
         if (popupWindow == null) {
             layoutId = getLayoutId()
             initPopData()
             try {
                 initPopupWindow()
-                onCreatePop()
+                onPopCreated(view)
             } catch (e: ViewUnCreatedException) {
                 needReload = true
                 e.printStackTrace()
@@ -363,7 +297,7 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
                 marginWidth,
                 marginHeight
             )
-            reShowData()
+            onPopReShow()
         }
 
         return this
@@ -373,7 +307,7 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
     /**
      * 关闭页面
      */
-    fun finish() {
+    private fun finishPop() {
         popupWindow?.let {
             if (it.isShowing) {
                 it.dismiss()
@@ -385,7 +319,7 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
     /**
      * 隐藏
      */
-    fun dismiss() {
+    private fun dismissPop() {
         popupWindow?.dismiss()
     }
 
@@ -398,6 +332,74 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
         val lp = activity?.window?.attributes
         lp?.alpha = bgAlpha
         activity?.window?.attributes = lp
+    }
+
+
+    override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
+        super.onWindowFocusChanged(hasWindowFocus)
+        if (hasWindowFocus && needReload) {
+            try {
+                initPopupWindow()
+                onPopCreated(view)
+                needReload = false
+            } catch (e: ViewUnCreatedException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    /**********************************     抽象方法   **********************************/
+
+
+    abstract fun getLayoutId(): Int
+
+    abstract fun onPopCreated(view: View?)
+    /**
+     * pop重新加载
+     */
+    open fun onPopReShow() {}
+
+    open fun onPopDismiss() {}
+
+    val isShow: Boolean
+        get() = popupWindow?.isShowing ?: false
+
+
+    /**-----------------------------对外API-------------------------------------------**/
+
+
+    var backBackground: Drawable? = null
+
+    /**
+     * 上下边距
+     */
+    var marginWidth = DEFAULT_MARGIN_WIDTH
+        set(value) {
+            field = value
+            SET_MARGIN_WIDTH = true
+        }
+
+    var marginHeight = DEFAULT_MARGIN_HEIGHT
+        set(value) {
+            field = value
+            SET_MARGIN_HEIGHT = true
+        }
+
+    var gravity = DEFAULT_GRAVITY
+        set(value) {
+            field = value
+            SET_GRAVITY = true
+        }
+
+
+    var bgAlpha = DEFAULT_ALPHA
+        set(value) {
+            field = value
+            SET_ALPHA = true
+        }
+
+    fun showOnView(view: View) {
+        showAtView = view
     }
 
     /**
@@ -416,74 +418,29 @@ abstract class EasyPop : FrameLayout, LifecycleObserver {
         viewHeight = height
     }
 
+    fun  outClickable(clickable: Boolean) {
+        popFocusable = clickable
+        isOutsideTouchable = clickable
+    }
+
+
     /**
-     * 注册lifecycle
+     * 显示view
      */
-    fun register(owner: LifecycleOwner): EasyPop {
-        owner.lifecycle.addObserver(this)
+    fun show(): EasyPop {
+        return showPop()
+    }
+
+    fun finish(): EasyPop {
+        finishPop()
         return this
     }
 
-    /**
-     * pop重新加载
-     */
-    open fun onReShowPop() {}
-
-    /**
-     * pop初次加载
-     */
-    open fun onCreatePop() {
-    }
-
-    /**
-     * activity生命周期
-     */
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    open fun onDestroy() {
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun releaseActivity() {
-        activity?.let { EasyPopManager.remove(it) }
-        activity = null
-    }
-
-    /**
-     * activity生命周期
-     */
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    open fun onResume() {
-    }
-
-    /**
-     * activity生命周期
-     */
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    open fun onPause() {
-    }
-
-    /**
-     * activity生命周期
-     */
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    open fun onStop() {
+    fun dismiss(): EasyPop {
+        dismissPop()
+        return this
     }
 
 
-    open fun onPopDismiss() {
 
-    }
-
-    override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
-        super.onWindowFocusChanged(hasWindowFocus)
-        if (hasWindowFocus && needReload) {
-            try {
-                initPopupWindow()
-                onCreatePop()
-                needReload = false
-            } catch (e: ViewUnCreatedException) {
-                e.printStackTrace()
-            }
-        }
-    }
 }

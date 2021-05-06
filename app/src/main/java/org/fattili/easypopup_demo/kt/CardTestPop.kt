@@ -20,41 +20,12 @@ class CardTestPop : CardPopup {
     ) {
     }
 
-    override fun outClickable(): Boolean {
-        return true
-    }
+
 
     override fun getContentLayoutId(): Int {
         return R.layout.card_pop_test
     }
 
     private val TAG = "CardTestPop"
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy: ")
-    }
-
-    override fun onCreatePop() {
-        super.onCreatePop()
-        Log.d(TAG, "onCreatePop: ")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause: ")
-    }
-
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "onStop: ")
-    }
-
-
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume: ")
-    }
 
 }

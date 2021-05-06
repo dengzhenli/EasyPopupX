@@ -19,6 +19,7 @@ public class DialogTest extends DialogPop {
 
     public DialogTest(@NotNull Activity activity, int gravity, int width, int height) {
         super(activity, gravity, width, height);
+        outClickable(true);
     }
 
     @Override
@@ -26,10 +27,6 @@ public class DialogTest extends DialogPop {
         return R.layout.pop_test;
     }
 
-    @Override
-    public boolean outClickable() {
-        return true;
-    }
 
     @Override
     public boolean useBackGround() {
