@@ -24,7 +24,7 @@ abstract class CardPopup : EasyPop {
 
 
     constructor(activity: Activity, gravity: Int, width: Int, height: Int) : super(activity) {
-        this.gravity = gravity
+        setGravity(gravity)
         setWidth(width)
         setHeight(height)
     }
@@ -37,11 +37,9 @@ abstract class CardPopup : EasyPop {
     abstract fun getContentLayoutId(): Int
 
     override fun onPopCreated(view: View?) {
-
         dataView = activity?.layoutInflater?.inflate(getContentLayoutId(), null)
         ep_pop_card_lv.addView(dataView)
         ep_pop_card_back_iv.setOnClickListener { finish() }
     }
-
 
 }

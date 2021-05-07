@@ -2,13 +2,9 @@ package org.fattili.easypopup.view
 
 import android.app.Activity
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import org.fattili.easypopup.R
 import org.fattili.easypopup.except.ViewUnCreatedException
 import org.fattili.easypopup.manager.EasyPopManager
@@ -121,6 +117,34 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
             SET_ISOUTSIDETOUCHABLE = true
         }
 
+    /**
+     * 上下边距
+     */
+    private var popMarginWidth = DEFAULT_MARGIN_WIDTH
+        set(value) {
+            field = value
+            SET_MARGIN_WIDTH = true
+        }
+
+    private var popMarginHeight = DEFAULT_MARGIN_HEIGHT
+        set(value) {
+            field = value
+            SET_MARGIN_HEIGHT = true
+        }
+
+    private var popGravity = DEFAULT_GRAVITY
+        set(value) {
+            field = value
+            SET_GRAVITY = true
+        }
+
+
+    private var popBgAlpha = DEFAULT_ALPHA
+        set(value) {
+            field = value
+            SET_ALPHA = true
+        }
+
 
     /**
      * 依托view 没用设置则使用activity根布局
@@ -169,49 +193,49 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
                 "layout_gravity" -> {
                     val v: Int = it.value.intValue ?: DEFAULT_GRAVITY
                     if (!SET_GRAVITY) {
-                        gravity = v
+                        popGravity = v
                     }
                 }
 
                 "layout_marginLeft" -> {
-                    if (gravity and GRAVITY_RIGHT_FLAG > 0) {
-                        marginWidth = XmlUtil.getPx(context, value)
+                    if (popGravity and GRAVITY_RIGHT_FLAG > 0) {
+                        popMarginWidth = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginRight" -> {
-                    if (gravity and GRAVITY_RIGHT_FLAG == 0) {
-                        marginWidth = XmlUtil.getPx(context, value)
+                    if (popGravity and GRAVITY_RIGHT_FLAG == 0) {
+                        popMarginWidth = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginHorizontal" -> {
-                    marginWidth = XmlUtil.getPx(context, value)
+                    popMarginWidth = XmlUtil.getPx(context, value)
                 }
                 "layout_marginStart" -> {
-                    if (gravity and GRAVITY_RIGHT_FLAG > 0) {
-                        marginWidth = XmlUtil.getPx(context, value)
+                    if (popGravity and GRAVITY_RIGHT_FLAG > 0) {
+                        popMarginWidth = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginEnd" -> {
-                    if (gravity and GRAVITY_RIGHT_FLAG == 0) {
-                        marginWidth = XmlUtil.getPx(context, value)
+                    if (popGravity and GRAVITY_RIGHT_FLAG == 0) {
+                        popMarginWidth = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginBottom" -> {
-                    if (gravity and GRAVITY_BOTTOM_FLAG == 0) {
-                        marginHeight = XmlUtil.getPx(context, value)
+                    if (popGravity and GRAVITY_BOTTOM_FLAG == 0) {
+                        popMarginHeight = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginTop" -> {
-                    if (gravity and GRAVITY_BOTTOM_FLAG == 0) {
-                        marginHeight = XmlUtil.getPx(context, value)
+                    if (popGravity and GRAVITY_BOTTOM_FLAG == 0) {
+                        popMarginHeight = XmlUtil.getPx(context, value)
                     }
                 }
                 "layout_marginVertical" -> {
-                    marginHeight = XmlUtil.getPx(context, value)
+                    popMarginHeight = XmlUtil.getPx(context, value)
                 }
                 "layout_margin" -> {
-                    marginWidth = XmlUtil.getPx(context, value)
-                    marginHeight = XmlUtil.getPx(context, value)
+                    popMarginWidth = XmlUtil.getPx(context, value)
+                    popMarginHeight = XmlUtil.getPx(context, value)
                 }
             }
         }
@@ -253,9 +277,9 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
         try {
             popupWindow?.showAtLocation(
                 showAtView,
-                gravity,
-                marginWidth,
-                marginHeight
+                popGravity,
+                popMarginWidth,
+                popMarginHeight
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -265,7 +289,7 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
         }
 
         //设置背景半透明
-        backgroundAlpha(bgAlpha)
+        backgroundAlpha(popBgAlpha)
         popupWindow?.setOnDismissListener {
             backgroundAlpha(1f)
             activity?.let { it1 -> EasyPopManager.remove(it1, this) }
@@ -282,6 +306,7 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
         activity?.let { EasyPopManager.add(it, this) }
         if (popupWindow == null) {
             layoutId = getLayoutId()
+            onPopInit()
             initPopData()
             try {
                 initPopupWindow()
@@ -293,9 +318,9 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
         } else {
             popupWindow?.showAtLocation(
                 view,
-                gravity,
-                marginWidth,
-                marginHeight
+                popGravity,
+                popMarginWidth,
+                popMarginHeight
             )
             onPopReShow()
         }
@@ -353,13 +378,17 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
 
     abstract fun getLayoutId(): Int
 
+    open fun onPopInit() {}
+
     abstract fun onPopCreated(view: View?)
+
     /**
      * pop重新加载
      */
     open fun onPopReShow() {}
 
     open fun onPopDismiss() {}
+
 
     val isShow: Boolean
         get() = popupWindow?.isShowing ?: false
@@ -368,61 +397,68 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
     /**-----------------------------对外API-------------------------------------------**/
 
 
-    var backBackground: Drawable? = null
+    private var backBackground: Drawable? = null
 
-    /**
-     * 上下边距
-     */
-    var marginWidth = DEFAULT_MARGIN_WIDTH
-        set(value) {
-            field = value
-            SET_MARGIN_WIDTH = true
-        }
-
-    var marginHeight = DEFAULT_MARGIN_HEIGHT
-        set(value) {
-            field = value
-            SET_MARGIN_HEIGHT = true
-        }
-
-    var gravity = DEFAULT_GRAVITY
-        set(value) {
-            field = value
-            SET_GRAVITY = true
-        }
-
-
-    var bgAlpha = DEFAULT_ALPHA
-        set(value) {
-            field = value
-            SET_ALPHA = true
-        }
-
-    fun showOnView(view: View) {
-        showAtView = view
+    fun setBackGround(value: Drawable): EasyPop {
+        backBackground = value
+        return this
     }
+
+    fun getBackGround(): Drawable? {
+        return backBackground
+    }
+
+    fun setMarginWidth(value: Int): EasyPop {
+        popMarginWidth = value
+        return this
+    }
+
+    fun setMarginHeight(value: Int): EasyPop {
+        popMarginHeight = value
+        return this
+    }
+
+    fun setGravity(value: Int): EasyPop {
+        popGravity = value
+        return this
+    }
+
+
+    fun setBgAlpha(value: Float): EasyPop {
+        popBgAlpha = value
+        return this
+    }
+
 
     /**
      * 设置宽度，pop与view一起
      */
-    fun setWidth(width: Int) {
+    fun setWidth(width: Int): EasyPop {
         popupWidth = width
         viewWidth = width
+        return this
     }
 
     /**
      * 设置高度，pop与view一起
      */
-    fun setHeight(height: Int) {
+    fun setHeight(height: Int): EasyPop {
         popupHeight = height
         viewHeight = height
+        return this
     }
 
-    fun  outClickable(clickable: Boolean) {
+
+    fun showOnView(view: View): EasyPop {
+        showAtView = view
+        return this
+    }
+
+    fun outClickable(clickable: Boolean): EasyPop {
         popFocusable = clickable
         isOutsideTouchable = clickable
+        return this
     }
-
 
     /**
      * 显示view
@@ -440,7 +476,5 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
         dismissPop()
         return this
     }
-
-
 
 }

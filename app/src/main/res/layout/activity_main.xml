@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".kt.MainActivity">
 
 
@@ -37,4 +38,11 @@
         android:layout_height="wrap_content"
         android:onClick="cardPop"
         android:text="cardPop" />
+
+    <Button
+        android:id="@+id/dddBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="viewLeft"
+        android:text="在左边显示" />
 </LinearLayout>

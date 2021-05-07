@@ -11,6 +11,6 @@ import org.fattili.easypopup.view.EasyPop
  */
 abstract class BottomPop : EasyPop {
     constructor(activity: Activity?) : super(activity!!) {
-        gravity = Gravity.BOTTOM
+        setGravity(Gravity.BOTTOM)
     }
 }
