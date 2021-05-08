@@ -10,7 +10,7 @@ EasyPopupX是一个可以让你在项目里面轻松使用PopupWindow的工具�
 * 只需极少的代码
 * PopupWindow相关的安全性，兼容性，内存优化都交给EasyPopupX去考虑
 * 可以在布局文件里面配置PopupWindow位置了
-* 可以在PopupWindow里面直接使用findViewById，也支持synthetic，即kotlin中直接使用id访问组件
+* 可以在PopupWindow里面直接使用findViewById
 * 其他更多属性
 
 你可以通过EasyPopupX轻松实现例如以下的页面
@@ -21,8 +21,14 @@ EasyPopupX是一个可以让你在项目里面轻松使用PopupWindow的工具�
 </div>
 
 ---
+# 更新记录
+## 1.0.3
+* 删除过多的抽象方法
+* 优化接口
+* 删除意义不大的Lifecycle
+
+---
 # 快速接入
-（项目目前仅支持AndroidX，我也纠结要不要兼容support，但看到郭霖大佬等人都放弃兼容support，就不给维护加大负担了。若有读者需要这方面需求，可提issue）
 
 ## 添加依赖
 根项目build.gradle添加jitpack
@@ -41,31 +47,36 @@ dependencies {
 }
 ```
 
-## 使用
-
-### 必须：在需要调用时候创建EasyPop的实现类
-```kotlin
-    fun normalPop(view: View) {
-        object : EasyPop(this@MainActivity) {
-            override fun outClickable(): Boolean {
-                return true
-            }
-
-            override fun initData() {}
-            override fun initView(view: View?) {
-                pop_example_text.text = "我是普通弹出窗"
-            }
-
-            override fun getLayoutId(): Int {
-                return R.layout.pop_test
-            }
-
-        }.show()
-    }
+如果项目没有使用kotlin导致报kotlin错误，需添加依赖  
+```
+dependencies {
+    // XXX为kt版本号，例如：1.4.21
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:XXX"
+}
 ```
 
-你也可以使用java接入，为节省篇幅，演示只用kotlin，java的使用可参考demo  
-pop_test.xml
+## 使用
+
+### 在需要调用时候创建EasyPop的实现类
+```kotlin
+    fun normalPop(view: View) {
+         object : EasyPop(this@MainActivity) {   
+               // 你自己的布局文件ID
+               override fun getLayoutId(): Int {
+                   return R.layout.pop_test
+               }    
+               // 布局创建完成，在这里写你的逻辑代码 
+               override fun onPopCreated(view: View?) {
+                   pop_example_text.text = "我是普通弹出窗"
+               }
+           }.show()
+    }
+```
+这里为了方便演示使用匿名内部类，实际开发建议单独创建一个类继承EasyPop。  
+
+你也可以使用java接入，为节省篇幅，演示只用kotlin，java的使用可参考demo。  
+
+***pop_test.xml***
 ```XML
 <?xml version="1.0" encoding="utf-8"?>
 
@@ -80,22 +91,11 @@ pop_test.xml
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
-### 建议：activity实现 LifecycleOwner 接口，并在调用easypop之前调用register方法  
-此方法会进行生命周期注册等步骤。
-```kotlin
-class MainActivity : AppCompatActivity(), LifecycleOwner {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        EasyPopManager.register(this, this)
-    }
-}
 
-```
-若没有进行此步骤，EasyPop需要生命周期时候需要手动调用
 
-### 建议：在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged  
+### 在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged  
+这一步不是必须的，只是兼容一些不显示的情况
 ```kotlin
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -104,24 +104,133 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 ```
 
 
-### 建议：页面较多时候不建议使用匿名内部类，应创建实现类管理
+---
+# 方法
+## 可继承方法
+```
+    /**
+     * 布局文件
+     */
+    abstract fun getLayoutId(): Int
+
+    /**
+     * PopupWindow初始化时候回调
+     */
+    open fun onPopInit() {}
+
+    /**
+     * PopupWindow创建成功时候回调
+     */
+    abstract fun onPopCreated(view: View?)
+
+    /**
+     * PopupWindow重新加载时候回调
+     */
+    open fun onPopReShow() {}
+
+    /**
+     * PopupWindow关闭时候回调
+     */
+    open fun onPopDismiss() {}
+```
+## PopupWindow设置
+
+    /**
+     * 显示view
+     */
+    fun show(): EasyPop {
+        return showPop()
+    }
+
+    fun finish(): EasyPop {
+        finishPop()
+        return this
+    }
+
+    fun dismiss(): EasyPop {
+        dismissPop()
+        return this
+    }
+
+### 设置宽度
+* `fun setWidth(width: Int): EasyPop`
 ```kotlin
-class TestPop(activity: Activity) : EasyPop(activity) {
-    // 这里进行初始化视图操作
-    override fun initView(view: View?) { pop_example_text.text = "我是普通弹出窗" }
-    // 这里进行初始化数据操作
-    override fun initData() {}
-    // 这里输入你自己编写的布局文件
-    override fun getLayoutId(): Int { return R.layout.pop_test }
-    // 点击外部弹窗是否消失
-    override fun outClickable(): Boolean { return true }
-}
+    fun topPop(view: View) {
+        TestPop(this)
+        .setWidth(500)
+        .show()
+    }
+```
+### 设置高度
+* `fun setHeight(height: Int): EasyPop`
+```kotlin
+    fun topPop(view: View) {
+        TestPop(this)
+        .setHeight(500)
+        .show()
+    }
 ```
 
----
+### 背景设置
+* `fun setBackGround(value: Drawable): EasyPop`
+```kotlin
+    fun topPop(view: View) {
+        TestPop(this)
+        .setBackGround(ColorDrawable(Color.TRANSPARENT))
+        .show()
+    }
+```
+
+    fun setBgAlpha(value: Float): EasyPop {
+        popBgAlpha = value
+        return this
+    }
+
+
+    fun outClickable(clickable: Boolean): EasyPop {
+        popFocusable = clickable
+        isOutsideTouchable = clickable
+        return this
+    }
+
+
+    fun setGravity(value: Int): EasyPop {
+        popGravity = value
+        return this
+    }
+
+   fun showOnView(view: View): EasyPop {
+        showAtView = view
+        return this
+    }
+
+    fun showOnView(
+        view: View,
+        vararg gravity: EasyPopGravity
+    ): EasyPop {
+        showOnView(view)
+        easyPopGravity = EasyPopGravity.CENTER.code
+        for (i in gravity.indices) {
+            easyPopGravity = easyPopGravity  or gravity[i].code
+        }
+        return this
+    }
+
+
+ fun setMarginWidth(value: Int): EasyPop {
+        popMarginWidth = value
+        return this
+    }
+
+    fun setMarginHeight(value: Int): EasyPop {
+        popMarginHeight = value
+        return this
+    }
+
+
+
+ 
 # 属性
-
-
 
 ## EasyPop属性
 
@@ -129,6 +238,7 @@ class TestPop(activity: Activity) : EasyPop(activity) {
 ```kotlin
 val easyPop = TestPop(this);
 easyPop.gravity = Gravity.RIGHT
+easyPop.setG
 easyPop.show()
 ```
 
@@ -347,7 +457,7 @@ AlertDialogPop的用法可参考安卓AlertDialog
 
 # 常见问题
 ## 提示创建失败，请等待页面渲染完毕怎么办？
-参考[建议：在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged](#建议在onwindowfocuschanged方法调用easypopmanageronwindowfocuschanged) 
+参考[在onWindowFocusChanged方法调用EasyPopManager.onWindowFocusChanged](#在onwindowfocuschanged方法调用easypopmanageronwindowfocuschanged) 
 
 # License
 

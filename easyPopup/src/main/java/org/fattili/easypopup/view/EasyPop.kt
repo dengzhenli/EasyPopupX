@@ -385,17 +385,29 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity) {
     /**********************************     抽象方法   **********************************/
 
 
+    /**
+     * 布局文件
+     */
     abstract fun getLayoutId(): Int
 
+    /**
+     * PopupWindow初始化时候回调
+     */
     open fun onPopInit() {}
 
+    /**
+     * PopupWindow创建成功时候回调
+     */
     abstract fun onPopCreated(view: View?)
 
     /**
-     * pop重新加载
+     * PopupWindow重新加载时候回调
      */
     open fun onPopReShow() {}
 
+    /**
+     * PopupWindow关闭时候回调
+     */
     open fun onPopDismiss() {}
 
 
