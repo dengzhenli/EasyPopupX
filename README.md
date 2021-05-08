@@ -270,20 +270,20 @@ EasyPopGravity有以下设置：
 ```
 这里的设置本质上是修改easypop的属性，若被影响属性在代码里面手动设置过，则使用手动设置的属性  
 
-属性名|影响属性|备注
+属性名|对应方法|备注
 ---|---|---
-"layout_width" |viewWidth popupWidth |
-"layout_height" | viewHeight popupHeight |
-"layout_gravity"| gravity |
-"layout_marginLeft"|   marginWidth |
-"layout_marginRight"|   marginWidth |优先于layout_marginLeft
-"layout_marginHorizontal"|   marginWidth |优先于layout_marginRight
-"layout_marginStart"|  marginWidth |优先于layout_marginHorizontal
-"layout_marginEnd"|  marginWidth |优先于layout_marginEnd
-"layout_marginBottom"| marginHeigh|
-"layout_marginTop"|   marginHeight 优先于layout_marginBottom
-"layout_marginVertical"| marginHeight |优先于layout_marginTop
-"layout_margin" |  marginWidth     marginHeight |优先于layout_marginVertical，layout_marginHorizontal
+"layout_width" |setWidth |
+"layout_height" | setHeight |
+"layout_gravity"| setGravity |
+"layout_marginLeft"|   setMarginWidth |
+"layout_marginRight"|   setMarginWidth |优先于layout_marginLeft
+"layout_marginHorizontal"|   setMarginWidth |优先于layout_marginRight
+"layout_marginStart"|  setMarginWidth |优先于layout_marginHorizontal
+"layout_marginEnd"|  setMarginWidth |优先于layout_marginEnd
+"layout_marginBottom"| setMarginHeight|
+"layout_marginTop"|   setMarginHeight 优先于layout_marginBottom
+"layout_marginVertical"| setMarginHeight |优先于layout_marginTop
+"layout_margin" |  setMarginWidth     setMarginHeight |优先于layout_marginVertical，layout_marginHorizontal
   
 
 ---
