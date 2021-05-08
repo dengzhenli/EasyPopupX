@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
 import android.view.View
-import androidx.lifecycle.LifecycleOwner
 import kotlinx.android.synthetic.main.ep_pop_alert_dialog.view.*
 import org.fattili.easypopup.R
 

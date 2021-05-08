@@ -1,7 +1,6 @@
 package org.fattili.easypopup.except
 
 import android.os.Build
-import androidx.annotation.RequiresApi
 import java.lang.Exception
 
 /**
@@ -16,11 +15,4 @@ class ViewUnCreatedException : Exception {
 
     constructor(exception: Exception) : super(exception.message, exception.cause)
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    constructor(
-        message: String?,
-        cause: Throwable?,
-        enableSuppression: Boolean,
-        writableStackTrace: Boolean
-    ) : super(message, cause, enableSuppression, writableStackTrace)
 }

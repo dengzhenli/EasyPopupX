@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 
+import org.fattili.easypopup.constant.EasyPopGravity;
 import org.fattili.easypopup.manager.EasyPopManager;
 import org.fattili.easypopup.util.ScreenUtil;
 import org.fattili.easypopup.view.EasyPop;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         new EasyPop(this) {
 
             @Override
-            public void onPopCreated(@org.jetbrains.annotations.Nullable View view) {
+            public void onPopCreated(View view) {
                 TextView textView = findViewById(R.id.pop_example_text);
                 textView.setText("我是普通弹出窗");
             }
@@ -83,4 +84,41 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         }.show();
 
     }
+
+    public void viewLeft(View view) {
+
+        new EasyPop(this) {
+
+            @Override
+            public void onPopCreated(View view) {
+
+            }
+
+            @Override
+            public int getLayoutId() {
+                return R.layout.pop_test1;
+            }
+
+        }.showOnView(view.findViewById(R.id.viewLeft), EasyPopGravity.CENTER, EasyPopGravity.TO_LEFT).show();
+    }
+
+
+    public void viewAboveLeft(View view) {
+
+
+        new EasyPop(this) {
+
+            @Override
+            public void onPopCreated(View view) {
+
+            }
+
+            @Override
+            public int getLayoutId() {
+                return R.layout.pop_test1;
+            }
+
+        }.showOnView(view.findViewById(R.id.viewAboveLeft), EasyPopGravity.ALIGN_LEFT, EasyPopGravity.TO_ABOVE).show();
+    }
+
 }

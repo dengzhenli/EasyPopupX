@@ -13,36 +13,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="normalPop"
-        android:text="normalPop" />
+        android:text="@string/normalPop" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="topPop"
-        android:text="topPop" />
+        android:text="@string/topPop" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="dialogPop"
-        android:text="dialogPop" />
+        android:text="@string/dialogPop" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="alertDialogPop"
-        android:text="alertDialogPop" />
+        android:text="@string/alertDialogPop" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="cardPop"
-        android:text="cardPop" />
+        android:text="@string/cardPop" />
 
     <Button
-        android:id="@+id/dddBt"
+        android:id="@+id/viewLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="viewLeft"
-        android:text="在左边显示" />
+        android:text="@string/viewLeft" />
+    <Button
+        android:id="@+id/viewAboveLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="viewAboveLeft"
+        android:text="@string/viewAboveLeft" />
 </LinearLayout>

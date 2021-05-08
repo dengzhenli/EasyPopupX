@@ -4,10 +4,11 @@ import android.app.Activity
 import android.graphics.drawable.Drawable
 import android.view.*
 import android.widget.FrameLayout
-import androidx.lifecycle.LifecycleObserver
 import org.fattili.easypopup.R
 import org.fattili.easypopup.except.ViewUnCreatedException
 import org.fattili.easypopup.manager.EasyPopManager
+import org.fattili.easypopup.constant.EasyPopGravity
+import org.fattili.easypopup.util.EasyPopGravityUtil
 import org.fattili.easypopup.util.XmlUtil
 import org.fattili.easypopup.view.base.BasePopupWindow
 
@@ -16,7 +17,7 @@ import org.fattili.easypopup.view.base.BasePopupWindow
  * Created by dengzhenli on 2021/01/23.
  * 自定义的Popup
  */
-abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObserver {
+abstract class EasyPop(activity: Activity) : FrameLayout(activity) {
 
     var view: View? = null
 
@@ -250,7 +251,6 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
         if (view == null) {
             val inflate = LayoutInflater.from(context)
             view = inflate.inflate(layoutId, this)
-            if (showAtView == null) showAtView = view
             if (backBackground != null) {
                 view?.background = backBackground
             }
@@ -275,12 +275,7 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
         popupWindow?.setBackgroundDrawable(view?.background)
 
         try {
-            popupWindow?.showAtLocation(
-                showAtView,
-                popGravity,
-                popMarginWidth,
-                popMarginHeight
-            )
+            showView()
         } catch (e: Exception) {
             e.printStackTrace()
             val parent = view?.parent as ViewGroup
@@ -298,6 +293,26 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
         onPopCreated(view)
     }
 
+    private var easyPopGravity: Int = EasyPopGravity.TO_BELOW + EasyPopGravity.CENTER
+
+    private fun showView() {
+        showAtView?.let {
+            popupWindow?.showAtLocation(
+                it,
+                Gravity.TOP or Gravity.START,
+                EasyPopGravityUtil.getXOff(it, easyPopGravity, viewWidth, popMarginWidth),
+                EasyPopGravityUtil.getYOff(it, easyPopGravity, viewHeight, popMarginHeight)
+            )
+        } ?: let {
+            popupWindow?.showAtLocation(
+                view,
+                popGravity,
+                popMarginWidth,
+                popMarginHeight
+            )
+        }
+
+    }
 
     /**
      * 显示view
@@ -310,18 +325,12 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
             initPopData()
             try {
                 initPopupWindow()
-                onPopCreated(view)
             } catch (e: ViewUnCreatedException) {
                 needReload = true
                 e.printStackTrace()
             }
         } else {
-            popupWindow?.showAtLocation(
-                view,
-                popGravity,
-                popMarginWidth,
-                popMarginHeight
-            )
+            showView()
             onPopReShow()
         }
 
@@ -451,6 +460,18 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity), LifecycleObs
 
     fun showOnView(view: View): EasyPop {
         showAtView = view
+        return this
+    }
+
+    fun showOnView(
+        view: View,
+        vararg gravity: EasyPopGravity
+    ): EasyPop {
+        showOnView(view)
+        easyPopGravity = EasyPopGravity.CENTER.code
+        for (i in gravity.indices) {
+            easyPopGravity = easyPopGravity  or gravity[i].code
+        }
         return this
     }
 
