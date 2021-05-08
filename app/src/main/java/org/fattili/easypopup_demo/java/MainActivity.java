@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
             public void onPopCreated(View view) {
                 TextView textView = findViewById(R.id.pop_example_text);
                 textView.setText("我是普通弹出窗");
+
             }
 
             @Override

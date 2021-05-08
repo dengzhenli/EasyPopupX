@@ -133,29 +133,32 @@ dependencies {
      */
     open fun onPopDismiss() {}
 ```
+## PopupWindow方法
+### 显示
+* `fun show(): EasyPop`
+```kotlin
+    fun onButtonClick(view: View) {
+        TestPop(this)
+        .show()
+    }
+```
+### 关闭
+* `fun finish(): EasyPop`
+```kotlin
+   pop.finish()
+```
+### 隐藏
+* `fun dismiss(): EasyPop`
+```kotlin
+   pop.dismiss()
+```
+
+
 ## PopupWindow设置
-
-    /**
-     * 显示view
-     */
-    fun show(): EasyPop {
-        return showPop()
-    }
-
-    fun finish(): EasyPop {
-        finishPop()
-        return this
-    }
-
-    fun dismiss(): EasyPop {
-        dismissPop()
-        return this
-    }
-
 ### 设置宽度
 * `fun setWidth(width: Int): EasyPop`
 ```kotlin
-    fun topPop(view: View) {
+    fun onButtonClick(view: View) {
         TestPop(this)
         .setWidth(500)
         .show()
@@ -164,7 +167,7 @@ dependencies {
 ### 设置高度
 * `fun setHeight(height: Int): EasyPop`
 ```kotlin
-    fun topPop(view: View) {
+    fun onButtonClick(view: View) {
         TestPop(this)
         .setHeight(500)
         .show()
@@ -174,86 +177,80 @@ dependencies {
 ### 背景设置
 * `fun setBackGround(value: Drawable): EasyPop`
 ```kotlin
-    fun topPop(view: View) {
+    fun onButtonClick(view: View) {
         TestPop(this)
         .setBackGround(ColorDrawable(Color.TRANSPARENT))
         .show()
     }
 ```
 
-    fun setBgAlpha(value: Float): EasyPop {
-        popBgAlpha = value
-        return this
-    }
+### 设置透明度
+* `fun setBgAlpha(alpha: Float): EasyPop`
 
-
-    fun outClickable(clickable: Boolean): EasyPop {
-        popFocusable = clickable
-        isOutsideTouchable = clickable
-        return this
-    }
-
-
-    fun setGravity(value: Int): EasyPop {
-        popGravity = value
-        return this
-    }
-
-   fun showOnView(view: View): EasyPop {
-        showAtView = view
-        return this
-    }
-
-    fun showOnView(
-        view: View,
-        vararg gravity: EasyPopGravity
-    ): EasyPop {
-        showOnView(view)
-        easyPopGravity = EasyPopGravity.CENTER.code
-        for (i in gravity.indices) {
-            easyPopGravity = easyPopGravity  or gravity[i].code
-        }
-        return this
-    }
-
-
- fun setMarginWidth(value: Int): EasyPop {
-        popMarginWidth = value
-        return this
-    }
-
-    fun setMarginHeight(value: Int): EasyPop {
-        popMarginHeight = value
-        return this
-    }
-
-
-
- 
-# 属性
-
-## EasyPop属性
-
-调用示例
+alpha: 打开弹窗后背景view的透明度 范围0-1。0为完全不可见，1为完全可见
 ```kotlin
-val easyPop = TestPop(this);
-easyPop.gravity = Gravity.RIGHT
-easyPop.setG
-easyPop.show()
+    fun onButtonClick(view: View) {
+        TestPop(this)
+        .setBgAlpha(0.5f)
+        .show()
+    }
+```
+### 是否可通过点击外部关闭弹窗
+
+默认true
+* `fun outClickable(clickable: Boolean): EasyPop`
+```kotlin
+    fun onButtonClick(view: View) {
+        TestPop(this)
+        .outClickable(false)
+        .show()
+    }
 ```
 
-属性名|属性描述|单位
----|---|---
-popupWidth|弹窗的宽度|px
-popupHeight|弹窗的高度|px
-viewWidth| 弹窗内view的宽度|px
-viewHeight| 弹窗内view的高度|px
-gravity| 弹窗方向，使用android.view.Gravity的值|int
-marginWidth| 弹窗方向基础上距离水平距离|px
-marginHeight| 弹窗方向基础上距离垂直距离|px
-bgAlpha| 弹窗背景透明度 0-1 |float
-isShow| 弹窗是否显示状态|boolean
+### 设置位置
 
+相对于根布局的位置，与View 的 gravity 用法一样，EasyPopup默认是相对View展示的，默认居中
+* `fun setGravity(value: Int): EasyPop`
+```kotlin
+    fun onButtonClick(view: View) {
+        TestPop(this)
+        .setGravity(Gravity.TOP)
+        .show()
+    }
+```
+
+### 设置相对view展示
+EasyPopup默认是相对View展示的，如果你想相对某个view展示，则可设置showOnView方法（setGravity属性将无效）
+* `fun showOnView(showAtView: View): EasyPop`
+只设置相对view，默认在该控件下方相对控件居中位置
+
+* `fun showOnView(showAtView: View,vararg gravity: EasyPopGravity): EasyPop`
+设置相对view以及位置，EasyPopGravity可设置多组
+```kotlin
+    fun onButtonClick(view: View) {
+        TestPop(this)
+        .showOnView(viewAboveLeft, EasyPopGravity.ALIGN_LEFT, EasyPopGravity.TO_ABOVE)
+        .show()
+    }
+```
+
+EasyPopGravity有以下设置：
+* CENTER 居中
+* TO_ABOVE 控件上方
+* TO_BELOW 控件下方
+* TO_LEFT 控件左边
+* TO_RIGHT 控件右边
+* ALIGN_TOP 对齐控件顶方
+* ALIGN_BOTTOM 对齐控件底方
+* ALIGN_LEFT 对齐控件左边
+* ALIGN_RIGHT 对齐控件右边
+
+### 设置水平偏移
+* `fun setMarginWidth(value: Int): EasyPop`
+### 设置垂直偏移
+* `fun setMarginHeight(value: Int): EasyPop`
+
+# 属性
 
 ## XML属性
 
@@ -288,44 +285,9 @@ isShow| 弹窗是否显示状态|boolean
 "layout_marginVertical"| marginHeight |优先于layout_marginTop
 "layout_margin" |  marginWidth     marginHeight |优先于layout_marginVertical，layout_marginHorizontal
   
-## 可用方法
-
-方法|描叙
----|---
-getLayoutId(): Int|抽象方法，必须实现，设置布局ID
-initView(view: View?)|抽象方法，必须实现，编写页面逻辑
-initData(）|抽象方法，必须实现，初始化数据
-outClickable(): Boolean|点击外部弹窗是否消失    
-show(): EasyPop|显示弹窗
-finish()|关闭弹窗
-dismiss()|隐藏弹窗 
-setWidth(width: Int) |设置弹窗宽度，影响viewWidth popupWidth
-setHeight(height: Int) |设置弹窗高度 viewHeight popupHeight
-onWindowFocusChanged(hasWindowFocus: Boolean)|activity回调方法
-
-### 回调方法
-方法|描叙
- ---|---
-onReShowPop()|  pop重新加载时调用
-onCreatePop() | pop初次加载时调用
-onPopDismiss()| pop隐藏时调用
- 
- 
-### 生命周期
-easypop通过lifecycle监听Activity的生命周期，因为弹窗调用时候基本activity已经加载完毕，故不监听onCreate和onStart方法  
-
-方法|描叙
----|---
- onDestroy()|Activity生命周期
- onResume()|Activity生命周期
- onPause()|Activity生命周期
- onStop()|Activity生命周期
- 
 
 ---
 # 组件
-
-
 
 ## 卡片式弹出窗
 
@@ -334,8 +296,6 @@ easypop通过lifecycle监听Activity的生命周期，因为弹窗调用时候�
 ```kotlin
 class CardTestPop : CardPopup {
     constructor(activity: Activity) : super(activity) {}
-
-    override fun outClickable(): Boolean { return true   }
 
     override fun getContentLayoutId(): Int {
         return R.layout.card_pop_test
@@ -398,9 +358,6 @@ class DialogTest : DialogPop {
         return R.layout.pop_test
     }
 
-    override fun outClickable(): Boolean {
-        return true
-    }
 
     // 是否使用DialogPop自带背景，选择否，则使用透明背景
     override fun useBackGround(): Boolean {
