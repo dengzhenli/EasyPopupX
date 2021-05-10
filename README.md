@@ -14,7 +14,7 @@ EasyPopupX是一个可以让你在项目里面轻松使用PopupWindow的工具�
 * 其他更多属性
 
 
-![示例图片](img/pop_example.gif)
+![示例图片](https://gitee.com/dengzhenli/easy-popup/blob/master/img/pop_example.gif)
 
 ---
 # 更新记录
