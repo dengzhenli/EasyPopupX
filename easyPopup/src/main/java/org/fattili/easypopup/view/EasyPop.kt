@@ -49,6 +49,7 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity) {
     private val DEFAULT_ALPHA = 0.5f
     private val DEFAULT_FOCUSABLE = true
     private val DEFAULT_ISOUTSIDETOUCHABLE = true
+    private val DEFAULT_EasyPopGravity = EasyPopGravity.TO_BELOW + EasyPopGravity.CENTER
 
     /**
      * 优先使用代码设置的选项
@@ -154,6 +155,7 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity) {
     private var popupWindow: BasePopupWindow? = null
 
 
+    private var easyPopGravity: Int = DEFAULT_EasyPopGravity
     /***********************************PopupWindow相关 **********************************/
     /**
      * 初始化窗体参数
@@ -293,7 +295,6 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity) {
         onPopCreated(view)
     }
 
-    private var easyPopGravity: Int = EasyPopGravity.TO_BELOW + EasyPopGravity.CENTER
 
     private fun showView() {
         showAtView?.let {
