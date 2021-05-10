@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EasyPopup</string>
+    <string name="app_name">EasyPopupX</string>
     <string name="normalPop">普通Pop</string>
     <string name="topPop">顶部Pop</string>
     <string name="dialogPop">弹窗Pop</string>

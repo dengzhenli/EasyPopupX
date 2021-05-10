@@ -288,7 +288,7 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity) {
         //设置背景半透明
         backgroundAlpha(popBgAlpha)
         popupWindow?.setOnDismissListener {
-            backgroundAlpha(1f)
+            backgroundAlpha(1F)
             activity?.let { it1 -> EasyPopManager.remove(it1, this) }
             onPopDismiss()
         }

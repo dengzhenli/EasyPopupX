@@ -13,12 +13,8 @@ EasyPopupX是一个可以让你在项目里面轻松使用PopupWindow的工具�
 * 可以在PopupWindow里面直接使用findViewById
 * 其他更多属性
 
-你可以通过EasyPopupX轻松实现例如以下的页面
-<div>
-    <img src="img/pop_top.jpeg" width="150">
-    <img src="img/pop_card.jpeg" width="150">
-    <img src="img/pop_dialog.jpeg" width="150">
-</div>
+
+[pop_example](img/pop_example.gif)
 
 ---
 # 更新记录
@@ -43,7 +39,7 @@ allprojects {
 添加依赖
 ```
 dependencies {
-     implementation 'com.github.dengzhenli:EasyPopupX:1.0.2'
+     implementation 'com.github.dengzhenli:EasyPopupX:1.0.3'
 }
 ```
 
