@@ -148,6 +148,9 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity) {
         }
 
 
+    private var animationStyle = R.style.ep_common_pop_theme
+
+
     /**
      * 依托view 没用设置则使用activity根布局
      */
@@ -491,6 +494,11 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity) {
     fun outClickable(clickable: Boolean): EasyPop {
         popFocusable = clickable
         isOutsideTouchable = clickable
+        return this
+    }
+
+    fun setAnimationStyle(style: Int): EasyPop {
+        animationStyle = style
         return this
     }
 
