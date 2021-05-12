@@ -82,6 +82,11 @@ dependencies {
 你也可以使用java接入，为节省篇幅，演示只用kotlin，java的使用可参考demo。  
 
 更多用法，参见[wiki](https://github.com/dengzhenli/EasyPopupX/wiki/%E9%A6%96%E9%A1%B5) 
+- [快速接入](https://github.com/dengzhenli/EasyPopupX/wiki/%E5%BF%AB%E9%80%9F%E6%8E%A5%E5%85%A5)
+- [方法](https://github.com/dengzhenli/EasyPopupX/wiki/%E6%96%B9%E6%B3%95)
+- [属性](https://github.com/dengzhenli/EasyPopupX/wiki/%E5%B1%9E%E6%80%A7)
+- [组件](https://github.com/dengzhenli/EasyPopupX/wiki/%E7%BB%84%E4%BB%B6)
+- [常见问题](https://github.com/dengzhenli/EasyPopupX/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
 
 # License
 
