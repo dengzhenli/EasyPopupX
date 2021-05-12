@@ -90,4 +90,4 @@ dependencies {
 
 # License
 
-EasyPopupX is Apache 2 licensed, as found in the LICENSE file.
+EasyPopupX 使用 Apache 2 licensed, 参见 LICENSE 文件.
