@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     fun alertDialogPop(view: View) {
         AlertDialogPop.Builder(this)
             .setTitle("标题")
-            .setMessage("是否启动自毁程序")
+            .setMessage("是否执行下一步")
             .setMeasureButton(true, null, View.OnClickListener { finish() })
             .setCancelButton(true, null, null)
             .show()
