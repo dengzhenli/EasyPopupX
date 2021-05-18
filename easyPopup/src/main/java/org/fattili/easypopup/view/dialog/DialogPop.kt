@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.View
 import kotlinx.android.synthetic.main.ep_pop_dialog.view.*
 import org.fattili.easypopup.R
+import org.fattili.easypopup.util.ScreenUtil
 import org.fattili.easypopup.view.EasyPop
 
 /**
@@ -48,6 +49,9 @@ abstract class DialogPop : EasyPop {
         dataView = activity?.layoutInflater?.inflate(getContentLayoutId(), null)
         if (!useBackGround()){
             ep_pop_dialog_v.background = ColorDrawable(Color.TRANSPARENT)
+        } else {
+            val padding = ScreenUtil.dip2px(context, 4f)
+            ep_pop_dialog_v?.setPadding(padding,padding,padding,padding)
         }
         ep_pop_dialog_v.addView(dataView)
     }
