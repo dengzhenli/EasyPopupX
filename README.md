@@ -79,7 +79,30 @@ dependencies {
 ```
 这里为了方便演示使用匿名内部类，实际开发建议单独创建一个类继承EasyPop。  
 
-你也可以使用java接入，为节省篇幅，演示只用kotlin，java的使用可参考demo。  
+你也可以使用java接入
+```java
+public class MainActivity extends AppCompatActivity {
+
+    public void normalPop(View view) {
+        new EasyPop(this) {
+
+            @Override
+            public void onPopCreated(View view) {
+                TextView textView = findViewById(R.id.pop_example_text);
+                textView.setText("我是普通弹出窗");
+
+            }
+
+            @Override
+            public int getLayoutId() {
+                return R.layout.pop_test;
+            }
+
+        }.show();
+    }
+}
+```
+为节省篇幅，演示只用kotlin，java的使用可参考demo(app module)。  
 
 更多用法，参见[wiki](https://github.com/dengzhenli/EasyPopupX/wiki/%E9%A6%96%E9%A1%B5) 
 - [快速接入](https://github.com/dengzhenli/EasyPopupX/wiki/%E5%BF%AB%E9%80%9F%E6%8E%A5%E5%85%A5)

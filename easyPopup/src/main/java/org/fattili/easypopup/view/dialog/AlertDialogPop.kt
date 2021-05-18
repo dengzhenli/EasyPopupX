@@ -32,6 +32,7 @@ class AlertDialogPop(activity: Activity) : DialogPop(activity) {
         initData()
     }
 
+
     private fun initData() {
         if (!TextUtils.isEmpty(paramMsg)) {
             ep_alert_dialog_msg_tv?.text = paramMsg

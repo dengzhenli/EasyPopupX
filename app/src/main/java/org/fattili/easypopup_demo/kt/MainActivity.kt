@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.pop_example.view.*
 import org.fattili.easypopup.constant.EasyPopGravity
@@ -17,7 +16,7 @@ import org.fattili.easypopup.view.dialog.AlertDialogPop
 import org.fattili.easypopup_demo.R
 
 
-class MainActivity : AppCompatActivity(), LifecycleOwner {
+class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +26,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     fun topPop(view: View) {
-        TopTestPop(this).show()
+        TopTestPop(this)
+            .show()
     }
 
     fun dialogPop(view: View) {
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 return R.layout.pop_test
             }
 
-        }.show()
+        }.setAnimationStyle(R.style.bottomEnter).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
@@ -76,7 +76,9 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 return R.layout.pop_test1
             }
 
-        }.showOnView(viewLeft, EasyPopGravity.CENTER, EasyPopGravity.TO_LEFT).show()
+        }
+        .showOnView(viewLeft, EasyPopGravity.CENTER, EasyPopGravity.TO_LEFT)
+        .show()
     }
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     fun viewAboveLeft(view: View) {

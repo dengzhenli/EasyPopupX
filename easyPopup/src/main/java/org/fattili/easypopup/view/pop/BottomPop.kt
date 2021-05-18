@@ -2,6 +2,7 @@ package org.fattili.easypopup.view.pop
 
 import android.app.Activity
 import android.view.Gravity
+import org.fattili.easypopup.R
 import org.fattili.easypopup.view.EasyPop
 
 /**
@@ -10,7 +11,8 @@ import org.fattili.easypopup.view.EasyPop
  * @author dengzhenli
  */
 abstract class BottomPop : EasyPop {
-    constructor(activity: Activity?) : super(activity!!) {
+    constructor(activity: Activity) : super(activity) {
         setGravity(Gravity.BOTTOM)
+        setAnimationStyle(R.style.ep_common_pop_bottom_theme)
     }
 }

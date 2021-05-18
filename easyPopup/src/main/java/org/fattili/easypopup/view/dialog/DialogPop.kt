@@ -22,6 +22,7 @@ abstract class DialogPop : EasyPop {
 
 
     constructor(activity: Activity) : super(activity) {
+        setAnimationStyle(R.style.ep_common_pop_scale_theme)
     }
 
 
@@ -33,7 +34,6 @@ abstract class DialogPop : EasyPop {
         setGravity(gravity)
         setWidth(width)
         setHeight(height)
-
     }
 
     override fun onPopInit() {

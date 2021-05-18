@@ -2,6 +2,8 @@ package org.fattili.easypopup.view
 
 import android.app.Activity
 import android.graphics.drawable.Drawable
+import android.os.Build
+import android.transition.Transition
 import android.view.*
 import android.widget.FrameLayout
 import org.fattili.easypopup.R
@@ -270,7 +272,8 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity) {
 
 
         //动画效果
-        popupWindow?.animationStyle = R.style.ep_common_pop_theme
+        popupWindow?.animationStyle = animationStyle
+
         //宽度
         popupWindow?.width = popupWidth
         //高度
@@ -501,6 +504,7 @@ abstract class EasyPop(activity: Activity) : FrameLayout(activity) {
         animationStyle = style
         return this
     }
+
 
     /**
      * 显示view

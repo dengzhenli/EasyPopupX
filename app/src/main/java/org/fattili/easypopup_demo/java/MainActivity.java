@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
 
 import org.fattili.easypopup.constant.EasyPopGravity;
 import org.fattili.easypopup.manager.EasyPopManager;
@@ -21,7 +20,7 @@ import org.fattili.easypopup_demo.R;
  *
  * @author dengzhenli
  */
-public class MainActivity extends AppCompatActivity implements LifecycleOwner {
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     }
 
     public void normalPop(View view) {
-//        new TestPop(this).register(this).show();
         new EasyPop(this) {
 
             @Override
@@ -82,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
                 return R.layout.pop_test;
             }
 
-        }.show();
+        }.setAnimationStyle(R.style.bottomEnter).show();
 
     }
 

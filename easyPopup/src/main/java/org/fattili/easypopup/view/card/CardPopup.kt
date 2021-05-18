@@ -27,6 +27,7 @@ abstract class CardPopup : EasyPop {
         setGravity(gravity)
         setWidth(width)
         setHeight(height)
+        setAnimationStyle(R.style.ep_common_pop_bottom_theme)
     }
 
 

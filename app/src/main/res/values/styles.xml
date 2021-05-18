@@ -28,4 +28,12 @@
         <item name="android:background">@drawable/selector_style_bt</item>
     </style>
 
+    <style name="bottomEnter" parent="ep_common_pop_theme">
+        <item name="android:windowEnterAnimation">@anim/anim_popup_bottom_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_popup_bottom_exit</item>
+    </style>
+
+
+
+
 </resources>
