@@ -32,7 +32,7 @@ allprojects {
 添加依赖
 ```
 dependencies {
-     implementation 'com.github.dengzhenli:EasyPopupX:1.0.3'
+     implementation 'com.github.dengzhenli:EasyPopupX:1.0.4'
 }
 ```
 
