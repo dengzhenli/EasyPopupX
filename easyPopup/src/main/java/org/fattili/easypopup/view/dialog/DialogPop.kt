@@ -3,11 +3,9 @@ package org.fattili.easypopup.view.dialog
 import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.os.Build
-import android.view.Gravity
+
 import android.view.View
-import kotlinx.android.synthetic.main.ep_pop_dialog.view.*
+import android.view.ViewGroup
 import org.fattili.easypopup.R
 import org.fattili.easypopup.util.ScreenUtil
 import org.fattili.easypopup.view.EasyPop
@@ -19,6 +17,8 @@ import org.fattili.easypopup.view.EasyPop
  */
 abstract class DialogPop : EasyPop {
     private var dataView: View? = null
+
+    private var dialogView: ViewGroup? = null
 
 
     constructor(activity: Activity) : super(activity) {
@@ -47,13 +47,14 @@ abstract class DialogPop : EasyPop {
 
     override fun onPopCreated(view: View?)  {
         dataView = activity?.layoutInflater?.inflate(getContentLayoutId(), null)
+        dialogView = findViewById(R.id.ep_pop_dialog_v)
         if (!useBackGround()){
-            ep_pop_dialog_v.background = ColorDrawable(Color.TRANSPARENT)
+            dialogView?.background = ColorDrawable(Color.TRANSPARENT)
         } else {
             val padding = ScreenUtil.dip2px(context, 4f)
-            ep_pop_dialog_v?.setPadding(padding,padding,padding,padding)
+            dialogView?.setPadding(padding,padding,padding,padding)
         }
-        ep_pop_dialog_v.addView(dataView)
+        dialogView?.addView(dataView)
     }
 
 

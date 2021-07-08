@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
 import android.view.View
-import kotlinx.android.synthetic.main.ep_pop_alert_dialog.view.*
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import org.fattili.easypopup.R
 
 /**
@@ -26,51 +28,71 @@ class AlertDialogPop(activity: Activity) : DialogPop(activity) {
     private var paramTitleView: View? = null
     private var paramContentView: View? = null
 
+
+    private var dialogView: ViewGroup? = null
+    private var contentView: ViewGroup? = null
+    private var msgTv: TextView? = null
+    private var titleTv: TextView? = null
+    private var measureBt: Button? = null
+    private var cancelBt: Button? = null
+
+
     override fun onPopCreated(view: View?) {
-        ep_alert_dialog_cancel_bt?.setOnClickListener(View.OnClickListener { finish() })
-        ep_alert_dialog_view?.visibility = View.GONE
+
+        initView()
         initData()
     }
 
+    private fun initView() {
+        dialogView = findViewById(R.id.ep_alert_dialog_view)
+        contentView = findViewById(R.id.ep_alert_dialog_content_view)
+        msgTv = findViewById(R.id.ep_alert_dialog_msg_tv)
+        titleTv = findViewById(R.id.ep_alert_dialog_title_tv)
+        measureBt = findViewById(R.id.ep_alert_dialog_measure_bt)
+        cancelBt = findViewById(R.id.ep_alert_dialog_cancel_bt)
+
+        cancelBt?.setOnClickListener(View.OnClickListener { finish() })
+        dialogView?.visibility = View.GONE
+    }
 
     private fun initData() {
         if (!TextUtils.isEmpty(paramMsg)) {
-            ep_alert_dialog_msg_tv?.text = paramMsg
+            msgTv?.text = paramMsg
         }
 
         if (!TextUtils.isEmpty(paramTitle)) {
-            ep_alert_dialog_title_tv?.text = paramTitle
-            ep_alert_dialog_view?.visibility = View.VISIBLE
+            titleTv?.text = paramTitle
+            dialogView?.visibility = View.VISIBLE
         }
 
         if (paramTitleView != null) {
-            ep_alert_dialog_title_tv.visibility = View.GONE
-            ep_alert_dialog_view?.addView(paramTitleView)
-            ep_alert_dialog_view?.visibility = View.VISIBLE
+            titleTv?.visibility = View.GONE
+            dialogView?.addView(paramTitleView)
+            dialogView?.visibility = View.VISIBLE
         }
 
         if (paramContentView != null) {
-            ep_alert_dialog_msg_tv.visibility = View.GONE
-            ep_alert_dialog_content_view?.addView(paramContentView)
+            msgTv?.visibility = View.GONE
+            contentView?.addView(paramContentView)
         }
 
-        ep_alert_dialog_cancel_bt?.visibility = if (paramCancelBtShow) View.VISIBLE else View.GONE
-        ep_alert_dialog_measure_bt?.visibility = if (paramMeasureBtShow) View.VISIBLE else View.GONE
+        cancelBt?.visibility = if (paramCancelBtShow) View.VISIBLE else View.GONE
+        measureBt?.visibility = if (paramMeasureBtShow) View.VISIBLE else View.GONE
 
         if (!TextUtils.isEmpty(paramCancelBtText)) {
-            ep_alert_dialog_cancel_bt?.text = paramCancelBtText
+            cancelBt?.text = paramCancelBtText
         }
 
         if (!TextUtils.isEmpty(paramMeasureBtText)) {
-            ep_alert_dialog_measure_bt?.text = paramMeasureBtText
+            measureBt?.text = paramMeasureBtText
         }
 
         if (paramCancelBtListener != null) {
-            ep_alert_dialog_cancel_bt?.setOnClickListener(paramCancelBtListener)
+            cancelBt?.setOnClickListener(paramCancelBtListener)
         }
 
         if (paramMeasureBtListener != null) {
-            ep_alert_dialog_measure_bt?.setOnClickListener(paramMeasureBtListener)
+            measureBt?.setOnClickListener(paramMeasureBtListener)
         }
     }
 

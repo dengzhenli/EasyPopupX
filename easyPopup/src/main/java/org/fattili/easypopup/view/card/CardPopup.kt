@@ -4,9 +4,9 @@ import android.app.Activity
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import org.fattili.easypopup.R
 import org.fattili.easypopup.view.EasyPop
-import kotlinx.android.synthetic.main.ep_pop_card.view.*
 
 /**
  * 卡片式弹出窗
@@ -39,8 +39,8 @@ abstract class CardPopup : EasyPop {
 
     override fun onPopCreated(view: View?) {
         dataView = activity?.layoutInflater?.inflate(getContentLayoutId(), null)
-        ep_pop_card_lv.addView(dataView)
-        ep_pop_card_back_iv.setOnClickListener { finish() }
+        findViewById<ViewGroup>(R.id.ep_pop_card_lv).addView(dataView)
+        findViewById<ImageView>(R.id.ep_pop_card_back_iv).setOnClickListener { finish() }
     }
 
 }
